@@ -11,7 +11,7 @@ Astro + TypeScript + Tailwind CSS, deployed on Vercel. Waitlist backed by Supaba
 | `/` | Hero, problem, how it works, SDK snippet, use cases, waitlist |
 | `/docs` | Links to what exists today (runtime + SDK READMEs, examples, cheatsheet) |
 | `/learn` | Tutorial stub — empty until the weekly content cycle starts |
-| `/examples` | Table linking to [browser-printing-examples](https://github.com/PortixOne/browser-printing-examples) |
+| `/examples` | Table linking to [browser-printing-examples](https://github.com/portixhq/browser-printing-examples) |
 | `/roadmap` | Real roadmap from printing → cash drawer → scanner → scales → displays → marketplace → full edge platform |
 | `/changelog` | Build log #1, in the manual's Built/Learned/Fixed/Next/Question format |
 | `/compare` | vs QZ Tray, vs JSPrintManager |
