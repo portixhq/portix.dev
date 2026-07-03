@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="PortixOne vs JSPrintManager">
+  <section class="mx-auto max-w-3xl px-6 py-20">
+    <p class="text-sm text-slate-500"><a href="/compare" class="hover:text-slate-300">← Compare</a></p>
+    <h1 class="mt-2 text-3xl font-bold">PortixOne vs JSPrintManager</h1>
+    <p class="mt-4 text-slate-300">
+      JSPrintManager is a commercial local print bridge. Verify current pricing and features on
+      their site before deciding — specifics below can go stale.
+    </p>
+
+    <table class="mt-8 w-full border-collapse text-sm">
+      <thead>
+        <tr class="border-b border-slate-800 text-left text-slate-400">
+          <th class="py-2 pr-4">&nbsp;</th>
+          <th class="py-2 pr-4">PortixOne</th>
+          <th class="py-2">JSPrintManager</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-800">
+        <tr><td class="py-3 pr-4 text-slate-400">Open source</td><td class="py-3 pr-4">Yes</td><td class="py-3">No</td></tr>
+        <tr><td class="py-3 pr-4 text-slate-400">Licensing</td><td class="py-3 pr-4">MIT</td><td class="py-3">Commercial</td></tr>
+        <tr><td class="py-3 pr-4 text-slate-400">Silent printing</td><td class="py-3 pr-4">Yes</td><td class="py-3">Yes</td></tr>
+        <tr><td class="py-3 pr-4 text-slate-400">Maturity</td><td class="py-3 pr-4">Early (MVP)</td><td class="py-3">Established commercial product</td></tr>
+      </tbody>
+    </table>
+
+    <p class="mt-8 text-slate-300">
+      If a commercial license with vendor support fits your team better than an open-source,
+      early-stage project, JSPrintManager is worth evaluating. PortixOne's pitch is being free,
+      open, and buildable-on — no license cost, and you can read (and change) every line.
+    </p>
+  </section>
+</BaseLayout>

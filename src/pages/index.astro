@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WaitlistForm from '../components/WaitlistForm.astro';
+---
+
+<BaseLayout title="Silent printing for web apps">
+  <!-- Hero -->
+  <section class="mx-auto max-w-4xl px-6 pt-24 pb-16 text-center">
+    <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Silent printing for web apps.</h1>
+    <p class="mx-auto mt-6 max-w-2xl text-lg text-slate-300">
+      PortixOne helps developers connect web applications to local printers through a lightweight
+      bridge and simple API — no print dialog, no browser fighting.
+    </p>
+    <div class="mt-10 flex flex-wrap justify-center gap-4">
+      <a
+        href="#waitlist"
+        class="rounded-md bg-emerald-500 px-6 py-3 text-sm font-medium text-slate-950 hover:bg-emerald-400"
+      >
+        Join the private beta
+      </a>
+      <a
+        href="https://github.com/PortixOne/portixone"
+        class="rounded-md border border-slate-700 px-6 py-3 text-sm font-medium hover:border-slate-500"
+      >
+        View on GitHub
+      </a>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section class="mx-auto max-w-4xl px-6 py-16 border-t border-slate-800">
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-emerald-400">The problem</h2>
+    <p class="mt-3 text-2xl font-medium">
+      Browser printing was not designed for modern POS and local hardware workflows.
+    </p>
+    <p class="mt-4 text-slate-300">
+      <code class="rounded bg-slate-900 px-1.5 py-0.5">window.print()</code> always shows a dialog, can't
+      pick a printer, and can't run silently. Every team building a POS, kitchen ticket system, or
+      internal tool ends up hand-rolling a native bridge to talk to local hardware — PortixOne is
+      that bridge, built once, so you don't have to.
+    </p>
+  </section>
+
+  <!-- How it works -->
+  <section class="mx-auto max-w-4xl px-6 py-16 border-t border-slate-800">
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-emerald-400">How it works</h2>
+    <p class="mt-3 text-2xl font-medium">Install the bridge, connect your printer, call the API.</p>
+    <ol class="mt-6 grid gap-4 sm:grid-cols-3">
+      <li class="rounded-lg border border-slate-800 p-5">
+        <span class="text-emerald-400 font-mono text-sm">01</span>
+        <p class="mt-2 font-medium">Run the runtime</p>
+        <p class="mt-1 text-sm text-slate-400">A small local process listens on localhost and talks to your printer.</p>
+      </li>
+      <li class="rounded-lg border border-slate-800 p-5">
+        <span class="text-emerald-400 font-mono text-sm">02</span>
+        <p class="mt-2 font-medium">Call the SDK</p>
+        <p class="mt-1 text-sm text-slate-400"><code>print({`{ content }`})</code> from your web app — no install for your users.</p>
+      </li>
+      <li class="rounded-lg border border-slate-800 p-5">
+        <span class="text-emerald-400 font-mono text-sm">03</span>
+        <p class="mt-2 font-medium">It prints</p>
+        <p class="mt-1 text-sm text-slate-400">Silently, on the printer you chose, with live status over WebSocket.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- SDK -->
+  <section class="mx-auto max-w-4xl px-6 py-16 border-t border-slate-800">
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-emerald-400">SDK</h2>
+    <p class="mt-3 text-2xl font-medium">One function call. That's the whole integration.</p>
+    <pre class="mt-6 overflow-x-auto rounded-lg bg-slate-900 p-5 text-sm text-slate-200"><code>{`import { createPortixClient } from '@portixone/sdk-js';
+
+const portix = createPortixClient({ apiKey: 'dev-local-key' });
+
+await portix.print({ content: 'Hello from PortixOne' });`}</code></pre>
+    <p class="mt-4 text-sm text-slate-400">
+      JavaScript SDK today · .NET, Python, and Go planned. See
+      <a href="/examples" class="text-emerald-400 hover:underline">runnable examples</a>
+      across vanilla JS, React, and Vue.
+    </p>
+  </section>
+
+  <!-- Use cases -->
+  <section class="mx-auto max-w-4xl px-6 py-16 border-t border-slate-800">
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-emerald-400">Use cases</h2>
+    <p class="mt-3 text-2xl font-medium">POS, receipts, labels, kitchens, internal tools.</p>
+    <p class="mt-4 text-slate-300">
+      Today: reliable local printing on Windows. On the roadmap: cash drawers, barcode scanners,
+      scales, and customer displays — see the <a href="/roadmap" class="text-emerald-400 hover:underline">full roadmap</a>.
+    </p>
+  </section>
+
+  <!-- Waitlist -->
+  <section class="mx-auto max-w-4xl px-6 py-16 border-t border-slate-800">
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-emerald-400">Private beta</h2>
+    <p class="mt-3 text-2xl font-medium">10 developer spots. No sales pitch — just early access and direct feedback.</p>
+    <div class="mt-6">
+      <WaitlistForm />
+    </div>
+  </section>
+</BaseLayout>

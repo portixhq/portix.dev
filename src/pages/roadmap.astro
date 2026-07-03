@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const stages = [
+  { title: 'Printing', status: 'In progress', desc: 'Local, silent printing on Windows via the runtime + SDK JS. Current MVP scope.' },
+  { title: 'Cash drawer', status: 'Planned', desc: 'Open-drawer capability, triggered from the same print job or standalone.' },
+  { title: 'Barcode scanner', status: 'Planned', desc: 'Read barcode scans as input events from a web app.' },
+  { title: 'Scales', status: 'Planned', desc: 'Read weight from connected scales.' },
+  { title: 'Customer displays', status: 'Planned', desc: 'Push content to secondary customer-facing displays.' },
+  { title: 'Driver marketplace', status: 'Future', desc: 'Community-contributed drivers for less common hardware.' },
+  { title: 'Full edge platform', status: 'Future', desc: 'Cloud dashboard, multi-project API keys, analytics, licensing — the complete layered architecture.' },
+];
+---
+
+<BaseLayout title="Roadmap">
+  <section class="mx-auto max-w-3xl px-6 py-20">
+    <h1 class="text-3xl font-bold">Roadmap</h1>
+    <p class="mt-4 text-slate-300">
+      PortixOne ships one device capability at a time, validated with real developers before moving
+      to the next. No exact dates — this is a live document, not a promise.
+    </p>
+
+    <ol class="mt-10 space-y-6">
+      {stages.map((stage, i) => (
+        <li class="flex gap-4">
+          <span class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-slate-700 text-xs text-slate-400">
+            {i + 1}
+          </span>
+          <div>
+            <div class="flex items-center gap-3">
+              <p class="font-medium">{stage.title}</p>
+              <span class="rounded-full border border-slate-700 px-2 py-0.5 text-xs text-slate-400">{stage.status}</span>
+            </div>
+            <p class="mt-1 text-sm text-slate-400">{stage.desc}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <p class="mt-12 text-sm text-slate-500">
+      SDKs: JavaScript is the only one that exists today.
+      <a href="https://github.com/PortixOne/portixone/tree/master/sdk-dotnet" class="hover:text-slate-300">.NET</a>,
+      <a href="https://github.com/PortixOne/portixone/tree/master/sdk-python" class="hover:text-slate-300">Python</a>, and
+      <a href="https://github.com/PortixOne/portixone/tree/master/sdk-go" class="hover:text-slate-300">Go</a>
+      are placeholders in the monorepo, built once the JS SDK is validated with real usage.
+    </p>
+  </section>
+</BaseLayout>

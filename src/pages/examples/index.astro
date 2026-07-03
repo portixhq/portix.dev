@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const examples = [
+  { name: 'vanilla-js/window-print', stack: 'Plain HTML/CSS', desc: "Native window.print(), printing only one element via @media print" },
+  { name: 'vanilla-js/portixone-fetch', stack: 'Plain HTML/JS', desc: 'Silent printing with a raw fetch() call — no SDK, no dialog' },
+  { name: 'react/print-button', stack: 'React + Vite + TS', desc: 'Silent printing via a usePortixPrint hook' },
+  { name: 'vue/print-button', stack: 'Vue 3 + Vite + TS', desc: 'Silent printing via the Composition API' },
+];
+---
+
+<BaseLayout title="Examples">
+  <section class="mx-auto max-w-3xl px-6 py-20">
+    <h1 class="text-3xl font-bold">Examples</h1>
+    <p class="mt-4 text-slate-300">
+      Real, runnable code — all live in
+      <a href="https://github.com/PortixOne/browser-printing-examples" class="text-emerald-400 hover:underline">browser-printing-examples</a>.
+    </p>
+
+    <div class="mt-10 divide-y divide-slate-800 border-y border-slate-800">
+      {examples.map((ex) => (
+        <a
+          href={`https://github.com/PortixOne/browser-printing-examples/tree/master/${ex.name}`}
+          class="flex flex-col gap-1 py-5 hover:bg-slate-900/50 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div>
+            <p class="font-mono text-sm text-emerald-400">{ex.name}</p>
+            <p class="mt-1 text-sm text-slate-400">{ex.desc}</p>
+          </div>
+          <span class="text-xs text-slate-500">{ex.stack}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

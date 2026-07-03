@@ -1,0 +1,74 @@
+---
+// Posts directly to the Supabase Edge Function (supabase/functions/waitlist).
+// PUBLIC_* env vars are safe to expose — they're the anon (public) key, not
+// a service-role secret. See README.md "Connecting Supabase + Resend".
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL ?? '';
+const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY ?? '';
+const isConfigured = Boolean(supabaseUrl && supabaseAnonKey);
+---
+
+<div id="waitlist" class="rounded-xl border border-slate-800 bg-slate-900/60 p-6">
+  {
+    isConfigured ? (
+      <form id="waitlist-form" class="flex flex-col gap-3 sm:flex-row">
+        <input
+          type="email"
+          name="email"
+          required
+          placeholder="you@company.com"
+          class="flex-1 rounded-md border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-white placeholder:text-slate-500 focus:border-emerald-500 focus:outline-none"
+        />
+        <button
+          type="submit"
+          class="rounded-md bg-emerald-500 px-5 py-2 text-sm font-medium text-slate-950 hover:bg-emerald-400"
+        >
+          Join the private beta
+        </button>
+      </form>
+      <p id="waitlist-message" class="mt-3 text-sm text-slate-400"></p>
+    ) : (
+      <p class="text-sm text-amber-400">
+        Waitlist isn't connected yet — set PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_ANON_KEY
+        (see README.md).
+      </p>
+    )
+  }
+</div>
+
+{
+  isConfigured && (
+    <script is:inline define:vars={{ supabaseUrl, supabaseAnonKey }}>
+      const form = document.getElementById('waitlist-form');
+      const message = document.getElementById('waitlist-message');
+
+      form?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const email = new FormData(form).get('email');
+        const submitButton = form.querySelector('button');
+        submitButton.disabled = true;
+        message.textContent = 'Joining…';
+
+        try {
+          const response = await fetch(`${supabaseUrl}/functions/v1/waitlist`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${supabaseAnonKey}`,
+            },
+            body: JSON.stringify({ email }),
+          });
+          const body = await response.json();
+          if (!response.ok) {
+            throw new Error(body.message ?? 'Something went wrong');
+          }
+          message.textContent = "You're in — check your inbox for a confirmation email.";
+          form.reset();
+        } catch (error) {
+          message.textContent = `Couldn't join: ${error.message}`;
+        } finally {
+          submitButton.disabled = false;
+        }
+      });
+    </script>
+  )
+}

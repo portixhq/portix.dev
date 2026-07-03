@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="PortixOne vs QZ Tray">
+  <section class="mx-auto max-w-3xl px-6 py-20">
+    <p class="text-sm text-slate-500"><a href="/compare" class="hover:text-slate-300">← Compare</a></p>
+    <h1 class="mt-2 text-3xl font-bold">PortixOne vs QZ Tray</h1>
+    <p class="mt-4 text-slate-300">
+      QZ Tray is a mature, widely-used local print bridge with a long track record — a solid choice
+      today, especially if you need its broader driver support right now. Verify current details on
+      <a href="https://qz.io" class="text-emerald-400 hover:underline">qz.io</a> before deciding;
+      specifics below can go stale.
+    </p>
+
+    <table class="mt-8 w-full border-collapse text-sm">
+      <thead>
+        <tr class="border-b border-slate-800 text-left text-slate-400">
+          <th class="py-2 pr-4">&nbsp;</th>
+          <th class="py-2 pr-4">PortixOne</th>
+          <th class="py-2">QZ Tray</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-800">
+        <tr><td class="py-3 pr-4 text-slate-400">Open source</td><td class="py-3 pr-4">Yes</td><td class="py-3">Partial</td></tr>
+        <tr><td class="py-3 pr-4 text-slate-400">Silent printing</td><td class="py-3 pr-4">Yes</td><td class="py-3">Yes</td></tr>
+        <tr><td class="py-3 pr-4 text-slate-400">Maturity</td><td class="py-3 pr-4">Early (MVP)</td><td class="py-3">Mature, long track record</td></tr>
+        <tr><td class="py-3 pr-4 text-slate-400">Device scope today</td><td class="py-3 pr-4">Windows, local printing</td><td class="py-3">Broad — printers, scanners, more</td></tr>
+        <tr><td class="py-3 pr-4 text-slate-400">API model</td><td class="py-3 pr-4">Capability-based (print, cut, drawer, ...)</td><td class="py-3">Driver/device-specific</td></tr>
+      </tbody>
+    </table>
+
+    <p class="mt-8 text-slate-300">
+      If you need something production-proven today across many device types, QZ Tray is a
+      reasonable choice. PortixOne's bet is a simpler developer experience and a vendor-agnostic
+      capability model — worth it once we've matched QZ Tray's maturity, not necessarily before.
+    </p>
+  </section>
+</BaseLayout>

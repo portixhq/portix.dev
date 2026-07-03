@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Docs">
+  <section class="mx-auto max-w-3xl px-6 py-20">
+    <h1 class="text-3xl font-bold">Docs</h1>
+    <p class="mt-4 text-slate-300">
+      Full docs site (guides, API reference, troubleshooting by stack) is on the roadmap — see
+      <a href="/roadmap" class="text-emerald-400 hover:underline">/roadmap</a>. For now, here's
+      everything that exists today:
+    </p>
+
+    <div class="mt-10 space-y-6">
+      <a
+        href="https://github.com/PortixOne/portixone/tree/master/runtime"
+        class="block rounded-lg border border-slate-800 p-5 hover:border-slate-600"
+      >
+        <p class="font-medium">Runtime README</p>
+        <p class="mt-1 text-sm text-slate-400">How to run the local bridge, its HTTP + WebSocket API, endpoints.</p>
+      </a>
+      <a
+        href="https://github.com/PortixOne/portixone/tree/master/sdk-js"
+        class="block rounded-lg border border-slate-800 p-5 hover:border-slate-600"
+      >
+        <p class="font-medium">SDK JS README</p>
+        <p class="mt-1 text-sm text-slate-400"><code>print()</code> / <code>getStatus()</code> quickstart.</p>
+      </a>
+      <a
+        href="/examples"
+        class="block rounded-lg border border-slate-800 p-5 hover:border-slate-600"
+      >
+        <p class="font-medium">Runnable examples</p>
+        <p class="mt-1 text-sm text-slate-400">Vanilla JS, React, and Vue — copy-paste working code.</p>
+      </a>
+      <a
+        href="https://github.com/PortixOne/escpos-cheatsheet"
+        class="block rounded-lg border border-slate-800 p-5 hover:border-slate-600"
+      >
+        <p class="font-medium">ESC/POS cheatsheet</p>
+        <p class="mt-1 text-sm text-slate-400">Command reference if you're building against thermal printers directly.</p>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

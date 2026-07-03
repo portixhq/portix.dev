@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const entries = [
+  {
+    number: 1,
+    date: '2026-07-02',
+    built: 'Monorepo scaffold (runtime + sdk-js + shared/protocol/escpos packages), and the 7-repo knowledge network: portixone, portix-runtime, portix-sdk-js, awesome-web-printing, browser-printing-examples, escpos-cheatsheet, thermal-printer-test-files.',
+    learned: 'ESC/POS command bytes are stable enough across vendors to build real, verifiable test fixtures and a cheatsheet from the Epson reference — verified by hex-dumping generated files, not just writing docs from memory.',
+    fixed: 'Client errors (401/400) were logging at ERROR level in the runtime instead of WARN — reserved ERROR for actual system faults.',
+    next: 'Connect this site\'s waitlist to a real Supabase project + Resend, then start Week 1 of the learning/content cycle (browser printing limitations write-up).',
+    question: 'What\'s the first real print job you\'ve had to hand-roll a bridge for?',
+  },
+];
+---
+
+<BaseLayout title="Changelog">
+  <section class="mx-auto max-w-3xl px-6 py-20">
+    <h1 class="text-3xl font-bold">Changelog</h1>
+    <p class="mt-4 text-slate-300">Build logs, in the order they happened.</p>
+
+    <div class="mt-10 space-y-12">
+      {entries.map((entry) => (
+        <article class="border-l-2 border-slate-800 pl-6">
+          <p class="text-xs text-slate-500">{entry.date}</p>
+          <h2 class="mt-1 text-lg font-semibold">PortixOne Build Log #{entry.number}</h2>
+          <dl class="mt-4 space-y-2 text-sm">
+            <div><dt class="inline font-medium text-slate-300">Built: </dt><dd class="inline text-slate-400">{entry.built}</dd></div>
+            <div><dt class="inline font-medium text-slate-300">Learned: </dt><dd class="inline text-slate-400">{entry.learned}</dd></div>
+            <div><dt class="inline font-medium text-slate-300">Fixed: </dt><dd class="inline text-slate-400">{entry.fixed}</dd></div>
+            <div><dt class="inline font-medium text-slate-300">Next: </dt><dd class="inline text-slate-400">{entry.next}</dd></div>
+            <div><dt class="inline font-medium text-slate-300">Question for developers: </dt><dd class="inline text-slate-400">{entry.question}</dd></div>
+          </dl>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,72 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'PortixOne — a secure edge runtime connecting web apps to local hardware.',
+} = Astro.props;
+
+const nav = [
+  { href: '/docs', label: 'Docs' },
+  { href: '/learn', label: 'Learn' },
+  { href: '/examples', label: 'Examples' },
+  { href: '/compare', label: 'Compare' },
+  { href: '/roadmap', label: 'Roadmap' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/changelog', label: 'Changelog' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} · PortixOne</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+    <header class="border-b border-slate-800">
+      <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+        <a href="/" class="text-lg font-semibold tracking-tight">Portix<span class="text-emerald-400">One</span></a>
+        <nav class="hidden gap-6 text-sm text-slate-300 md:flex">
+          {nav.map((item) => (
+            <a href={item.href} class="hover:text-white">{item.label}</a>
+          ))}
+        </nav>
+        <a
+          href="https://github.com/PortixOne/portixone"
+          class="rounded-md border border-slate-700 px-3 py-1.5 text-sm hover:border-slate-500"
+        >
+          GitHub
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="border-t border-slate-800 mt-24">
+      <div class="mx-auto max-w-5xl px-6 py-10 text-sm text-slate-400">
+        <p class="mb-4">
+          PortixOne is a founder-led project, built in public from Mexico for a global developer audience.
+        </p>
+        <div class="flex flex-wrap gap-x-6 gap-y-2">
+          <a href="https://github.com/PortixOne/portixone" class="hover:text-white">portixone</a>
+          <a href="https://github.com/PortixOne/portix-sdk-js" class="hover:text-white">portix-sdk-js</a>
+          <a href="https://github.com/PortixOne/awesome-web-printing" class="hover:text-white">awesome-web-printing</a>
+          <a href="https://github.com/PortixOne/browser-printing-examples" class="hover:text-white">browser-printing-examples</a>
+          <a href="https://github.com/PortixOne/escpos-cheatsheet" class="hover:text-white">escpos-cheatsheet</a>
+          <a href="https://github.com/PortixOne/thermal-printer-test-files" class="hover:text-white">thermal-printer-test-files</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

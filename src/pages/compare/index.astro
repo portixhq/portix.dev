@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Compare">
+  <section class="mx-auto max-w-3xl px-6 py-20">
+    <h1 class="text-3xl font-bold">Compare</h1>
+    <p class="mt-4 text-slate-300">
+      Honest comparisons — PortixOne is early (MVP, Windows local printing only), so these are about
+      helping you pick the right tool today, not claiming to already do more than we do.
+    </p>
+
+    <div class="mt-10 space-y-4">
+      <a href="/compare/qz-tray" class="block rounded-lg border border-slate-800 p-5 hover:border-slate-600">
+        <p class="font-medium">PortixOne vs QZ Tray</p>
+      </a>
+      <a href="/compare/jsprintmanager" class="block rounded-lg border border-slate-800 p-5 hover:border-slate-600">
+        <p class="font-medium">PortixOne vs JSPrintManager</p>
+      </a>
+    </div>
+
+    <p class="mt-8 text-sm text-slate-500">
+      Full landscape of bridges and browser printing APIs:
+      <a href="https://github.com/PortixOne/awesome-web-printing" class="hover:text-slate-300">awesome-web-printing</a>.
+    </p>
+  </section>
+</BaseLayout>
