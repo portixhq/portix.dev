@@ -12,22 +12,22 @@ const examples = [
 <BaseLayout title="Examples">
   <section class="mx-auto max-w-3xl px-6 py-20">
     <h1 class="text-3xl font-bold">Examples</h1>
-    <p class="mt-4 text-slate-300">
+    <p class="mt-4 text-ink">
       Real, runnable code — all live in
-      <a href="https://github.com/portixhq/browser-printing-examples" class="text-emerald-400 hover:underline">browser-printing-examples</a>.
+      <a href="https://github.com/portixhq/browser-printing-examples" class="text-accent hover:underline">browser-printing-examples</a>.
     </p>
 
-    <div class="mt-10 divide-y divide-slate-800 border-y border-slate-800">
+    <div class="mt-10 divide-y divide-line border-y border-line">
       {examples.map((ex) => (
         <a
           href={`https://github.com/portixhq/browser-printing-examples/tree/master/${ex.name}`}
-          class="flex flex-col gap-1 py-5 hover:bg-slate-900/50 sm:flex-row sm:items-center sm:justify-between"
+          class="flex flex-col gap-1 py-5 hover:bg-surface sm:flex-row sm:items-center sm:justify-between"
         >
           <div>
-            <p class="font-mono text-sm text-emerald-400">{ex.name}</p>
-            <p class="mt-1 text-sm text-slate-400">{ex.desc}</p>
+            <p class="font-mono text-sm text-accent">{ex.name}</p>
+            <p class="mt-1 text-sm text-muted">{ex.desc}</p>
           </div>
-          <span class="text-xs text-slate-500">{ex.stack}</span>
+          <span class="text-xs text-muted">{ex.stack}</span>
         </a>
       ))}
     </div>

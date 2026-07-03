@@ -1,101 +1,138 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WaitlistForm from '../components/WaitlistForm.astro';
+import TerminalInstall from '../components/TerminalInstall.astro';
+import NetworkDiagram from '../components/NetworkDiagram.astro';
+import CodeTabs from '../components/CodeTabs.astro';
+import ArchitectureDiagram from '../components/ArchitectureDiagram.astro';
+
+const features = [
+  {
+    title: 'One runtime',
+    desc: 'A single local process handles every device connection — no per-vendor bridges.',
+  },
+  {
+    title: 'One API',
+    desc: 'Call the same interface regardless of the hardware behind it.',
+  },
+  {
+    title: 'Every device',
+    desc: 'Printers, barcode scanners, scales, USB and serial peripherals — one model.',
+  },
+  {
+    title: 'Built for developers',
+    desc: 'Typed SDKs, explicit errors, no vendor lock-in.',
+  },
+];
+
+const sdks = [
+  { name: 'JavaScript', available: true },
+  { name: 'Python', available: false },
+  { name: 'Go', available: false },
+  { name: '.NET', available: false },
+  { name: 'Rust', available: false, soon: true },
+];
+
+const metrics = [
+  { value: '<5ms', label: 'Latency' },
+  { value: 'Cross-platform', label: 'Windows, macOS, Linux' },
+  { value: 'Offline-first', label: 'No cloud round-trip to print' },
+  { value: 'Local runtime', label: 'Runs on the machine, not a server' },
+  { value: 'Secure channel', label: 'API-key authenticated locally' },
+];
 ---
 
-<BaseLayout title="Silent printing for web apps">
-  <!-- Hero -->
-  <section class="mx-auto max-w-4xl px-6 pt-24 pb-16 text-center">
-    <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Silent printing for web apps.</h1>
-    <p class="mx-auto mt-6 max-w-2xl text-lg text-slate-300">
-      PortixOne helps developers connect web applications to local printers through a lightweight
-      bridge and simple API — no print dialog, no browser fighting.
-    </p>
-    <div class="mt-10 flex flex-wrap justify-center gap-4">
-      <a
-        href="#waitlist"
-        class="rounded-md bg-emerald-500 px-6 py-3 text-sm font-medium text-slate-950 hover:bg-emerald-400"
-      >
-        Join the private beta
-      </a>
-      <a
-        href="https://github.com/portixhq/portixone"
-        class="rounded-md border border-slate-700 px-6 py-3 text-sm font-medium hover:border-slate-500"
-      >
-        View on GitHub
-      </a>
+<BaseLayout title="The local infrastructure for web applications">
+  <section class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-16 px-6 pb-24 pt-20 md:grid-cols-2 md:pt-28">
+    <div>
+      <p class="mb-5 text-[12px] font-semibold uppercase tracking-[0.16em] text-muted">PortixOne</p>
+      <h1 class="text-[44px] font-extrabold leading-[1.08] tracking-tight md:text-[52px]">
+        The local infrastructure<br />for web applications.
+      </h1>
+      <p class="mt-6 text-xl font-semibold text-accent2">One API. Every device.</p>
+
+      <div class="mt-9 max-w-md">
+        <TerminalInstall command="npm install @portixone/sdk-js" />
+      </div>
+
+      <div class="mt-7 flex flex-wrap gap-3">
+        <a href="#waitlist" class="rounded-md bg-accent px-6 py-3 text-[14px] font-semibold text-[#00202A] hover:opacity-90">
+          Get started
+        </a>
+        <a href="/docs" class="rounded-md border border-line px-6 py-3 text-[14px] font-semibold hover:border-white/20">
+          Documentation
+        </a>
+      </div>
+    </div>
+
+    <NetworkDiagram />
+  </section>
+
+  <section class="border-t border-line">
+    <div class="mx-auto grid max-w-6xl grid-cols-1 gap-4 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4">
+      {features.map((f) => (
+        <div class="rounded-md border border-line bg-surface p-6">
+          <p class="text-[15px] font-semibold">{f.title}</p>
+          <p class="mt-2 text-[13px] leading-relaxed text-muted">{f.desc}</p>
+        </div>
+      ))}
     </div>
   </section>
 
-  <!-- Problem -->
-  <section class="mx-auto max-w-4xl px-6 py-16 border-t border-slate-800">
-    <h2 class="text-sm font-semibold uppercase tracking-wide text-emerald-400">The problem</h2>
-    <p class="mt-3 text-2xl font-medium">
-      Browser printing was not designed for modern POS and local hardware workflows.
-    </p>
-    <p class="mt-4 text-slate-300">
-      <code class="rounded bg-slate-900 px-1.5 py-0.5">window.print()</code> always shows a dialog, can't
-      pick a printer, and can't run silently. Every team building a POS, kitchen ticket system, or
-      internal tool ends up hand-rolling a native bridge to talk to local hardware — PortixOne is
-      that bridge, built once, so you don't have to.
-    </p>
+  <section class="border-t border-line">
+    <div class="mx-auto grid max-w-6xl grid-cols-1 gap-14 px-6 py-20 md:grid-cols-[1.3fr_1fr]">
+      <CodeTabs />
+      <div class="flex flex-col justify-center">
+        <p class="mb-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Runtime API</p>
+        <p class="text-xl font-semibold leading-snug">One API connects every supported device.</p>
+        <p class="mt-3 text-[14px] leading-relaxed text-muted">
+          Same calls, same shapes, regardless of what's plugged in. See <a href="/examples" class="text-accent hover:underline">runnable examples</a>.
+        </p>
+      </div>
+    </div>
   </section>
 
-  <!-- How it works -->
-  <section class="mx-auto max-w-4xl px-6 py-16 border-t border-slate-800">
-    <h2 class="text-sm font-semibold uppercase tracking-wide text-emerald-400">How it works</h2>
-    <p class="mt-3 text-2xl font-medium">Install the bridge, connect your printer, call the API.</p>
-    <ol class="mt-6 grid gap-4 sm:grid-cols-3">
-      <li class="rounded-lg border border-slate-800 p-5">
-        <span class="text-emerald-400 font-mono text-sm">01</span>
-        <p class="mt-2 font-medium">Run the runtime</p>
-        <p class="mt-1 text-sm text-slate-400">A small local process listens on localhost and talks to your printer.</p>
-      </li>
-      <li class="rounded-lg border border-slate-800 p-5">
-        <span class="text-emerald-400 font-mono text-sm">02</span>
-        <p class="mt-2 font-medium">Call the SDK</p>
-        <p class="mt-1 text-sm text-slate-400"><code>print({`{ content }`})</code> from your web app — no install for your users.</p>
-      </li>
-      <li class="rounded-lg border border-slate-800 p-5">
-        <span class="text-emerald-400 font-mono text-sm">03</span>
-        <p class="mt-2 font-medium">It prints</p>
-        <p class="mt-1 text-sm text-slate-400">Silently, on the printer you chose, with live status over WebSocket.</p>
-      </li>
-    </ol>
+  <section class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <p class="mb-10 text-center text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Architecture</p>
+      <ArchitectureDiagram />
+    </div>
   </section>
 
-  <!-- SDK -->
-  <section class="mx-auto max-w-4xl px-6 py-16 border-t border-slate-800">
-    <h2 class="text-sm font-semibold uppercase tracking-wide text-emerald-400">SDK</h2>
-    <p class="mt-3 text-2xl font-medium">One function call. That's the whole integration.</p>
-    <pre class="mt-6 overflow-x-auto rounded-lg bg-slate-900 p-5 text-sm text-slate-200"><code>{`import { createPortixClient } from '@portixone/sdk-js';
-
-const portix = createPortixClient({ apiKey: 'dev-local-key' });
-
-await portix.print({ content: 'Hello from PortixOne' });`}</code></pre>
-    <p class="mt-4 text-sm text-slate-400">
-      JavaScript SDK today · .NET, Python, and Go planned. See
-      <a href="/examples" class="text-emerald-400 hover:underline">runnable examples</a>
-      across vanilla JS, React, and Vue.
-    </p>
+  <section class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <p class="mb-8 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">SDK ecosystem</p>
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        {sdks.map((sdk) => (
+          <div class:list={['rounded-md border border-line bg-surface p-5 text-center', !sdk.available && 'opacity-50']}>
+            <p class="font-mono text-[13px]">{sdk.name}</p>
+            <p class="mt-1 text-[11px] text-muted">{sdk.soon ? 'Coming soon' : sdk.available ? 'Available' : 'Planned'}</p>
+          </div>
+        ))}
+      </div>
+    </div>
   </section>
 
-  <!-- Use cases -->
-  <section class="mx-auto max-w-4xl px-6 py-16 border-t border-slate-800">
-    <h2 class="text-sm font-semibold uppercase tracking-wide text-emerald-400">Use cases</h2>
-    <p class="mt-3 text-2xl font-medium">POS, receipts, labels, kitchens, internal tools.</p>
-    <p class="mt-4 text-slate-300">
-      Today: reliable local printing on Windows. On the roadmap: cash drawers, barcode scanners,
-      scales, and customer displays — see the <a href="/roadmap" class="text-emerald-400 hover:underline">full roadmap</a>.
-    </p>
+  <section class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <div class="grid grid-cols-2 gap-6 text-center sm:grid-cols-5">
+        {metrics.map((m) => (
+          <div>
+            <p class="font-mono text-2xl font-bold text-accent">{m.value}</p>
+            <p class="mt-2 text-[12px] text-muted">{m.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
   </section>
 
-  <!-- Waitlist -->
-  <section class="mx-auto max-w-4xl px-6 py-16 border-t border-slate-800">
-    <h2 class="text-sm font-semibold uppercase tracking-wide text-emerald-400">Private beta</h2>
-    <p class="mt-3 text-2xl font-medium">10 developer spots. No sales pitch — just early access and direct feedback.</p>
-    <div class="mt-6">
-      <WaitlistForm />
+  <section id="waitlist" class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <p class="mb-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Private beta</p>
+      <h2 class="text-2xl font-semibold">10 developer spots. No sales pitch — just early access and direct feedback.</h2>
+      <div class="mt-8 max-w-lg">
+        <WaitlistForm />
+      </div>
     </div>
   </section>
 </BaseLayout>

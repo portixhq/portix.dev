@@ -1,0 +1,36 @@
+---
+interface Props {
+  command: string;
+}
+
+const { command } = Astro.props;
+---
+
+<div
+  class="terminal-install flex items-center justify-between rounded-md border border-line bg-surface px-4 py-3 font-mono text-[13px]"
+  data-command={command}
+>
+  <span><span class="text-muted">$</span> {command}</span>
+  <button type="button" class="copy-btn text-muted hover:text-ink" aria-label="Copy install command">
+    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+      <rect x="9" y="9" width="12" height="12" rx="2" />
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+    </svg>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.terminal-install').forEach((el) => {
+    const command = el.dataset.command ?? '';
+    const button = el.querySelector('.copy-btn');
+    button?.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(command);
+      button.innerHTML =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 6 9 17l-5-5"/></svg>';
+      setTimeout(() => {
+        button.innerHTML =
+          '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+      }, 1500);
+    });
+  });
+</script>

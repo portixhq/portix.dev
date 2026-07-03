@@ -15,7 +15,7 @@ const stages = [
 <BaseLayout title="Roadmap">
   <section class="mx-auto max-w-3xl px-6 py-20">
     <h1 class="text-3xl font-bold">Roadmap</h1>
-    <p class="mt-4 text-slate-300">
+    <p class="mt-4 text-ink">
       PortixOne ships one device capability at a time, validated with real developers before moving
       to the next. No exact dates — this is a live document, not a promise.
     </p>
@@ -23,25 +23,25 @@ const stages = [
     <ol class="mt-10 space-y-6">
       {stages.map((stage, i) => (
         <li class="flex gap-4">
-          <span class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-slate-700 text-xs text-slate-400">
+          <span class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-line text-xs text-muted">
             {i + 1}
           </span>
           <div>
             <div class="flex items-center gap-3">
               <p class="font-medium">{stage.title}</p>
-              <span class="rounded-full border border-slate-700 px-2 py-0.5 text-xs text-slate-400">{stage.status}</span>
+              <span class="rounded-full border border-line px-2 py-0.5 text-xs text-muted">{stage.status}</span>
             </div>
-            <p class="mt-1 text-sm text-slate-400">{stage.desc}</p>
+            <p class="mt-1 text-sm text-muted">{stage.desc}</p>
           </div>
         </li>
       ))}
     </ol>
 
-    <p class="mt-12 text-sm text-slate-500">
+    <p class="mt-12 text-sm text-muted">
       SDKs: JavaScript is the only one that exists today.
-      <a href="https://github.com/portixhq/portixone/tree/master/sdk-dotnet" class="hover:text-slate-300">.NET</a>,
-      <a href="https://github.com/portixhq/portixone/tree/master/sdk-python" class="hover:text-slate-300">Python</a>, and
-      <a href="https://github.com/portixhq/portixone/tree/master/sdk-go" class="hover:text-slate-300">Go</a>
+      <a href="https://github.com/portixhq/portixone/tree/master/sdk-dotnet" class="hover:text-ink">.NET</a>,
+      <a href="https://github.com/portixhq/portixone/tree/master/sdk-python" class="hover:text-ink">Python</a>, and
+      <a href="https://github.com/portixhq/portixone/tree/master/sdk-go" class="hover:text-ink">Go</a>
       are placeholders in the monorepo, built once the JS SDK is validated with real usage.
     </p>
   </section>

@@ -17,19 +17,19 @@ const entries = [
 <BaseLayout title="Changelog">
   <section class="mx-auto max-w-3xl px-6 py-20">
     <h1 class="text-3xl font-bold">Changelog</h1>
-    <p class="mt-4 text-slate-300">Build logs, in the order they happened.</p>
+    <p class="mt-4 text-ink">Build logs, in the order they happened.</p>
 
     <div class="mt-10 space-y-12">
       {entries.map((entry) => (
-        <article class="border-l-2 border-slate-800 pl-6">
-          <p class="text-xs text-slate-500">{entry.date}</p>
+        <article class="border-l-2 border-line pl-6">
+          <p class="text-xs text-muted">{entry.date}</p>
           <h2 class="mt-1 text-lg font-semibold">PortixOne Build Log #{entry.number}</h2>
           <dl class="mt-4 space-y-2 text-sm">
-            <div><dt class="inline font-medium text-slate-300">Built: </dt><dd class="inline text-slate-400">{entry.built}</dd></div>
-            <div><dt class="inline font-medium text-slate-300">Learned: </dt><dd class="inline text-slate-400">{entry.learned}</dd></div>
-            <div><dt class="inline font-medium text-slate-300">Fixed: </dt><dd class="inline text-slate-400">{entry.fixed}</dd></div>
-            <div><dt class="inline font-medium text-slate-300">Next: </dt><dd class="inline text-slate-400">{entry.next}</dd></div>
-            <div><dt class="inline font-medium text-slate-300">Question for developers: </dt><dd class="inline text-slate-400">{entry.question}</dd></div>
+            <div><dt class="inline font-medium text-ink">Built: </dt><dd class="inline text-muted">{entry.built}</dd></div>
+            <div><dt class="inline font-medium text-ink">Learned: </dt><dd class="inline text-muted">{entry.learned}</dd></div>
+            <div><dt class="inline font-medium text-ink">Fixed: </dt><dd class="inline text-muted">{entry.fixed}</dd></div>
+            <div><dt class="inline font-medium text-ink">Next: </dt><dd class="inline text-muted">{entry.next}</dd></div>
+            <div><dt class="inline font-medium text-ink">Question for developers: </dt><dd class="inline text-muted">{entry.question}</dd></div>
           </dl>
         </article>
       ))}
