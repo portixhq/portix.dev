@@ -1,0 +1,29 @@
+---
+const rows = [
+  { label: 'Print dialog', browser: false, portix: true, portixLabel: 'Silent printing' },
+  { label: 'Works the same on mobile', browser: false, portix: true, portixLabel: 'Consistent behavior' },
+  { label: 'No driver installation', browser: false, portix: true, portixLabel: 'Handled by the runtime' },
+  { label: 'Consistent across browsers', browser: false, portix: true, portixLabel: 'One API, everywhere' },
+  { label: 'No user interaction required', browser: false, portix: true, portixLabel: 'Fully programmatic' },
+];
+---
+
+<div class="overflow-hidden rounded-md border border-line">
+  <div class="grid grid-cols-3 border-b border-line bg-surface text-[12px] font-semibold uppercase tracking-[0.1em] text-muted">
+    <div class="px-5 py-3">Capability</div>
+    <div class="px-5 py-3 text-center">Browser printing</div>
+    <div class="px-5 py-3 text-center text-ink">PortixOne</div>
+  </div>
+  {
+    rows.map((row, i) => (
+      <div class:list={['grid grid-cols-3 text-[13px]', i !== rows.length - 1 && 'border-b border-line']}>
+        <div class="px-5 py-4 text-ink">{row.label}</div>
+        <div class="flex items-center justify-center px-5 py-4 text-red-400">✕</div>
+        <div class="flex items-center justify-center gap-2 px-5 py-4 text-accent">
+          <span>✓</span>
+          <span class="hidden text-muted sm:inline">{row.portixLabel}</span>
+        </div>
+      </div>
+    ))
+  }
+</div>

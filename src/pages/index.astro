@@ -1,28 +1,26 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import WaitlistForm from '../components/WaitlistForm.astro';
+import JoinPreviewForm from '../components/JoinPreviewForm.astro';
 import TerminalInstall from '../components/TerminalInstall.astro';
 import NetworkDiagram from '../components/NetworkDiagram.astro';
 import CodeTabs from '../components/CodeTabs.astro';
 import ArchitectureDiagram from '../components/ArchitectureDiagram.astro';
+import ComparisonTable from '../components/ComparisonTable.astro';
+import CompatibilityGrid from '../components/CompatibilityGrid.astro';
+import OpenSourceLinks from '../components/OpenSourceLinks.astro';
+import DocsCards from '../components/DocsCards.astro';
+import PricingCards from '../components/PricingCards.astro';
+import StatusRoadmap from '../components/StatusRoadmap.astro';
 
 const features = [
-  {
-    title: 'One runtime',
-    desc: 'A single local process handles every device connection — no per-vendor bridges.',
-  },
-  {
-    title: 'One API',
-    desc: 'Call the same interface regardless of the hardware behind it.',
-  },
-  {
-    title: 'Every device',
-    desc: 'Printers, barcode scanners, scales, USB and serial peripherals — one model.',
-  },
-  {
-    title: 'Built for developers',
-    desc: 'Typed SDKs, explicit errors, no vendor lock-in.',
-  },
+  { title: 'Silent printing', desc: 'No browser print dialog — the job goes straight to the printer.' },
+  { title: 'Persistent queue', desc: 'Jobs survive a runtime restart; nothing gets lost mid-print.' },
+  { title: 'Printer discovery', desc: 'Finds Windows-registered and network printers automatically.' },
+  { title: 'Status events', desc: 'Subscribe to job lifecycle events over WebSocket in real time.' },
+  { title: 'Cross browser', desc: 'Same behavior in Chrome, Firefox, Edge, and Safari.' },
+  { title: 'Cross framework', desc: 'React, Vue, Angular, Next.js, Electron, or vanilla JS.' },
+  { title: 'Local runtime', desc: 'Runs on the machine, not a server — no cloud round-trip to print.' },
+  { title: 'Built for developers', desc: 'Typed SDK, explicit errors, no vendor lock-in.' },
 ];
 
 const sdks = [
@@ -34,29 +32,33 @@ const sdks = [
 ];
 
 const metrics = [
-  { value: '<5ms', label: 'Latency' },
-  { value: 'Cross-platform', label: 'Windows, macOS, Linux' },
   { value: 'Offline-first', label: 'No cloud round-trip to print' },
+  { value: 'Cross-platform', label: 'Windows today, macOS/Linux on the roadmap' },
   { value: 'Local runtime', label: 'Runs on the machine, not a server' },
   { value: 'Secure channel', label: 'API-key authenticated locally' },
 ];
 ---
 
-<BaseLayout title="The local infrastructure for web applications">
+<BaseLayout title="Print from any web app">
   <section class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-16 px-6 pb-24 pt-20 md:grid-cols-2 md:pt-28">
     <div>
-      <p class="mb-5 text-[12px] font-semibold uppercase tracking-[0.16em] text-muted">PortixOne</p>
+      <div class="mb-5 flex flex-wrap items-center gap-3">
+        <span class="rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-accent">
+          Developer Preview
+        </span>
+        <span class="text-[11px] text-muted">Early Access • Windows • ESC/POS</span>
+      </div>
       <h1 class="text-[44px] font-extrabold leading-[1.08] tracking-tight md:text-[52px]">
-        The local infrastructure<br />for web applications.
+        Print from any web app.
       </h1>
-      <p class="mt-6 text-xl font-semibold text-accent2">One API. Every device.</p>
+      <p class="mt-6 text-xl font-semibold text-accent2">No browser dialogs. No native code. Just one API.</p>
 
       <div class="mt-9 max-w-md">
-        <TerminalInstall command="npm install @portixone/sdk-js" />
+        <TerminalInstall command="npm install @portixone/sdk" />
       </div>
 
       <div class="mt-7 flex flex-wrap gap-3">
-        <a href="#waitlist" class="rounded-md bg-accent px-6 py-3 text-[14px] font-semibold text-[#00202A] hover:opacity-90">
+        <a href="#join" class="rounded-md bg-accent px-6 py-3 text-[14px] font-semibold text-[#00202A] hover:opacity-90">
           Get started
         </a>
         <a href="/docs" class="rounded-md border border-line px-6 py-3 text-[14px] font-semibold hover:border-white/20">
@@ -80,6 +82,13 @@ const metrics = [
   </section>
 
   <section class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <p class="mb-10 text-center text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">How it works</p>
+      <ArchitectureDiagram />
+    </div>
+  </section>
+
+  <section class="border-t border-line">
     <div class="mx-auto grid max-w-6xl grid-cols-1 gap-14 px-6 py-20 md:grid-cols-[1.3fr_1fr]">
       <CodeTabs />
       <div class="flex flex-col justify-center">
@@ -94,8 +103,15 @@ const metrics = [
 
   <section class="border-t border-line">
     <div class="mx-auto max-w-6xl px-6 py-20">
-      <p class="mb-10 text-center text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Architecture</p>
-      <ArchitectureDiagram />
+      <p class="mb-8 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Browser printing vs. PortixOne</p>
+      <ComparisonTable />
+    </div>
+  </section>
+
+  <section class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <p class="mb-8 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Compatibility</p>
+      <CompatibilityGrid />
     </div>
   </section>
 
@@ -115,7 +131,7 @@ const metrics = [
 
   <section class="border-t border-line">
     <div class="mx-auto max-w-6xl px-6 py-20">
-      <div class="grid grid-cols-2 gap-6 text-center sm:grid-cols-5">
+      <div class="grid grid-cols-2 gap-6 text-center sm:grid-cols-4">
         {metrics.map((m) => (
           <div>
             <p class="font-mono text-2xl font-bold text-accent">{m.value}</p>
@@ -126,12 +142,45 @@ const metrics = [
     </div>
   </section>
 
-  <section id="waitlist" class="border-t border-line">
+  <section class="border-t border-line">
     <div class="mx-auto max-w-6xl px-6 py-20">
-      <p class="mb-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Private beta</p>
-      <h2 class="text-2xl font-semibold">10 developer spots. No sales pitch — just early access and direct feedback.</h2>
-      <div class="mt-8 max-w-lg">
-        <WaitlistForm />
+      <p class="mb-8 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Open source</p>
+      <OpenSourceLinks />
+    </div>
+  </section>
+
+  <section class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <p class="mb-8 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Documentation</p>
+      <DocsCards />
+    </div>
+  </section>
+
+  <section class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <p class="mb-3 text-center text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Pricing</p>
+      <h2 class="text-center text-2xl font-semibold">The SDK stays free. Pricing kicks in once PortixOne is already part of your workflow.</h2>
+      <div class="mt-10">
+        <PricingCards />
+      </div>
+    </div>
+  </section>
+
+  <section id="join" class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <p class="mb-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Developer Preview</p>
+      <h2 class="text-2xl font-semibold">Tell us about your use case — we'll reach out directly, no sales pitch.</h2>
+      <div class="mt-8 max-w-xl">
+        <JoinPreviewForm />
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <p class="mb-8 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Current status</p>
+      <div class="max-w-md">
+        <StatusRoadmap />
       </div>
     </div>
   </section>

@@ -1,0 +1,28 @@
+---
+const items = [
+  { label: 'Windows', status: 'available' },
+  { label: 'ESC/POS', status: 'available' },
+  { label: 'USB', status: 'available' },
+  { label: 'Network (TCP)', status: 'available' },
+  { label: 'Bluetooth', status: 'soon' },
+  { label: 'Linux', status: 'roadmap' },
+  { label: 'macOS', status: 'roadmap' },
+];
+
+const statusLabel: Record<string, string> = {
+  available: 'Available',
+  soon: 'Coming soon',
+  roadmap: 'Roadmap',
+};
+---
+
+<div class="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
+  {
+    items.map((item) => (
+      <div class:list={['rounded-md border border-line bg-surface p-4 text-center', item.status !== 'available' && 'opacity-60']}>
+        <p class="font-mono text-[13px] text-ink">{item.label}</p>
+        <p class="mt-1 text-[11px] text-muted">{statusLabel[item.status]}</p>
+      </div>
+    ))
+  }
+</div>

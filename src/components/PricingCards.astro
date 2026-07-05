@@ -1,0 +1,65 @@
+---
+const plans = [
+  {
+    name: 'Free',
+    tagline: 'Developer Preview',
+    price: '$0',
+    features: ['SDK', '1 Runtime', '1 Printer', 'Unlimited development use', 'Community support'],
+    cta: 'Join Preview',
+    href: '#join',
+    highlight: true,
+  },
+  {
+    name: 'Pro',
+    tagline: 'Coming Soon',
+    price: '$19–29/mo',
+    features: ['Unlimited printers', 'Auto-updates', 'Logs & monitoring', 'Remote pairing', 'Priority support'],
+    cta: 'Notify Me',
+    href: '#join',
+    highlight: false,
+  },
+  {
+    name: 'Business',
+    tagline: 'Contact Us',
+    price: 'Custom',
+    features: ['Multi-tenant', 'Fleet management', 'Cloud dashboard', 'Teams & SSO', 'SLA'],
+    cta: "Let's Talk",
+    href: 'mailto:hello@portix.dev?subject=PortixOne%20Business',
+    highlight: false,
+  },
+];
+---
+
+<div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+  {
+    plans.map((plan) => (
+      <div
+        class:list={[
+          'flex flex-col rounded-md border p-6',
+          plan.highlight ? 'border-accent bg-surface' : 'border-line bg-surface',
+        ]}
+      >
+        <p class="text-[13px] font-semibold uppercase tracking-[0.1em] text-muted">{plan.name}</p>
+        <p class="mt-1 text-[13px] text-accent2">{plan.tagline}</p>
+        <p class="mt-4 font-mono text-2xl font-bold text-ink">{plan.price}</p>
+        <ul class="mt-5 flex-1 space-y-2 text-[13px] text-muted">
+          {plan.features.map((f) => (
+            <li class="flex gap-2">
+              <span class="text-accent">✓</span>
+              <span>{f}</span>
+            </li>
+          ))}
+        </ul>
+        <a
+          href={plan.href}
+          class:list={[
+            'mt-6 rounded-md px-5 py-2.5 text-center text-[13px] font-semibold',
+            plan.highlight ? 'bg-accent text-[#00202A] hover:opacity-90' : 'border border-line hover:border-white/20',
+          ]}
+        >
+          {plan.cta}
+        </a>
+      </div>
+    ))
+  }
+</div>

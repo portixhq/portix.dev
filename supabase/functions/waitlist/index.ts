@@ -22,6 +22,11 @@ function jsonResponse(body: unknown, status = 200): Response {
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+function optionalText(value: unknown): string | undefined {
+  const trimmed = String(value ?? '').trim();
+  return trimmed.length > 0 ? trimmed : undefined;
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: CORS_HEADERS });
@@ -32,9 +37,21 @@ Deno.serve(async (req) => {
   }
 
   let email: string;
+  let name: string | undefined;
+  let github: string | undefined;
+  let company: string | undefined;
+  let framework: string | undefined;
+  let printer: string | undefined;
+  let useCase: string | undefined;
   try {
     const body = await req.json();
     email = String(body.email ?? '').trim().toLowerCase();
+    name = optionalText(body.name);
+    github = optionalText(body.github);
+    company = optionalText(body.company);
+    framework = optionalText(body.framework);
+    printer = optionalText(body.printer);
+    useCase = optionalText(body.useCase);
   } catch {
     return jsonResponse({ message: 'Invalid JSON body' }, 400);
   }
@@ -48,7 +65,9 @@ Deno.serve(async (req) => {
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
   );
 
-  const { error: insertError } = await supabase.from('waitlist').insert({ email });
+  const { error: insertError } = await supabase
+    .from('waitlist')
+    .insert({ email, name, github, company, framework, printer, use_case: useCase });
 
   if (insertError) {
     // Unique constraint violation = already signed up. Treat as success so
@@ -70,7 +89,7 @@ Deno.serve(async (req) => {
           body: JSON.stringify({
             from: 'PortixOne <hello@portix.dev>',
             to: email,
-            subject: "You're on the PortixOne private beta list",
+            subject: "You're on the PortixOne Developer Preview list",
             text: "Thanks for joining! We'll reach out directly to set up your integration — no spam, just a real conversation about your printing use case.",
           }),
         });
