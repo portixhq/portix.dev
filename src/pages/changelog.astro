@@ -11,6 +11,33 @@ const entries = [
     next: 'Connect this site\'s waitlist to a real Supabase project + Resend, then start Week 1 of the learning/content cycle (browser printing limitations write-up).',
     question: 'What\'s the first real print job you\'ve had to hand-roll a bridge for?',
   },
+  {
+    number: 2,
+    date: '2026-07-03',
+    built: 'Milestone 2 — Developer Zero: @portixone/sdk published on the public npm registry, a mock mode that renders a receipt preview with zero hardware, and a Windows Service + tray + Inno Setup installer verified end-to-end.',
+    learned: 'Reinstalling over a running tray stacked duplicate processes, and a process-kill script matched and killed itself mid-run — both only surfaced by actually testing reinstall/uninstall, not by reading the installer script.',
+    fixed: 'Print-cut timing (the cutter fired before paper cleared the head) and the runtime silently ignoring .env in favor of a stale persisted config.',
+    next: 'Build the Local API: per-app pairing instead of one shared admin key, and a queue that survives a runtime restart.',
+    question: 'What almost-invisible bug has only ever shown up for you during a real reinstall, not a fresh install?',
+  },
+  {
+    number: 3,
+    date: '2026-07-05',
+    built: 'Milestone 3 — Local API, pairing, and a persisted queue: per-app pairing (request/approve/poll), a queue rewritten as service/store/worker with crash recovery, LAN printer discovery, and human-readable hardware errors (PrinterOfflineError, PaperOutError, PrinterTimeoutError...) instead of raw exceptions.',
+    learned: 'A generic connection error tells a developer nothing actionable — naming the exact failure (paper out vs. offline vs. busy) is the difference between a support ticket and a five-second fix on their own.',
+    fixed: 'An unbounded PowerShell call in the Windows Spooler driver that could hang a print job forever if the spooler service itself hung.',
+    next: 'Measure instead of build: real print latency, pairing duration, and failure rates from a live runtime.',
+    question: 'What error message from a piece of hardware infrastructure has wasted the most of your debugging time?',
+  },
+  {
+    number: 4,
+    date: '2026-07-05',
+    built: 'Milestone 4 — Productization: GET /metrics (pairing duration, print latency, failures, WebSocket disconnects), a 1000-job stress test, Node.js embedded in the installer so it has zero prerequisites, a portable no-admin build, and @portixone/sdk@0.3.0/protocol@0.2.0/shared@0.2.0 republished with the full API. This site\'s own landing was rebuilt around an honest "Developer Preview" positioning to match.',
+    learned: 'Naming a metric after what it actually measures — not what it is supposed to measure eventually — is what makes a metrics panel trustworthy. Our WebSocket counter is named totalDisconnects, not reconnectCount, because reconnect-on-drop isn\'t built yet: every value in it today is a disconnect nothing recovered from automatically.',
+    fixed: 'npm does not include CHANGELOG.md in a published package by default (only package.json/README/LICENSE) — caught before three packages shipped without theirs.',
+    next: 'A genuinely clean-machine install test (no Node.js, no dev tools) and real usage of PortixOne inside a production app, not a demo.',
+    question: 'Have you ever shipped a metric whose name quietly overclaimed what it measured?',
+  },
 ];
 ---
 
