@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const errors = [
+  { code: 'INVALID_API_KEY', status: 401, meaning: "The x-portix-api-key header didn't match the runtime's admin key or a valid paired token.", fix: 'Check PORTIX_LOCAL_API_KEY on the runtime, or re-run pair() if the token expired.' },
+  { code: 'PRINTER_NOT_FOUND', status: 404, meaning: 'No printer with that exact name is known to the runtime.', fix: 'Call listPrinters() and use one of the returned names verbatim.' },
+  { code: 'INVALID_PRINT_JOB', status: 400, meaning: "The print job body didn't match the expected shape.", fix: 'content is required; printerName and copies are optional.' },
+  { code: 'INVALID_REQUEST', status: 400, meaning: 'A required field was missing from the request body.', fix: 'Check the endpoint in the Runtime API reference for its required fields.' },
+  { code: 'JOB_NOT_FOUND', status: 404, meaning: "No job with that ID, or it isn't visible to this caller.", fix: 'Paired apps only see their own jobs — use the admin key to see everything.' },
+  { code: 'PAIRING_NOT_FOUND', status: 404, meaning: 'The pairing code is wrong, already used, or expired.', fix: 'Call pair() again to get a fresh code.' },
+  { code: 'UNTRUSTED_ORIGIN', status: 403, meaning: "The request's Origin header doesn't match the one pinned to this pairing at approval time.", fix: "Pair again from the app's real origin." },
+  { code: 'PERMISSION_DENIED', status: 403, meaning: 'This paired app is not authorized for the capability it tried to use.', fix: 'Only print exists as a permission today — check the pairing approval.' },
+  { code: 'JOB_NOT_CANCELLABLE', status: 409, meaning: "The job is already printing, completed, failed, or cancelled.", fix: "cancel() only works on jobs still pending." },
+  { code: 'PRINTER_BUSY', status: 409, meaning: 'The printer is already processing another job.', fix: 'Retry shortly — the queue will pick it up.' },
+  { code: 'PRINTER_OFFLINE', status: 503, meaning: 'The printer is unreachable.', fix: 'Check power, USB/network cable, and that Windows lists it as online.' },
+  { code: 'PAPER_OUT', status: 503, meaning: 'The printer reported it has no paper.', fix: 'Reload paper and print again — nothing is lost, the job stays queued.' },
+  { code: 'CONNECTION_LOST', status: 503, meaning: 'The connection dropped mid-job — e.g. USB unplugged while printing.', fix: 'Reconnect the printer and retry.' },
+  { code: 'PRINTER_TIMEOUT', status: 503, meaning: "The printer didn't respond in time.", fix: "Check it's powered on and reachable — this is the usual sign of a wrong IP for network printers." },
+  { code: 'PRINTER_NOT_READY', status: 503, meaning: 'The printer reported a real, non-offline problem — paper jam, open door, low toner.', fix: 'Check the printer itself; the message includes the raw reason.' },
+  { code: 'INVALID_DRIVER_CONFIG', status: 503, meaning: "The runtime's printer driver isn't fully configured.", fix: 'e.g. PORTIX_NETWORK_PRINTER_HOST is required when PORTIX_PRINTER_DRIVER=network.' },
+  { code: 'PRINTER_CONNECTION_FAILED', status: 503, meaning: 'A generic connection failure not covered by a more specific code above.', fix: 'Check the printer and the runtime logs for detail.' },
+];
+
+const faqs = [
+  { q: 'Do I need a physical printer to try this?', a: 'No. Pass { mode: "mock" } to new Portix() and every method works identically — print() renders a text preview instead of sending it anywhere.' },
+  { q: 'What platforms does the Runtime run on?', a: 'Windows today. Linux and macOS are on the roadmap, built once Windows is validated with real usage.' },
+  { q: 'What printers are supported?', a: 'Any ESC/POS thermal printer — over USB via a Windows printer driver, or over network (TCP/9100, the de facto standard on Epson, Xprinter, and most others). See the compatibility grid on the homepage.' },
+  { q: 'Is the SDK free?', a: 'Yes, always — the SDK stays free and open. Pricing only applies to Runtime administration features (multiple printers, auto-updates, monitoring). See /#join for the current plans.' },
+  { q: "Do I need pairing, or can I just use the admin key?", a: "The admin key is fine for a single app you control. Pairing exists for multi-tenant products (like Kubia) where each installation should get its own scoped token instead of sharing one key across every customer." },
+  { q: 'Why is websocket.totalDisconnects high even though nothing seems broken?', a: "That counter measures exactly what its name says — disconnects, not failed reconnections — because the SDK doesn't implement reconnect-on-drop yet. Every value in it is a disconnect the SDK didn't automatically recover from; a page refresh or network blip both count." },
+  { q: 'Is PortixOne open source?', a: 'Yes, MIT-licensed — the Runtime, SDK, and every device driver. See github.com/portixhq/portixone for what\'s open vs. the closed Cloud Platform.' },
+];
+---
+
+<BaseLayout title="FAQ & Troubleshooting">
+  <section class="mx-auto max-w-3xl px-6 py-20">
+    <p class="text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Docs</p>
+    <h1 class="mt-2 text-3xl font-bold">FAQ & Troubleshooting</h1>
+
+    <h2 class="mt-10 text-lg font-semibold">Frequently asked</h2>
+    <div class="mt-6 space-y-6">
+      {faqs.map((item) => (
+        <div>
+          <p class="font-medium text-ink">{item.q}</p>
+          <p class="mt-1 text-[14px] leading-relaxed text-muted">{item.a}</p>
+        </div>
+      ))}
+    </div>
+
+    <h2 class="mt-14 text-lg font-semibold">Error codes</h2>
+    <p class="mt-4 text-[14px] text-muted">
+      Every failed request is <code class="font-mono text-ink">{'{ error: CODE, message }'}</code>. What each one means, and what to do about it:
+    </p>
+    <div class="mt-6 overflow-x-auto rounded-md border border-line">
+      <table class="w-full text-left text-[13px]">
+        <thead class="border-b border-line bg-surface text-muted">
+          <tr>
+            <th class="px-4 py-2 font-medium">Code</th>
+            <th class="px-4 py-2 font-medium">HTTP</th>
+            <th class="px-4 py-2 font-medium">Meaning</th>
+            <th class="px-4 py-2 font-medium">Fix</th>
+          </tr>
+        </thead>
+        <tbody>
+          {errors.map((e) => (
+            <tr class="border-b border-line last:border-0 align-top">
+              <td class="px-4 py-3 font-mono text-accent2">{e.code}</td>
+              <td class="px-4 py-3 font-mono text-muted">{e.status}</td>
+              <td class="px-4 py-3 text-muted">{e.meaning}</td>
+              <td class="px-4 py-3 text-muted">{e.fix}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <p class="mt-10 text-sm text-muted">
+      Still stuck? <a href="https://github.com/portixhq/portixone/issues" class="text-accent hover:underline">Open an issue</a> with
+      what you tried and the exact error — that's the fastest path to a fix or a docs update.
+    </p>
+  </section>
+</BaseLayout>
