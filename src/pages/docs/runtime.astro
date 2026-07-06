@@ -9,10 +9,11 @@ const endpoints = [
   { method: 'GET', path: '/printers/:name', auth: 'API key', desc: 'One printer by name. 404 if not found.' },
   { method: 'GET', path: '/jobs', auth: 'API key', desc: "Jobs visible to this caller — all of them for the admin key, only the caller's own once paired." },
   { method: 'POST', path: '/jobs/:id/cancel', auth: 'API key', desc: "Cancels a job that hasn't started printing." },
-  { method: 'POST', path: '/pairing/request', auth: 'None', desc: 'Body: { tenant, appId }. Returns { code, expiresAt }.' },
+  { method: 'POST', path: '/pairing/request', auth: 'None', desc: 'Body: { tenant, appId }. Returns { code, expiresAt }. Auto-approved with no human involved if the Origin is localhost or a private-network address.' },
   { method: 'GET', path: '/pairing/status?code=...', auth: 'None', desc: 'Poll target for pair() — { status, token?, deviceId?, permissions? }.' },
   { method: 'POST', path: '/pairing/approve', auth: 'Admin key', desc: 'Approves a pending pairing code — normally driven by a human, not the SDK.' },
-  { method: 'GET', path: '/pairings', auth: 'Admin key', desc: 'Every approved pairing on this runtime.' },
+  { method: 'GET', path: '/pairings', auth: 'Admin key', desc: 'Every approved pairing, with lastUsedAt and recentJobCount per app.' },
+  { method: 'DELETE', path: '/pairings/:deviceId', auth: 'Admin key', desc: "Revokes an app's access immediately — its token stops working on the next request." },
   { method: 'GET', path: '/pairing/pending', auth: 'Admin key', desc: 'Pairing codes awaiting approval.' },
   { method: 'GET', path: '/metrics', auth: 'Admin key', desc: 'RuntimeMetrics — see below.' },
 ];
