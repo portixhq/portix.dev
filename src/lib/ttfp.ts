@@ -1,34 +1,42 @@
 // Shared "Time To First Print" progress tracker for the landing page.
-// Approximate by design — the point is a visitor always feels "I'm progressing,"
-// never "I'm reading documentation." See ROADMAP.md Fase 8.
+// Every stage after "landed" is tied to a real, observable action — the last
+// two (paired, printed) are real signals from runtime-client.ts, not
+// simulated clicks. The bar can never claim 100% unless a real print happened.
 
-export type MilestoneKey =
-  | 'sdkSelected'
-  | 'printerSelected'
-  | 'sampleGenerated'
-  | 'runtimeDownloaded'
-  | 'playgroundPrinted';
+export type StageKey =
+  | 'landed'
+  | 'sawHowItWorks'
+  | 'selectedUseCase'
+  | 'generatedSnippet'
+  | 'downloadedRuntime'
+  | 'pairedBrowser'
+  | 'printed';
 
-interface MilestoneDef {
-  key: MilestoneKey;
-  weight: number;
+interface Stage {
+  key: StageKey;
+  percent: number;
+  label: string;
 }
 
-const STORAGE_KEY = 'portix_ttfp_v1';
-const BASE_SECONDS = 300; // "under 5 minutes"
-const FLOOR_PERCENT = 8; // never show 0% — always mid-journey
-
-const MILESTONES: MilestoneDef[] = [
-  { key: 'sdkSelected', weight: 15 },
-  { key: 'printerSelected', weight: 10 },
-  { key: 'sampleGenerated', weight: 15 },
-  { key: 'runtimeDownloaded', weight: 30 },
-  { key: 'playgroundPrinted', weight: 30 },
+export const STAGES: Stage[] = [
+  { key: 'landed', percent: 0, label: 'Landed on the page' },
+  { key: 'sawHowItWorks', percent: 15, label: 'Saw how it works' },
+  { key: 'selectedUseCase', percent: 30, label: 'Selected your use case' },
+  { key: 'generatedSnippet', percent: 45, label: 'Generated your integration' },
+  { key: 'downloadedRuntime', percent: 60, label: 'Downloaded the Runtime' },
+  { key: 'pairedBrowser', percent: 80, label: 'Paired your browser' },
+  { key: 'printed', percent: 100, label: 'First print completed' },
 ];
+
+/** Checklist-facing stages — "landed" is the implicit baseline, not a checkbox. */
+export const CHECKLIST_STAGES = STAGES.filter((s) => s.key !== 'landed');
+
+const STORAGE_KEY = 'portix_ttfp_v2';
+const BASE_SECONDS = 300; // "under 5 minutes"
 
 export const UPDATE_EVENT = 'portix:ttfp:update';
 
-type State = Partial<Record<MilestoneKey, boolean>>;
+type State = Partial<Record<StageKey, boolean>>;
 
 function readState(): State {
   if (typeof localStorage === 'undefined') return {};
@@ -44,14 +52,16 @@ function writeState(state: State) {
 }
 
 export function getState(): State {
-  return readState();
+  const state = readState();
+  state.landed = true;
+  return state;
 }
 
-export function isDone(key: MilestoneKey): boolean {
-  return Boolean(readState()[key]);
+export function isDone(key: StageKey): boolean {
+  return key === 'landed' || Boolean(readState()[key]);
 }
 
-export function markMilestone(key: MilestoneKey) {
+export function markStage(key: StageKey) {
   const state = readState();
   if (state[key]) return;
   state[key] = true;
@@ -59,15 +69,21 @@ export function markMilestone(key: MilestoneKey) {
   window.dispatchEvent(new CustomEvent(UPDATE_EVENT, { detail: { key } }));
 }
 
+/** The displayed progress is the highest percent among reached stages — 100 only ever appears via `printed`. */
 export function getProgress(): number {
-  const state = readState();
-  const earned = MILESTONES.reduce((sum, m) => sum + (state[m.key] ? m.weight : 0), 0);
-  return Math.max(FLOOR_PERCENT, Math.min(100, earned + FLOOR_PERCENT * (earned === 0 ? 1 : 0.4)));
+  const state = getState();
+  const reached = STAGES.filter((s) => state[s.key]).map((s) => s.percent);
+  return Math.max(0, ...reached);
+}
+
+export function getCurrentStage(): Stage {
+  const percent = getProgress();
+  return [...STAGES].reverse().find((s) => s.percent <= percent) ?? STAGES[0];
 }
 
 export function getEtaLabel(): string {
   const progress = getProgress();
-  if (progress >= 100) return 'Ready to print';
+  if (progress >= 100) return 'Printed';
   const remaining = Math.max(15, Math.round(BASE_SECONDS * (1 - progress / 100)));
   const m = Math.floor(remaining / 60);
   const s = remaining % 60;

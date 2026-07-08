@@ -112,3 +112,11 @@ await portix.print({
     });
   });
 </script>
+
+<script>
+  import { markStage } from '../lib/ttfp';
+
+  document.querySelectorAll<HTMLButtonElement>('.case-btn').forEach((btn) => {
+    btn.addEventListener('click', () => markStage('selectedUseCase'), { once: true });
+  });
+</script>

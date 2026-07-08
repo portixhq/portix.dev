@@ -2,20 +2,15 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TerminalInstall from '../components/TerminalInstall.astro';
 import TTFPBar from '../components/TTFPBar.astro';
-import StuckHereDiagram from '../components/StuckHereDiagram.astro';
+import HeroFlow from '../components/HeroFlow.astro';
 import SmartDefaults from '../components/SmartDefaults.astro';
 import Playground from '../components/Playground.astro';
 import SnippetWizard from '../components/SnippetWizard.astro';
-import ReadyChecklist from '../components/ReadyChecklist.astro';
-import InstallChecklist from '../components/InstallChecklist.astro';
+import TTFPChecklist from '../components/TTFPChecklist.astro';
 import CostOfProblem from '../components/CostOfProblem.astro';
 import LossAversion from '../components/LossAversion.astro';
-import ComparisonTable from '../components/ComparisonTable.astro';
-import CompatibilityGrid from '../components/CompatibilityGrid.astro';
-import OpenSourceLinks from '../components/OpenSourceLinks.astro';
 import DocsCards from '../components/DocsCards.astro';
 import PricingCards from '../components/PricingCards.astro';
-import StatusRoadmap from '../components/StatusRoadmap.astro';
 import JoinPreviewForm from '../components/JoinPreviewForm.astro';
 
 const badges = ['Windows Ready', 'Local Runtime', 'Secure Pairing', 'Thermal Printers', 'ESC/POS', 'REST', 'WebSocket'];
@@ -23,7 +18,7 @@ const badges = ['Windows Ready', 'Local Runtime', 'Secure Pairing', 'Thermal Pri
 
 <BaseLayout title="Print from any web app">
   <!-- Hero -->
-  <section class="mx-auto max-w-3xl px-6 pb-20 pt-20 text-center md:pt-28">
+  <section class="mx-auto max-w-3xl px-6 pb-16 pt-20 text-center md:pt-28">
     <div class="mb-5 flex flex-wrap items-center justify-center gap-3">
       <span class="rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-accent">
         Developer Preview
@@ -51,7 +46,11 @@ const badges = ['Windows Ready', 'Local Runtime', 'Secure Pairing', 'Thermal Pri
       ))}
     </div>
 
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+    <div class="mt-10">
+      <HeroFlow />
+    </div>
+
+    <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
       <a href="#playground" class="rounded-md bg-accent px-6 py-3 text-[14px] font-semibold text-[#00202A] hover:opacity-90">
         Start printing in under 5 minutes
       </a>
@@ -61,11 +60,12 @@ const badges = ['Windows Ready', 'Local Runtime', 'Secure Pairing', 'Thermal Pri
     </div>
   </section>
 
-  <!-- Most developers get stuck here -->
-  <section class="border-t border-line">
-    <div class="mx-auto max-w-6xl px-6 py-20">
-      <p class="mb-10 text-center text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Most developers get stuck here</p>
-      <StuckHereDiagram />
+  <!-- Playground — the centerpiece, not a section among sections -->
+  <section id="playground" class="border-t border-line bg-surface/40">
+    <div class="mx-auto max-w-6xl px-6 py-24">
+      <p class="mb-3 text-center text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">This is the product</p>
+      <h2 class="mb-14 text-center text-2xl font-semibold">Not a screenshot. Try it right now.</h2>
+      <Playground />
     </div>
   </section>
 
@@ -74,13 +74,6 @@ const badges = ['Windows Ready', 'Local Runtime', 'Secure Pairing', 'Thermal Pri
     <div class="mx-auto max-w-6xl px-6 py-20">
       <p class="mb-10 text-center text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Pick your use case</p>
       <SmartDefaults />
-    </div>
-  </section>
-
-  <!-- Playground -->
-  <section id="playground" class="border-t border-line">
-    <div class="mx-auto max-w-6xl px-6 py-20">
-      <Playground />
     </div>
   </section>
 
@@ -93,32 +86,10 @@ const badges = ['Windows Ready', 'Local Runtime', 'Secure Pairing', 'Thermal Pri
     </div>
   </section>
 
-  <!-- Ready checklist -->
-  <section class="border-t border-line">
-    <div class="mx-auto max-w-6xl px-6 py-16">
-      <ReadyChecklist />
-    </div>
-  </section>
-
-  <!-- Install checklist with ETA -->
+  <!-- Shared TTFP checklist -->
   <section class="border-t border-line">
     <div class="mx-auto max-w-6xl px-6 py-20">
-      <InstallChecklist />
-    </div>
-  </section>
-
-  <!-- Comparison + Compatibility -->
-  <section class="border-t border-line">
-    <div class="mx-auto max-w-6xl px-6 py-20">
-      <p class="mb-8 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Browser printing vs. PortixOne</p>
-      <ComparisonTable />
-    </div>
-  </section>
-
-  <section class="border-t border-line">
-    <div class="mx-auto max-w-6xl px-6 py-20">
-      <p class="mb-8 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Compatibility</p>
-      <CompatibilityGrid />
+      <TTFPChecklist />
     </div>
   </section>
 
@@ -143,14 +114,6 @@ const badges = ['Windows Ready', 'Local Runtime', 'Secure Pairing', 'Thermal Pri
     </div>
   </section>
 
-  <!-- Open source -->
-  <section class="border-t border-line">
-    <div class="mx-auto max-w-6xl px-6 py-20">
-      <p class="mb-8 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Open source</p>
-      <OpenSourceLinks />
-    </div>
-  </section>
-
   <!-- Documentation -->
   <section class="border-t border-line">
     <div class="mx-auto max-w-6xl px-6 py-20">
@@ -160,22 +123,12 @@ const badges = ['Windows Ready', 'Local Runtime', 'Secure Pairing', 'Thermal Pri
   </section>
 
   <!-- Join -->
-  <section id="join" class="border-t border-line">
+  <section id="join" class="border-t border-line pb-16">
     <div class="mx-auto max-w-6xl px-6 py-20">
       <p class="mb-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Developer Preview</p>
       <h2 class="text-2xl font-semibold">Tell us about your use case — we'll reach out directly, no sales pitch.</h2>
       <div class="mt-8 max-w-xl">
         <JoinPreviewForm />
-      </div>
-    </div>
-  </section>
-
-  <!-- Status -->
-  <section class="border-t border-line pb-16">
-    <div class="mx-auto max-w-6xl px-6 py-20">
-      <p class="mb-8 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Current status</p>
-      <div class="max-w-md">
-        <StatusRoadmap />
       </div>
     </div>
   </section>

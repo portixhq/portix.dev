@@ -6,9 +6,9 @@ const items = [
 const total = items.reduce((sum, i) => sum + i.price, 0);
 ---
 
-<div class="mx-auto grid max-w-3xl grid-cols-1 items-center gap-10 md:grid-cols-2">
+<div class="mx-auto grid max-w-4xl grid-cols-1 items-center gap-12 md:grid-cols-2">
   <div class="flex justify-center">
-    <div class="playground-receipt w-56 rounded-sm bg-white px-5 py-6 font-mono text-[12px] text-[#111] shadow-[0_20px_60px_-15px_rgba(0,200,255,0.25)] transition-transform duration-500">
+    <div class="playground-receipt w-60 rounded-sm bg-white px-6 py-7 font-mono text-[12px] text-[#111] shadow-[0_30px_80px_-15px_rgba(0,200,255,0.3)] transition-transform duration-500">
       <p class="text-center text-[13px] font-bold tracking-widest">PORTIX.ONE</p>
       <p class="mb-3 text-center text-[10px] text-[#666]">Playground Receipt</p>
       <div class="border-t border-dashed border-[#999] pt-2">
@@ -23,53 +23,126 @@ const total = items.reduce((sum, i) => sum + i.price, 0);
         <span>TOTAL</span>
         <span>${total.toFixed(2)}</span>
       </div>
-      <p class="mt-4 text-center text-[9px] text-[#999]">thank you — try it for real ↓</p>
+      <p class="mt-4 text-center text-[9px] text-[#999]">this is the only button that matters ↓</p>
     </div>
   </div>
 
   <div class="flex flex-col items-start">
     <p class="mb-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Zero install</p>
-    <h3 class="text-xl font-semibold leading-snug">See it print before you install anything.</h3>
+    <h3 class="text-2xl font-semibold leading-snug">Hit print. We'll show you exactly what happens.</h3>
     <p class="mt-3 text-[14px] leading-relaxed text-muted">
-      Hit print. We'll simulate the exact flow your users get — then show you the one thing standing between this and a
-      real receipt.
+      This isn't a mockup — it really looks for a PortixOne Runtime on your machine. If it finds one, this prints for
+      real. If not, we'll show you the one thing standing in the way.
     </p>
 
     <button
       type="button"
-      class="playground-print-btn mt-6 rounded-md bg-accent px-6 py-3 text-[14px] font-semibold text-[#00202A] hover:opacity-90"
+      class="playground-print-btn mt-6 rounded-md bg-accent px-7 py-3.5 text-[15px] font-semibold text-[#00202A] hover:opacity-90"
     >
       Print
     </button>
 
-    <div class="playground-status mt-4 min-h-[3.5rem] text-[13px] leading-relaxed text-muted"></div>
+    <div class="playground-console mt-5 w-full rounded-md border border-line bg-bg p-4 font-mono text-[12px] leading-6 text-muted">
+      <p class="console-line text-muted/60">$ waiting for you to hit print…</p>
+    </div>
+
+    <div class="playground-outcome mt-4 min-h-[2rem] text-[13px] leading-relaxed"></div>
   </div>
 </div>
 
 <script>
-  import { markMilestone } from '../lib/ttfp';
+  import { markStage } from '../lib/ttfp';
+  import { detectRuntime, requestPairing, waitForApproval, realPrint, PairingExpiredError } from '../lib/runtime-client';
 
   const btn = document.querySelector<HTMLButtonElement>('.playground-print-btn');
   const receipt = document.querySelector<HTMLElement>('.playground-receipt');
-  const status = document.querySelector<HTMLElement>('.playground-status');
+  const consoleEl = document.querySelector<HTMLElement>('.playground-console');
+  const outcome = document.querySelector<HTMLElement>('.playground-outcome');
 
-  btn?.addEventListener('click', () => {
-    if (!receipt || !status || btn.disabled) return;
-    btn.disabled = true;
-    btn.textContent = 'Printing…';
+  function log(line: string): Promise<void> {
+    return new Promise((resolve) => {
+      const p = document.createElement('p');
+      p.className = 'console-line';
+      p.textContent = `$ ${line}`;
+      consoleEl?.appendChild(p);
+      if (consoleEl) consoleEl.scrollTop = consoleEl.scrollHeight;
+      setTimeout(resolve, 450);
+    });
+  }
 
+  function resetConsole() {
+    if (consoleEl) consoleEl.innerHTML = '';
+  }
+
+  function bump() {
+    if (!receipt) return;
     receipt.style.transform = 'translateY(6px) scale(0.98)';
-    status.innerHTML = '<span class="text-accent">●</span> Sending job to a printer…';
-
     setTimeout(() => {
       receipt.style.transform = 'translateY(0) scale(1)';
-      status.innerHTML = `
-        <span class="text-accent2">Runtime not detected on this device.</span><br />
-        That's the only missing piece — install it once, and this exact call prints for real.
-      `;
+    }, 300);
+  }
+
+  btn?.addEventListener('click', async () => {
+    if (btn.disabled) return;
+    btn.disabled = true;
+    btn.textContent = 'Working…';
+    if (outcome) outcome.innerHTML = '';
+    resetConsole();
+    bump();
+
+    await log('Generating ticket…');
+    await log('Looking for a PortixOne Runtime at 127.0.0.1:17321…');
+
+    const found = await detectRuntime();
+
+    if (!found) {
+      await log('No Runtime responded.');
+      await log('Falling back to a simulated preview.');
+      if (outcome) {
+        outcome.innerHTML = `
+          <span class="text-accent2 font-semibold">Runtime not detected on this device.</span><br />
+          That's the only missing piece. Install it once — this exact flow prints for real from then on.<br />
+          <a href="https://github.com/portixhq/portixone/releases/latest" class="playground-download mt-2 inline-block font-semibold text-accent hover:underline">Download Runtime →</a>
+        `;
+        outcome.querySelector('.playground-download')?.addEventListener('click', () => markStage('downloadedRuntime'));
+      }
       btn.textContent = 'Print again';
       btn.disabled = false;
-      markMilestone('playgroundPrinted');
-    }, 900);
+      return;
+    }
+
+    await log('Runtime found. Requesting permission to print…');
+
+    try {
+      const { code, expiresAt } = await requestPairing();
+      await log(`Check your PortixOne tray — approve code ${code} to continue.`);
+      if (outcome) {
+        outcome.innerHTML = `<span class="text-accent font-semibold">Waiting for approval in your PortixOne tray… (code: ${code})</span>`;
+      }
+
+      const token = await waitForApproval(code, expiresAt, () => log('Still waiting for approval…'));
+      markStage('pairedBrowser');
+      await log('Approved! Sending the real print job…');
+
+      const result = await realPrint(token, 'Coffee    $4.00\nBurger    $8.00\nTOTAL     $12.00\n\nPrinted from portix.one\'s Playground.');
+      await log(`Print job ${result.jobId} — ${result.status}.`);
+      markStage('printed');
+
+      if (outcome) {
+        outcome.innerHTML = `<span class="text-accent font-semibold">Check your printer — that was a real print.</span>`;
+      }
+      btn.textContent = 'Print again';
+    } catch (error) {
+      const expired = error instanceof PairingExpiredError;
+      await log(expired ? 'Approval timed out.' : 'Something went wrong talking to the Runtime.');
+      if (outcome) {
+        outcome.innerHTML = expired
+          ? 'Approval timed out — hit print again and approve it from the tray a little faster.'
+          : 'Could not complete a real print this time — try again, or use the Runtime dashboard directly.';
+      }
+      btn.textContent = 'Try again';
+    } finally {
+      btn.disabled = false;
+    }
   });
 </script>

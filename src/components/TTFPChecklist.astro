@@ -1,0 +1,64 @@
+---
+---
+
+<div class="mx-auto max-w-md">
+  <div class="flex items-baseline justify-between">
+    <p class="text-[15px] font-semibold text-ink">Your first print</p>
+    <span class="ttfp-checklist-eta font-mono text-[12px] text-accent2">~5:00 remaining</span>
+  </div>
+
+  <ul class="ttfp-checklist-list mt-5 space-y-3"></ul>
+
+  <p class="ttfp-checklist-note mt-4 text-[13px] leading-relaxed text-muted"></p>
+</div>
+
+<script>
+  import { CHECKLIST_STAGES, getState, getEtaLabel, onUpdate, type StageKey } from '../lib/ttfp';
+
+  const list = document.querySelector<HTMLElement>('.ttfp-checklist-list');
+
+  if (list) {
+    list.innerHTML = CHECKLIST_STAGES.map(
+      (stage) => `
+        <li class="checklist-item flex items-center gap-3 text-[13px] text-muted" data-key="${stage.key}">
+          <span class="checklist-check flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-line text-[11px] text-muted">○</span>
+          <span>${stage.label}</span>
+        </li>
+      `,
+    ).join('');
+  }
+
+  function render() {
+    const state = getState();
+
+    document.querySelectorAll<HTMLElement>('.checklist-item').forEach((el) => {
+      const key = el.dataset.key as StageKey;
+      const isDone = Boolean(state[key]);
+      const check = el.querySelector('.checklist-check');
+      if (check) check.textContent = isDone ? '✓' : '○';
+      check?.classList.toggle('border-accent', isDone);
+      check?.classList.toggle('text-accent', isDone);
+      check?.classList.toggle('border-line', !isDone);
+      el.classList.toggle('text-ink', isDone);
+    });
+
+    document.querySelectorAll<HTMLElement>('.ttfp-checklist-eta').forEach((el) => {
+      const eta = getEtaLabel();
+      el.textContent = eta === 'Printed' ? eta : `~${eta}`;
+    });
+
+    document.querySelectorAll<HTMLElement>('.ttfp-checklist-note').forEach((el) => {
+      if (state.printed) {
+        el.textContent = 'That was a real print. Welcome to PortixOne.';
+      } else if (state.pairedBrowser) {
+        el.textContent = "You're paired — hit print in the Playground above for the real thing.";
+      } else if (state.downloadedRuntime) {
+        el.textContent = "You're one click away from your first print.";
+      } else {
+        el.textContent = '';
+      }
+    });
+  }
+
+  onUpdate(render);
+</script>

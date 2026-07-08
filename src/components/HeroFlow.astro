@@ -1,0 +1,114 @@
+---
+const nodes = [
+  { label: 'Web App', delay: '0s' },
+  { label: 'Portix.One Runtime', delay: '0.9s' },
+  { label: 'Printer', delay: '1.8s' },
+];
+---
+
+<div class="hero-flow mx-auto flex max-w-2xl flex-col items-center gap-1 sm:flex-row sm:justify-center sm:gap-0">
+  {nodes.map((node, i) => (
+    <>
+      <div class="flow-node flex flex-col items-center" style={`--delay: ${node.delay}`}>
+        <div class="flow-box rounded-md border border-line bg-surface px-4 py-2.5 font-mono text-[12px] text-ink">
+          {node.label}
+        </div>
+      </div>
+      {i < nodes.length - 1 && (
+        <div class="flow-connector relative h-6 w-6 sm:h-px sm:w-10" style={`--delay: ${node.delay}`}>
+          <span class="flow-pulse"></span>
+        </div>
+      )}
+    </>
+  ))}
+  <div class="flow-ticket-wrap relative ml-0 mt-1 h-10 w-10 sm:ml-3 sm:mt-0">
+    <div class="flow-ticket absolute left-1/2 top-0 h-8 w-6 -translate-x-1/2 rounded-[1px] bg-ink"></div>
+  </div>
+</div>
+
+<style>
+  .flow-box {
+    animation: flow-pulse-box 3s ease-in-out infinite;
+    animation-delay: var(--delay);
+  }
+  .flow-connector {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  @media (min-width: 640px) {
+    .flow-connector {
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+  .flow-pulse {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, #00c8ff, transparent);
+    opacity: 0;
+    animation: flow-travel 3s ease-in-out infinite;
+    animation-delay: var(--delay);
+  }
+  @keyframes flow-pulse-box {
+    0%,
+    85%,
+    100% {
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: none;
+    }
+    10%,
+    25% {
+      border-color: #00c8ff;
+      box-shadow: 0 0 16px -2px rgba(0, 200, 255, 0.5);
+    }
+  }
+  @keyframes flow-travel {
+    0%,
+    90%,
+    100% {
+      opacity: 0;
+    }
+    5%,
+    20% {
+      opacity: 1;
+    }
+  }
+  .flow-ticket {
+    animation: flow-ticket-print 3s ease-in-out infinite;
+    animation-delay: 2.4s;
+    transform-origin: top center;
+  }
+  @keyframes flow-ticket-print {
+    0%,
+    70% {
+      transform: translateX(-50%) scaleY(0);
+      opacity: 0;
+    }
+    80% {
+      opacity: 1;
+    }
+    95%,
+    100% {
+      transform: translateX(-50%) scaleY(1);
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  import { markStage } from '../lib/ttfp';
+
+  const el = document.querySelector('.hero-flow');
+  if (el && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          markStage('sawHowItWorks');
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.4 },
+    );
+    observer.observe(el);
+  } else {
+    markStage('sawHowItWorks');
+  }
+</script>

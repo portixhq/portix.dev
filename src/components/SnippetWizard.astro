@@ -78,7 +78,7 @@ const protocols = [
 </div>
 
 <script>
-  import { markMilestone } from '../lib/ttfp';
+  import { markStage } from '../lib/ttfp';
 
   const wizard = document.querySelector<HTMLElement>('.wizard');
   if (wizard) {
@@ -200,14 +200,11 @@ export default function PrintButton() {
         const value = btn.dataset.value!;
         selections[group] = value;
 
-        if (group === 'language') markMilestone('sdkSelected');
-        if (group === 'printer') markMilestone('printerSelected');
-
         if (current === 2) {
           const template = templates[selections.language] ?? templates.js;
           const code = template({ printer: selections.printer ?? 'default', protocol: selections.protocol ?? 'escpos' });
           if (snippetCode) snippetCode.innerHTML = highlight(code);
-          markMilestone('sampleGenerated');
+          markStage('generatedSnippet');
         }
 
         showStep(Math.min(current + 1, 3));
@@ -217,7 +214,7 @@ export default function PrintButton() {
     backBtn?.addEventListener('click', () => showStep(Math.max(current - 1, 0)));
 
     wizard.querySelector('.wizard-continue')?.addEventListener('click', () => {
-      markMilestone('sampleGenerated');
+      markStage('generatedSnippet');
     });
   }
 </script>
