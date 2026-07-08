@@ -1,0 +1,51 @@
+---
+const items = [
+  { key: 'sdkSelected', label: 'SDK selected' },
+  { key: 'printerSelected', label: 'Printer selected' },
+  { key: 'sampleGenerated', label: 'Sample generated' },
+];
+---
+
+<div class="ready-checklist mx-auto max-w-md rounded-md border border-line bg-surface p-6">
+  <p class="ready-heading text-[15px] font-semibold text-ink">You're already 40% ready.</p>
+  <ul class="mt-4 space-y-2 text-[13px]">
+    {items.map((item) => (
+      <li class="ready-item flex items-center gap-2 text-muted" data-key={item.key}>
+        <span class="ready-check inline-block w-4 text-center text-muted">○</span>
+        <span>{item.label}</span>
+      </li>
+    ))}
+  </ul>
+  <p class="mt-4 border-t border-line pt-4 text-[12px] text-muted">
+    Next: <span class="text-accent">Install Runtime</span>
+  </p>
+</div>
+
+<script>
+  import { getState, onUpdate, type MilestoneKey } from '../lib/ttfp';
+
+  const keys: MilestoneKey[] = ['sdkSelected', 'printerSelected', 'sampleGenerated'];
+
+  function render() {
+    const state = getState();
+    const done = keys.filter((k) => state[k]).length;
+    const percent = 40 + Math.round((done / keys.length) * 60);
+
+    document.querySelectorAll<HTMLElement>('.ready-heading').forEach((el) => {
+      el.textContent = done === 0 ? "You're already 40% ready." : `You're already ${percent}% ready.`;
+    });
+
+    document.querySelectorAll<HTMLElement>('.ready-item').forEach((el) => {
+      const key = el.dataset.key as MilestoneKey;
+      const isDone = Boolean(state[key]);
+      const check = el.querySelector('.ready-check');
+      if (check) check.textContent = isDone ? '✓' : '○';
+      check?.classList.toggle('text-accent', isDone);
+      check?.classList.toggle('text-muted', !isDone);
+      el.classList.toggle('text-ink', isDone);
+      el.classList.toggle('text-muted', !isDone);
+    });
+  }
+
+  onUpdate(render);
+</script>

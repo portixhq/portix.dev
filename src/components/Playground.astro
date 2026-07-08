@@ -1,0 +1,75 @@
+---
+const items = [
+  { name: 'Coffee', price: 4 },
+  { name: 'Burger', price: 8 },
+];
+const total = items.reduce((sum, i) => sum + i.price, 0);
+---
+
+<div class="mx-auto grid max-w-3xl grid-cols-1 items-center gap-10 md:grid-cols-2">
+  <div class="flex justify-center">
+    <div class="playground-receipt w-56 rounded-sm bg-white px-5 py-6 font-mono text-[12px] text-[#111] shadow-[0_20px_60px_-15px_rgba(0,200,255,0.25)] transition-transform duration-500">
+      <p class="text-center text-[13px] font-bold tracking-widest">PORTIX.ONE</p>
+      <p class="mb-3 text-center text-[10px] text-[#666]">Playground Receipt</p>
+      <div class="border-t border-dashed border-[#999] pt-2">
+        {items.map((item) => (
+          <div class="flex justify-between py-0.5">
+            <span>{item.name}</span>
+            <span>${item.price.toFixed(2)}</span>
+          </div>
+        ))}
+      </div>
+      <div class="mt-2 flex justify-between border-t border-dashed border-[#999] pt-2 font-bold">
+        <span>TOTAL</span>
+        <span>${total.toFixed(2)}</span>
+      </div>
+      <p class="mt-4 text-center text-[9px] text-[#999]">thank you — try it for real ↓</p>
+    </div>
+  </div>
+
+  <div class="flex flex-col items-start">
+    <p class="mb-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Zero install</p>
+    <h3 class="text-xl font-semibold leading-snug">See it print before you install anything.</h3>
+    <p class="mt-3 text-[14px] leading-relaxed text-muted">
+      Hit print. We'll simulate the exact flow your users get — then show you the one thing standing between this and a
+      real receipt.
+    </p>
+
+    <button
+      type="button"
+      class="playground-print-btn mt-6 rounded-md bg-accent px-6 py-3 text-[14px] font-semibold text-[#00202A] hover:opacity-90"
+    >
+      Print
+    </button>
+
+    <div class="playground-status mt-4 min-h-[3.5rem] text-[13px] leading-relaxed text-muted"></div>
+  </div>
+</div>
+
+<script>
+  import { markMilestone } from '../lib/ttfp';
+
+  const btn = document.querySelector<HTMLButtonElement>('.playground-print-btn');
+  const receipt = document.querySelector<HTMLElement>('.playground-receipt');
+  const status = document.querySelector<HTMLElement>('.playground-status');
+
+  btn?.addEventListener('click', () => {
+    if (!receipt || !status || btn.disabled) return;
+    btn.disabled = true;
+    btn.textContent = 'Printing…';
+
+    receipt.style.transform = 'translateY(6px) scale(0.98)';
+    status.innerHTML = '<span class="text-accent">●</span> Sending job to a printer…';
+
+    setTimeout(() => {
+      receipt.style.transform = 'translateY(0) scale(1)';
+      status.innerHTML = `
+        <span class="text-accent2">Runtime not detected on this device.</span><br />
+        That's the only missing piece — install it once, and this exact call prints for real.
+      `;
+      btn.textContent = 'Print again';
+      btn.disabled = false;
+      markMilestone('playgroundPrinted');
+    }, 900);
+  });
+</script>

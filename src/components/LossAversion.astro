@@ -1,0 +1,29 @@
+---
+const without = ['Browser print dialog', 'Manual driver setup', 'Driver issues per machine', 'Support tickets for printing', 'Different implementation per browser'];
+const withPortix = ['Same API everywhere', 'Local Runtime, zero drivers', 'Silent printing', 'Pair once, print forever', 'Works everywhere'];
+---
+
+<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+  <div class="rounded-md border border-line bg-surface p-6">
+    <p class="mb-4 text-[12px] font-semibold uppercase tracking-[0.14em] text-muted">Without PortixOne</p>
+    <ul class="space-y-2.5 text-[13px] text-muted">
+      {without.map((item) => (
+        <li class="flex gap-2">
+          <span class="text-red-400">✕</span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <div class="rounded-md border border-accent/40 bg-surface p-6">
+    <p class="mb-4 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">With PortixOne</p>
+    <ul class="space-y-2.5 text-[13px] text-ink">
+      {withPortix.map((item) => (
+        <li class="flex gap-2">
+          <span class="text-accent">✓</span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>

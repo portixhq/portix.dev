@@ -1,106 +1,113 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import JoinPreviewForm from '../components/JoinPreviewForm.astro';
 import TerminalInstall from '../components/TerminalInstall.astro';
-import NetworkDiagram from '../components/NetworkDiagram.astro';
-import CodeTabs from '../components/CodeTabs.astro';
-import ArchitectureDiagram from '../components/ArchitectureDiagram.astro';
+import TTFPBar from '../components/TTFPBar.astro';
+import StuckHereDiagram from '../components/StuckHereDiagram.astro';
+import SmartDefaults from '../components/SmartDefaults.astro';
+import Playground from '../components/Playground.astro';
+import SnippetWizard from '../components/SnippetWizard.astro';
+import ReadyChecklist from '../components/ReadyChecklist.astro';
+import InstallChecklist from '../components/InstallChecklist.astro';
+import CostOfProblem from '../components/CostOfProblem.astro';
+import LossAversion from '../components/LossAversion.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
 import CompatibilityGrid from '../components/CompatibilityGrid.astro';
 import OpenSourceLinks from '../components/OpenSourceLinks.astro';
 import DocsCards from '../components/DocsCards.astro';
 import PricingCards from '../components/PricingCards.astro';
 import StatusRoadmap from '../components/StatusRoadmap.astro';
+import JoinPreviewForm from '../components/JoinPreviewForm.astro';
 
-const features = [
-  { title: 'Silent printing', desc: 'No browser print dialog — the job goes straight to the printer.' },
-  { title: 'Persistent queue', desc: 'Jobs survive a runtime restart; nothing gets lost mid-print.' },
-  { title: 'Printer discovery', desc: 'Finds Windows-registered and network printers automatically.' },
-  { title: 'Status events', desc: 'Subscribe to job lifecycle events over WebSocket in real time.' },
-  { title: 'Cross browser', desc: 'Same behavior in Chrome, Firefox, Edge, and Safari.' },
-  { title: 'Cross framework', desc: 'React, Vue, Angular, Next.js, Electron, or vanilla JS.' },
-  { title: 'Local runtime', desc: 'Runs on the machine, not a server — no cloud round-trip to print.' },
-  { title: 'Built for developers', desc: 'Typed SDK, explicit errors, no vendor lock-in.' },
-];
-
-const sdks = [
-  { name: 'JavaScript', available: true },
-  { name: 'Python', available: false },
-  { name: 'Go', available: false },
-  { name: '.NET', available: false },
-  { name: 'Rust', available: false, soon: true },
-];
-
-const metrics = [
-  { value: 'Offline-first', label: 'No cloud round-trip to print' },
-  { value: 'Cross-platform', label: 'Windows today, macOS/Linux on the roadmap' },
-  { value: 'Local runtime', label: 'Runs on the machine, not a server' },
-  { value: 'Secure channel', label: 'API-key authenticated locally' },
-];
+const badges = ['Windows Ready', 'Local Runtime', 'Secure Pairing', 'Thermal Printers', 'ESC/POS', 'REST', 'WebSocket'];
 ---
 
 <BaseLayout title="Print from any web app">
-  <section class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-16 px-6 pb-24 pt-20 md:grid-cols-2 md:pt-28">
-    <div>
-      <div class="mb-5 flex flex-wrap items-center gap-3">
-        <span class="rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-accent">
-          Developer Preview
-        </span>
-        <span class="text-[11px] text-muted">Early Access • Windows • ESC/POS</span>
-      </div>
-      <h1 class="text-[44px] font-extrabold leading-[1.08] tracking-tight md:text-[52px]">
-        Print from any web app.
-      </h1>
-      <p class="mt-6 text-xl font-semibold text-accent2">No browser dialogs. No native code. Just one API.</p>
-
-      <div class="mt-9 max-w-md">
-        <TerminalInstall command="npm install @portixone/sdk" />
-      </div>
-
-      <div class="mt-7 flex flex-wrap gap-3">
-        <a href="#join" class="rounded-md bg-accent px-6 py-3 text-[14px] font-semibold text-[#00202A] hover:opacity-90">
-          Get started
-        </a>
-        <a href="/docs" class="rounded-md border border-line px-6 py-3 text-[14px] font-semibold hover:border-white/20">
-          Documentation
-        </a>
-      </div>
+  <!-- Hero -->
+  <section class="mx-auto max-w-3xl px-6 pb-20 pt-20 text-center md:pt-28">
+    <div class="mb-5 flex flex-wrap items-center justify-center gap-3">
+      <span class="rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-accent">
+        Developer Preview
+      </span>
+      <span class="text-[11px] text-muted">Early Access • Windows • ESC/POS</span>
     </div>
 
-    <NetworkDiagram />
-  </section>
+    <h1 class="text-[36px] font-extrabold leading-[1.15] tracking-tight md:text-[48px]">
+      Printing from a web app shouldn't be the hardest part of your stack.
+    </h1>
+    <p class="mx-auto mt-5 max-w-xl text-[17px] leading-relaxed text-muted">
+      Connect any local printer to your web application in minutes. No drivers. No browser hacks. No manual configuration.
+    </p>
 
-  <section class="border-t border-line">
-    <div class="mx-auto grid max-w-6xl grid-cols-1 gap-4 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4">
-      {features.map((f) => (
-        <div class="rounded-md border border-line bg-surface p-6">
-          <p class="text-[15px] font-semibold">{f.title}</p>
-          <p class="mt-2 text-[13px] leading-relaxed text-muted">{f.desc}</p>
-        </div>
+    <div class="mx-auto mt-8 max-w-md">
+      <TerminalInstall command="npm install @portixone/sdk" />
+    </div>
+
+    <div class="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[11px] text-muted">
+      {badges.map((b) => (
+        <span class="flex items-center gap-1.5">
+          <span class="text-accent">✓</span>
+          {b}
+        </span>
       ))}
     </div>
+
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <a href="#playground" class="rounded-md bg-accent px-6 py-3 text-[14px] font-semibold text-[#00202A] hover:opacity-90">
+        Start printing in under 5 minutes
+      </a>
+      <a href="#playground" class="rounded-md border border-line px-6 py-3 text-[14px] font-semibold hover:border-white/20">
+        Watch it print in 30 seconds
+      </a>
+    </div>
   </section>
 
+  <!-- Most developers get stuck here -->
   <section class="border-t border-line">
     <div class="mx-auto max-w-6xl px-6 py-20">
-      <p class="mb-10 text-center text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">How it works</p>
-      <ArchitectureDiagram />
+      <p class="mb-10 text-center text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Most developers get stuck here</p>
+      <StuckHereDiagram />
     </div>
   </section>
 
+  <!-- Smart Defaults -->
   <section class="border-t border-line">
-    <div class="mx-auto grid max-w-6xl grid-cols-1 gap-14 px-6 py-20 md:grid-cols-[1.3fr_1fr]">
-      <CodeTabs />
-      <div class="flex flex-col justify-center">
-        <p class="mb-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Runtime API</p>
-        <p class="text-xl font-semibold leading-snug">One API connects every supported device.</p>
-        <p class="mt-3 text-[14px] leading-relaxed text-muted">
-          Same calls, same shapes, regardless of what's plugged in. See <a href="/examples" class="text-accent hover:underline">runnable examples</a>.
-        </p>
-      </div>
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <p class="mb-10 text-center text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Pick your use case</p>
+      <SmartDefaults />
     </div>
   </section>
 
+  <!-- Playground -->
+  <section id="playground" class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <Playground />
+    </div>
+  </section>
+
+  <!-- IKEA-effect wizard -->
+  <section class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <p class="mb-3 text-center text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Build your integration</p>
+      <h2 class="mb-10 text-center text-2xl font-semibold">Four clicks to your own snippet.</h2>
+      <SnippetWizard />
+    </div>
+  </section>
+
+  <!-- Ready checklist -->
+  <section class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-6 py-16">
+      <ReadyChecklist />
+    </div>
+  </section>
+
+  <!-- Install checklist with ETA -->
+  <section class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <InstallChecklist />
+    </div>
+  </section>
+
+  <!-- Comparison + Compatibility -->
   <section class="border-t border-line">
     <div class="mx-auto max-w-6xl px-6 py-20">
       <p class="mb-8 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Browser printing vs. PortixOne</p>
@@ -115,33 +122,28 @@ const metrics = [
     </div>
   </section>
 
+  <!-- Loss aversion -->
   <section class="border-t border-line">
     <div class="mx-auto max-w-6xl px-6 py-20">
-      <p class="mb-8 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">SDK ecosystem</p>
-      <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-        {sdks.map((sdk) => (
-          <div class:list={['rounded-md border border-line bg-surface p-5 text-center', !sdk.available && 'opacity-50']}>
-            <p class="font-mono text-[13px]">{sdk.name}</p>
-            <p class="mt-1 text-[11px] text-muted">{sdk.soon ? 'Coming soon' : sdk.available ? 'Available' : 'Planned'}</p>
-          </div>
-        ))}
+      <LossAversion />
+    </div>
+  </section>
+
+  <!-- Cost of problem + Pricing (contrast effect) -->
+  <section class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <CostOfProblem />
+      <div class="mt-16 border-t border-line pt-16">
+        <p class="mb-3 text-center text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Pricing</p>
+        <h2 class="text-center text-2xl font-semibold">The SDK stays free. Pricing kicks in once PortixOne is already part of your workflow.</h2>
+        <div class="mt-10">
+          <PricingCards />
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="border-t border-line">
-    <div class="mx-auto max-w-6xl px-6 py-20">
-      <div class="grid grid-cols-2 gap-6 text-center sm:grid-cols-4">
-        {metrics.map((m) => (
-          <div>
-            <p class="font-mono text-2xl font-bold text-accent">{m.value}</p>
-            <p class="mt-2 text-[12px] text-muted">{m.label}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
+  <!-- Open source -->
   <section class="border-t border-line">
     <div class="mx-auto max-w-6xl px-6 py-20">
       <p class="mb-8 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Open source</p>
@@ -149,6 +151,7 @@ const metrics = [
     </div>
   </section>
 
+  <!-- Documentation -->
   <section class="border-t border-line">
     <div class="mx-auto max-w-6xl px-6 py-20">
       <p class="mb-8 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Documentation</p>
@@ -156,16 +159,7 @@ const metrics = [
     </div>
   </section>
 
-  <section class="border-t border-line">
-    <div class="mx-auto max-w-6xl px-6 py-20">
-      <p class="mb-3 text-center text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Pricing</p>
-      <h2 class="text-center text-2xl font-semibold">The SDK stays free. Pricing kicks in once PortixOne is already part of your workflow.</h2>
-      <div class="mt-10">
-        <PricingCards />
-      </div>
-    </div>
-  </section>
-
+  <!-- Join -->
   <section id="join" class="border-t border-line">
     <div class="mx-auto max-w-6xl px-6 py-20">
       <p class="mb-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Developer Preview</p>
@@ -176,7 +170,8 @@ const metrics = [
     </div>
   </section>
 
-  <section class="border-t border-line">
+  <!-- Status -->
+  <section class="border-t border-line pb-16">
     <div class="mx-auto max-w-6xl px-6 py-20">
       <p class="mb-8 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Current status</p>
       <div class="max-w-md">
@@ -184,4 +179,12 @@ const metrics = [
       </div>
     </div>
   </section>
+
+  <TTFPBar />
 </BaseLayout>
+
+<style is:global>
+  body {
+    padding-bottom: 44px;
+  }
+</style>

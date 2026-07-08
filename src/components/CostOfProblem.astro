@@ -1,0 +1,19 @@
+---
+const costs = [
+  { industry: 'Restaurant', cost: '$500/day', detail: 'in lost orders when the kitchen printer stalls' },
+  { industry: 'Warehouse', cost: 'Delayed shipments', detail: 'every time a label print silently fails' },
+  { industry: 'Retail', cost: 'Long checkout lines', detail: 'from browser print dialogs at the register' },
+  { industry: 'Healthcare', cost: 'Labeling mistakes', detail: 'when staff work around a broken print flow' },
+];
+---
+
+<p class="text-center text-2xl font-semibold">How much does failed printing actually cost?</p>
+<div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  {costs.map((c) => (
+    <div class="rounded-md border border-line bg-surface p-6 text-center">
+      <p class="text-[12px] font-semibold uppercase tracking-[0.1em] text-muted">{c.industry}</p>
+      <p class="mt-3 font-mono text-xl font-bold text-accent2">{c.cost}</p>
+      <p class="mt-2 text-[12px] leading-relaxed text-muted">{c.detail}</p>
+    </div>
+  ))}
+</div>
