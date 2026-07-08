@@ -96,16 +96,38 @@ const protocols = [
     const sdkPkg = '@portixone' + '/sdk';
     const importLine = `import { Portix } from '${sdkPkg}';`;
 
+    // Maps the wizard's illustrative choices to the SDK's real PrintJob shape
+    // ({ content, printerName?, copies? } — see packages/protocol/src/job.types.ts).
+    // There's no `protocol` field on print(): ESC/POS vs. RAW is handled by the
+    // Runtime's driver layer, not something a caller specifies per job — the
+    // wizard still asks so the snippet's comment can name the printer honestly.
+    const printerNames: Record<string, string> = {
+      thermal: 'Thermal POS-80',
+      laser: 'HP LaserJet',
+      epson: 'Epson TM-T88',
+    };
+    const protocolNotes: Record<string, string> = {
+      escpos: 'ESC/POS — handled automatically by the Runtime',
+      raw: 'RAW — handled automatically by the Runtime',
+    };
+
+    function printerNameFor(printer: string): string {
+      return printerNames[printer] ?? 'default';
+    }
+    function protocolCommentFor(protocol: string): string {
+      return `// Protocol: ${protocolNotes[protocol] ?? protocol}`;
+    }
+
     const templates: Record<string, (p: { printer: string; protocol: string }) => string> = {
       js: ({ printer, protocol }) => `${importLine}
 
 const portix = new Portix();
 await portix.connect();
 
+${protocolCommentFor(protocol)}
 await portix.print({
-  printer: '${printer}',
-  protocol: '${protocol}',
   content: 'Hello from PortixOne',
+  printerName: '${printerNameFor(printer)}',
 });`,
       react: ({ printer, protocol }) => `${importLine}
 
@@ -114,7 +136,8 @@ const portix = new Portix();
 function PrintButton() {
   const handlePrint = async () => {
     await portix.connect();
-    await portix.print({ printer: '${printer}', protocol: '${protocol}', content: 'Hello!' });
+    ${protocolCommentFor(protocol)}
+    await portix.print({ content: 'Hello!', printerName: '${printerNameFor(printer)}' });
   };
 
   return <button onClick={handlePrint}>Print</button>;
@@ -125,7 +148,8 @@ const portix = new Portix();
 
 async function print() {
   await portix.connect();
-  await portix.print({ printer: '${printer}', protocol: '${protocol}', content: 'Hello!' });
+  ${protocolCommentFor(protocol)}
+  await portix.print({ content: 'Hello!', printerName: '${printerNameFor(printer)}' });
 }`,
       angular: ({ printer, protocol }) => `${importLine}
 
@@ -134,7 +158,8 @@ export class PrintService {
 
   async print() {
     await this.portix.connect();
-    await this.portix.print({ printer: '${printer}', protocol: '${protocol}', content: 'Hello!' });
+    ${protocolCommentFor(protocol)}
+    await this.portix.print({ content: 'Hello!', printerName: '${printerNameFor(printer)}' });
   }
 }`,
       next: ({ printer, protocol }) => `'use client';
@@ -145,7 +170,8 @@ const portix = new Portix();
 export default function PrintButton() {
   const handlePrint = async () => {
     await portix.connect();
-    await portix.print({ printer: '${printer}', protocol: '${protocol}', content: 'Hello!' });
+    ${protocolCommentFor(protocol)}
+    await portix.print({ content: 'Hello!', printerName: '${printerNameFor(printer)}' });
   };
 
   return <button onClick={handlePrint}>Print</button>;

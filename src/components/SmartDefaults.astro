@@ -5,16 +5,11 @@ const cases = [
     label: 'POS',
     printer: 'Thermal receipt printer (ESC/POS)',
     desc: 'Print a receipt the instant a sale closes — no browser dialog between checkout and paper.',
-    code: `const portix = new Portix();
+    code: `const portix = new Portix({ appId: 'pos', tenant: 'default' });
 await portix.connect();
 
 await portix.print({
-  type: 'receipt',
-  printer: 'default',
-  items: [
-    { name: 'Coffee', price: 4 },
-    { name: 'Burger', price: 8 },
-  ],
+  content: 'Coffee    $4.00\\nBurger    $8.00\\nTOTAL     $12.00',
 });`,
   },
   {
@@ -22,14 +17,12 @@ await portix.print({
     label: 'Warehouse',
     printer: 'Label printer (ZPL / thermal)',
     desc: 'Print shipping labels straight from your fulfillment dashboard, one per scanned box.',
-    code: `const portix = new Portix();
+    code: `const portix = new Portix({ appId: 'warehouse', tenant: 'default' });
 await portix.connect();
 
 await portix.print({
-  type: 'label',
-  printer: 'zebra-zt230',
-  sku: 'SKU-88213',
-  destination: 'DHL Express',
+  content: 'SKU: SKU-88213\\nDest: DHL Express',
+  printerName: 'ZDesigner ZT230',
 });`,
   },
   {
@@ -37,13 +30,12 @@ await portix.print({
     label: 'Healthcare',
     printer: 'Wristband / badge printer',
     desc: 'Print a patient wristband at intake without touching hospital IT policy or drivers.',
-    code: `const portix = new Portix();
+    code: `const portix = new Portix({ appId: 'healthcare', tenant: 'default' });
 await portix.connect();
 
 await portix.print({
-  type: 'wristband',
-  printer: 'zebra-hc100',
-  patientId: 'PT-4471',
+  content: 'Patient: PT-4471',
+  printerName: 'Zebra HC100',
 });`,
   },
 ];
