@@ -70,6 +70,20 @@ const total = items.reduce((sum, i) => sum + i.price, 0);
     });
   }
 
+  /** Updates one line in place instead of appending — for anything that repeats (a wait countdown), not a new event each time. */
+  function logLive(id: string, line: string): void {
+    if (!consoleEl) return;
+    let el = consoleEl.querySelector<HTMLElement>(`[data-live="${id}"]`);
+    if (!el) {
+      el = document.createElement('p');
+      el.className = 'console-line';
+      el.dataset.live = id;
+      consoleEl.appendChild(el);
+    }
+    el.textContent = `$ ${line}`;
+    consoleEl.scrollTop = consoleEl.scrollHeight;
+  }
+
   function resetConsole() {
     if (consoleEl) consoleEl.innerHTML = '';
   }
@@ -93,7 +107,7 @@ const total = items.reduce((sum, i) => sum + i.price, 0);
     await log('Generating ticket…');
     await log('Looking for a PortixOne Runtime at 127.0.0.1:17321…');
 
-    const found = await detectRuntime();
+    const { found, simulated } = await detectRuntime();
 
     if (!found) {
       await log('No Runtime responded.');
@@ -120,16 +134,32 @@ const total = items.reduce((sum, i) => sum + i.price, 0);
         outcome.innerHTML = `<span class="text-accent font-semibold">Waiting for approval in your PortixOne tray… (code: ${code})</span>`;
       }
 
-      const token = await waitForApproval(code, expiresAt, () => log('Still waiting for approval…'));
+      const token = await waitForApproval(code, expiresAt, (_elapsed, remaining) => {
+        logLive('waiting', `Still waiting for approval in the tray… (${remaining}s left)`);
+        if (outcome) {
+          outcome.innerHTML = `<span class="text-accent font-semibold">Waiting for approval in your PortixOne tray… (code: ${code}, ${remaining}s left)</span>`;
+        }
+      });
       markStage('pairedBrowser');
-      await log('Approved! Sending the real print job…');
+      await log('Approved! Sending the print job…');
 
       const result = await realPrint(token, 'Coffee    $4.00\nBurger    $8.00\nTOTAL     $12.00\n\nPrinted from portix.one\'s Playground.');
       await log(`Print job ${result.jobId} — ${result.status}.`);
-      markStage('printed');
 
-      if (outcome) {
-        outcome.innerHTML = `<span class="text-accent font-semibold">Check your printer — that was a real print.</span>`;
+      if (simulated) {
+        await log('Note: this Runtime has no real printer driver configured — nothing physically printed.');
+        if (outcome) {
+          outcome.innerHTML = `
+            <span class="text-accent2 font-semibold">Pairing and the print job both worked for real.</span><br />
+            Your Runtime is running in simulation mode (no printer driver configured), so nothing came out of a
+            physical printer this time — the wire is proven, hook up a real printer to see paper.
+          `;
+        }
+      } else {
+        markStage('printed');
+        if (outcome) {
+          outcome.innerHTML = `<span class="text-accent font-semibold">Check your printer — that was a real print.</span>`;
+        }
       }
       btn.textContent = 'Print again';
     } catch (error) {

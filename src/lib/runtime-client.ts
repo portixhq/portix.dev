@@ -32,14 +32,22 @@ function withTimeout(ms: number): { signal: AbortSignal; cancel: () => void } {
   return { signal: controller.signal, cancel: () => clearTimeout(timer) };
 }
 
+export interface DetectResult {
+  found: boolean;
+  /** True when the Runtime is real but has no real printer driver configured — a print would be accepted and tracked, never reach paper. */
+  simulated?: boolean;
+}
+
 /** A short, best-effort probe — most visitors have no Runtime running, so this must fail fast, not hang. */
-export async function detectRuntime(): Promise<boolean> {
+export async function detectRuntime(): Promise<DetectResult> {
   const { signal, cancel } = withTimeout(HEALTH_TIMEOUT_MS);
   try {
     const res = await fetch(`${RUNTIME_BASE}/health`, { signal });
-    return res.ok;
+    if (!res.ok) return { found: false };
+    const body: { simulated?: boolean } = await res.json();
+    return { found: true, simulated: body.simulated };
   } catch {
-    return false;
+    return { found: false };
   } finally {
     cancel();
   }
@@ -57,16 +65,18 @@ export async function requestPairing(): Promise<PairingRequestResult> {
   return res.json();
 }
 
-/** Polls until a human approves (or denies/expires) the request from the PortixOne tray. */
+/** Polls until a human approves (or denies/expires) the request from the PortixOne tray.
+ *  `onTick` fires once per poll with elapsed/remaining seconds — a live countdown, not a log spam source. */
 export async function waitForApproval(
   code: string,
   expiresAt: string,
-  onTick?: () => void,
+  onTick?: (elapsedSec: number, remainingSec: number) => void,
 ): Promise<string> {
-  const deadline = Math.min(Date.now() + PAIRING_TIMEOUT_MS, new Date(expiresAt).getTime());
+  const startedAt = Date.now();
+  const deadline = Math.min(startedAt + PAIRING_TIMEOUT_MS, new Date(expiresAt).getTime());
   while (Date.now() < deadline) {
     await new Promise((resolve) => setTimeout(resolve, PAIRING_POLL_MS));
-    onTick?.();
+    onTick?.(Math.round((Date.now() - startedAt) / 1000), Math.max(0, Math.round((deadline - Date.now()) / 1000)));
     const res = await fetch(`${RUNTIME_BASE}/pairing/status?code=${encodeURIComponent(code)}`);
     if (!res.ok) continue;
     const status: PairingStatusResult = await res.json();
