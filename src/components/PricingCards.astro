@@ -2,29 +2,29 @@
 const plans = [
   {
     name: 'Free',
-    tagline: 'Developer Preview',
+    tagline: 'For every developer',
     price: '$0',
-    features: ['SDK', '1 Runtime', '1 Printer', 'Unlimited development use', 'Community support'],
-    cta: 'Join Preview',
+    features: ['Full Runtime & SDK', 'Silent printing', 'Unrestricted production use', 'Playground & docs', 'Community support'],
+    cta: 'Get Started',
+    href: '/docs',
+    highlight: false,
+  },
+  {
+    name: 'Production',
+    tagline: 'Recommended',
+    price: '$24/mo',
+    features: ['Everything in Free', 'Priority support', 'Production reliability tooling'],
+    cta: 'Notify Me',
     href: '#join',
     highlight: true,
   },
   {
-    name: 'Pro',
-    tagline: 'Coming Soon',
-    price: '$19–29/mo',
-    features: ['Unlimited printers', 'Auto-updates', 'Logs & monitoring', 'Remote pairing', 'Priority support'],
+    name: 'Scale',
+    tagline: 'For growing operations',
+    price: '$79/mo',
+    features: ['Organizations & teams', 'Runtime health & diagnostics', 'Remote configuration', 'Version management', 'Priority support'],
     cta: 'Notify Me',
     href: '#join',
-    highlight: false,
-  },
-  {
-    name: 'Business',
-    tagline: 'Contact Us',
-    price: 'Custom',
-    features: ['Multi-tenant', 'Fleet management', 'Cloud dashboard', 'Teams & SSO', 'SLA'],
-    cta: "Let's Talk",
-    href: 'mailto:hello@portix.dev?subject=PortixOne%20Business',
     highlight: false,
   },
 ];
@@ -57,3 +57,7 @@ const plans = [
     ))
   }
 </div>
+
+<p class="mt-6 text-center text-[13px] text-muted">
+  Need Enterprise? <a href="mailto:hello@portix.dev?subject=PortixOne%20Enterprise" class="text-brand hover:underline">Let's talk</a>.
+</p>
