@@ -51,11 +51,11 @@ await portix.print({
           aria-checked={i === 0 ? 'true' : 'false'}
           data-case={c.id}
           class:list={[
-            'case-btn flex w-full items-center gap-3 rounded-md border px-4 py-3 text-left text-[14px] transition-colors',
-            i === 0 ? 'is-active border-accent bg-surface text-ink' : 'border-line text-muted hover:border-white/20',
+            'case-btn flex w-full items-center gap-3 rounded-btn border px-4 py-3 text-left text-[14px] transition-colors duration-150 ease-out',
+            i === 0 ? 'is-active border-brand bg-surface text-ink' : 'border-line text-muted hover:border-brand',
           ]}
         >
-          <span class:list={['case-dot h-2.5 w-2.5 shrink-0 rounded-full border', i === 0 ? 'border-accent bg-accent' : 'border-line']}></span>
+          <span class:list={['case-dot h-2.5 w-2.5 shrink-0 rounded-full border', i === 0 ? 'border-brand bg-brand' : 'border-line']}></span>
           <span>
             <span class="block font-semibold">{c.label}</span>
             <span class="case-printer block text-[12px] text-muted">{c.printer}</span>
@@ -66,11 +66,11 @@ await portix.print({
     <p class="case-desc mt-5 text-[13px] leading-relaxed text-muted">{cases[0].desc}</p>
   </div>
 
-  <div class="rounded-md border border-line bg-surface p-5">
+  <div class="rounded-code border border-line bg-surface-tertiary p-5">
     <pre class="case-code overflow-x-auto font-mono text-[13px] leading-7 text-ink"><code set:html={cases[0].code
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
-      .replace(/\b(const|await|new)\b/g, '<span class="text-accent2">$1</span>')}
+      .replace(/\b(const|await|new)\b/g, '<span class="text-brand">$1</span>')}
     /></pre>
   </div>
 </div>
@@ -84,7 +84,7 @@ await portix.print({
     return code
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
-      .replace(/\b(const|await|new)\b/g, '<span class="text-accent2">$1</span>');
+      .replace(/\b(const|await|new)\b/g, '<span class="text-brand">$1</span>');
   }
 
   buttons.forEach((btn) => {
@@ -95,16 +95,16 @@ await portix.print({
 
       buttons.forEach((b) => {
         const dot = b.querySelector('.case-dot');
-        b.classList.remove('is-active', 'border-accent', 'bg-surface', 'text-ink');
+        b.classList.remove('is-active', 'border-brand', 'bg-surface', 'text-ink');
         b.classList.add('border-line', 'text-muted');
         b.setAttribute('aria-checked', 'false');
-        dot?.classList.remove('border-accent', 'bg-accent');
+        dot?.classList.remove('border-brand', 'bg-brand');
         dot?.classList.add('border-line');
       });
-      btn.classList.add('is-active', 'border-accent', 'bg-surface', 'text-ink');
+      btn.classList.add('is-active', 'border-brand', 'bg-surface', 'text-ink');
       btn.classList.remove('border-line', 'text-muted');
       btn.setAttribute('aria-checked', 'true');
-      btn.querySelector('.case-dot')?.classList.add('border-accent', 'bg-accent');
+      btn.querySelector('.case-dot')?.classList.add('border-brand', 'bg-brand');
       btn.querySelector('.case-dot')?.classList.remove('border-line');
 
       if (descEl) descEl.textContent = active.desc;

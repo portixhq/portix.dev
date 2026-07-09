@@ -7,10 +7,10 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY ?? '';
 const isConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
 const fieldClass =
-  'w-full rounded-md border border-line bg-bg px-4 py-2.5 text-sm text-ink placeholder:text-muted focus:border-accent focus:outline-none';
+  'w-full rounded-btn border border-line bg-surface px-4 py-2 text-sm text-ink placeholder:text-muted transition-colors duration-150 ease-out focus:border-ink focus-visible:outline-none';
 ---
 
-<div class="rounded-md border border-line bg-surface p-6">
+<div class="rounded-card border border-line bg-surface p-6">
   {
     isConfigured ? (
       <form id="preview-form" class="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -26,15 +26,12 @@ const fieldClass =
           rows="3"
           class:list={[fieldClass, 'sm:col-span-2 resize-none']}
         />
-        <button
-          type="submit"
-          class="rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-[#00202A] hover:opacity-90 sm:col-span-2"
-        >
+        <button type="submit" class="btn-primary sm:col-span-2">
           Join Developer Preview
         </button>
       </form>
     ) : (
-      <p class="text-sm text-amber-400">
+      <p class="text-sm text-warning">
         The signup form isn't connected yet — set PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_ANON_KEY (see README.md).
       </p>
     )

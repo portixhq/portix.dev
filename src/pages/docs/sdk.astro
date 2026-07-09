@@ -64,15 +64,15 @@ const methods = [
 
 <BaseLayout title="SDK Reference">
   <section class="mx-auto max-w-3xl px-6 py-20">
-    <p class="text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Docs</p>
-    <h1 class="mt-2 text-3xl font-bold">SDK Reference</h1>
+    <p class="font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-brand">Docs</p>
+    <h1 class="mt-2 font-mono text-3xl font-semibold">SDK Reference</h1>
     <p class="mt-4 text-ink">
       <code class="font-mono text-[13px]">@portixone/sdk</code> — one class, <code class="font-mono text-[13px]">Portix</code>.
-      Source: <a href="https://github.com/portixhq/portixone/tree/master/sdk-js" class="text-accent hover:underline">sdk-js/</a>.
+      Source: <a href="https://github.com/portixhq/portixone/tree/master/sdk-js" class="text-brand hover:underline">sdk-js/</a>.
     </p>
 
-    <h2 class="mt-10 text-lg font-semibold">new Portix(options?)</h2>
-    <div class="mt-4 overflow-x-auto rounded-md border border-line">
+    <h2 class="mt-10 font-mono text-lg font-semibold">new Portix(options?)</h2>
+    <div class="mt-4 overflow-x-auto rounded-code border border-line">
       <table class="w-full text-left text-[13px]">
         <thead class="border-b border-line bg-surface text-muted">
           <tr>
@@ -95,29 +95,29 @@ const methods = [
       </table>
     </div>
 
-    <h2 class="mt-12 text-lg font-semibold">Methods</h2>
+    <h2 class="mt-12 font-mono text-lg font-semibold">Methods</h2>
     <div class="mt-6 space-y-6">
       {methods.map((m) => (
         <div class="border-l-2 border-line pl-5">
-          <p class="font-mono text-[13px] text-accent2">{m.sig}</p>
+          <p class="font-mono text-[13px] text-brand">{m.sig}</p>
           <p class="mt-2 text-[13px] leading-relaxed text-muted">{m.desc}</p>
         </div>
       ))}
     </div>
 
-    <h2 class="mt-12 text-lg font-semibold">Mock mode</h2>
+    <h2 class="mt-12 font-mono text-lg font-semibold">Mock mode</h2>
     <p class="mt-4 text-[14px] leading-relaxed text-muted">
       No runtime or printer nearby? Pass <code class="font-mono text-ink">mode: "mock"</code> and use the exact same API —
       <code class="font-mono text-ink">print()</code> renders a text preview instead of sending it anywhere. Going to
       production is a one-word change: drop the option, or set it to <code class="font-mono text-ink">"runtime"</code>.
     </p>
 
-    <h2 class="mt-12 text-lg font-semibold">Pairing — for multi-tenant integrations</h2>
+    <h2 class="mt-12 font-mono text-lg font-semibold">Pairing — for multi-tenant integrations</h2>
     <p class="mt-4 text-[14px] leading-relaxed text-muted">
       If you're building a product other businesses install PortixOne for, don't share the runtime's admin key —
       pair each installation once instead:
     </p>
-    <pre class="mt-4 overflow-x-auto rounded-md border border-line bg-surface p-5 font-mono text-[13px] leading-7 text-ink"><code>{`const portix = new Portix({ tenant: "acme-cafe", appId: "kubia" });
+    <pre class="mt-4 overflow-x-auto rounded-code border border-line bg-surface-tertiary p-5 font-mono text-[13px] leading-7 text-ink"><code>{`const portix = new Portix({ tenant: "acme-cafe", appId: "kubia" });
 await portix.connect();
 
 const { code } = await portix.pair();
@@ -128,7 +128,7 @@ portix.on("paired", ({ deviceId, permissions }) => {
 });`}</code></pre>
 
     <p class="mt-10 text-sm text-muted">
-      See <a href="/docs/runtime" class="text-accent hover:underline">Runtime API</a> if you need to call the local
+      See <a href="/docs/runtime" class="text-brand hover:underline">Runtime API</a> if you need to call the local
       HTTP/WebSocket surface directly instead of through the SDK.
     </p>
   </section>

@@ -1,0 +1,27 @@
+---
+import Container from './Container.astro';
+
+interface Props {
+  id?: string;
+  class?: string;
+  containerSize?: 'md' | 'lg';
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+}
+
+const { id, class: className, containerSize = 'lg', eyebrow, title, description } = Astro.props;
+---
+
+<section id={id} class:list={['py-16 md:py-24', className]}>
+  <Container size={containerSize}>
+    {eyebrow && (
+      <p class="mb-3 font-mono text-[13px] font-medium uppercase tracking-wide text-brand">{eyebrow}</p>
+    )}
+    {title && (
+      <h2 class="mb-4 font-mono text-[28px] font-semibold tracking-tight text-ink md:text-[36px]">{title}</h2>
+    )}
+    {description && <p class="mb-12 max-w-2xl text-[16px] text-muted">{description}</p>}
+    <slot />
+  </Container>
+</section>

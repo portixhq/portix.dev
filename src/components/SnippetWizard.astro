@@ -17,19 +17,19 @@ const protocols = [
 ];
 ---
 
-<div class="wizard mx-auto max-w-2xl rounded-md border border-line bg-surface p-6 md:p-8">
+<div class="wizard mx-auto max-w-2xl rounded-card border border-line bg-surface p-6 md:p-8">
   <div class="mb-6 flex items-center gap-2">
     {[0, 1, 2, 3].map((i) => (
-      <div class:list={['wizard-dot h-1.5 flex-1 rounded-full', i === 0 ? 'bg-accent' : 'bg-white/10']} data-dot={i}></div>
+      <div class:list={['wizard-dot h-1.5 flex-1 rounded-full', i === 0 ? 'bg-brand' : 'bg-line']} data-dot={i}></div>
     ))}
   </div>
 
   <div class="wizard-step" data-step="0">
-    <p class="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">Step 1 of 4</p>
+    <p class="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-brand">Step 1 of 4</p>
     <h3 class="mb-4 text-[16px] font-semibold">Select your language</h3>
     <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
       {languages.map((l) => (
-        <button type="button" class="wizard-choice rounded-md border border-line px-4 py-3 text-[13px] text-muted hover:border-accent hover:text-ink" data-group="language" data-value={l.id}>
+        <button type="button" class="wizard-choice rounded-btn border border-line px-4 py-3 text-[13px] text-muted transition-colors duration-150 ease-out hover:border-brand hover:text-ink" data-group="language" data-value={l.id}>
           {l.label}
         </button>
       ))}
@@ -37,11 +37,11 @@ const protocols = [
   </div>
 
   <div class="wizard-step hidden" data-step="1">
-    <p class="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">Step 2 of 4</p>
+    <p class="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-brand">Step 2 of 4</p>
     <h3 class="mb-4 text-[16px] font-semibold">Select your printer</h3>
     <div class="grid grid-cols-3 gap-2">
       {printers.map((p) => (
-        <button type="button" class="wizard-choice rounded-md border border-line px-4 py-3 text-[13px] text-muted hover:border-accent hover:text-ink" data-group="printer" data-value={p.id}>
+        <button type="button" class="wizard-choice rounded-btn border border-line px-4 py-3 text-[13px] text-muted transition-colors duration-150 ease-out hover:border-brand hover:text-ink" data-group="printer" data-value={p.id}>
           {p.label}
         </button>
       ))}
@@ -49,11 +49,11 @@ const protocols = [
   </div>
 
   <div class="wizard-step hidden" data-step="2">
-    <p class="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">Step 3 of 4</p>
+    <p class="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-brand">Step 3 of 4</p>
     <h3 class="mb-4 text-[16px] font-semibold">Select your protocol</h3>
     <div class="grid grid-cols-2 gap-2">
       {protocols.map((p) => (
-        <button type="button" class="wizard-choice rounded-md border border-line px-4 py-3 text-[13px] text-muted hover:border-accent hover:text-ink" data-group="protocol" data-value={p.id}>
+        <button type="button" class="wizard-choice rounded-btn border border-line px-4 py-3 text-[13px] text-muted transition-colors duration-150 ease-out hover:border-brand hover:text-ink" data-group="protocol" data-value={p.id}>
           {p.label}
         </button>
       ))}
@@ -61,12 +61,12 @@ const protocols = [
   </div>
 
   <div class="wizard-step hidden" data-step="3">
-    <p class="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">Your snippet</p>
+    <p class="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-brand">Your snippet</p>
     <h3 class="mb-4 text-[16px] font-semibold">This is your integration.</h3>
-    <div class="rounded-md border border-line bg-bg p-5">
+    <div class="rounded-code border border-line bg-surface-tertiary p-5">
       <pre class="wizard-snippet overflow-x-auto font-mono text-[13px] leading-7 text-ink"><code></code></pre>
     </div>
-    <a href="/docs" class="wizard-continue mt-6 inline-block rounded-md bg-accent px-6 py-3 text-[14px] font-semibold text-[#00202A] hover:opacity-90">
+    <a href="/docs" class="wizard-continue btn-primary mt-6 inline-flex">
       Continue
     </a>
   </div>
@@ -182,13 +182,13 @@ export default function PrintButton() {
       return code
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
-        .replace(/\b(import|from|const|await|new|async|function|export|class|return)\b/g, '<span class="text-accent2">$1</span>');
+        .replace(/\b(import|from|const|await|new|async|function|export|class|return)\b/g, '<span class="text-brand">$1</span>');
     }
 
     function showStep(i: number) {
       steps.forEach((s) => s.classList.toggle('hidden', Number(s.dataset.step) !== i));
-      dots.forEach((d) => d.classList.toggle('bg-accent', Number(d.dataset.dot) <= i));
-      dots.forEach((d) => d.classList.toggle('bg-white/10', Number(d.dataset.dot) > i));
+      dots.forEach((d) => d.classList.toggle('bg-brand', Number(d.dataset.dot) <= i));
+      dots.forEach((d) => d.classList.toggle('bg-line', Number(d.dataset.dot) > i));
       if (backBtn) backBtn.disabled = i === 0;
       if (hint) hint.textContent = i < 3 ? '' : '';
       current = i;

@@ -1,0 +1,34 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'icon' | 'danger';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  id?: string;
+}
+
+const {
+  variant = 'primary',
+  href,
+  type = 'button',
+  class: className,
+  id,
+} = Astro.props;
+
+const variantClass = {
+  primary: 'btn-primary',
+  secondary: 'btn-secondary',
+  outline: 'btn-outline',
+  ghost: 'btn-ghost',
+  link: 'btn-link',
+  icon: 'btn-icon',
+  danger: 'btn-danger',
+}[variant];
+
+const classes = [variantClass, className].filter(Boolean).join(' ');
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag id={id} class={classes} href={href} type={href ? undefined : type}>
+  <slot />
+</Tag>

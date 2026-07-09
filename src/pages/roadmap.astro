@@ -14,7 +14,7 @@ const stages = [
 
 <BaseLayout title="Roadmap">
   <section class="mx-auto max-w-3xl px-6 py-20">
-    <h1 class="text-3xl font-bold">Roadmap</h1>
+    <h1 class="font-mono text-3xl font-semibold">Roadmap</h1>
     <p class="mt-4 text-ink">
       PortixOne ships one device capability at a time, validated with real developers before moving
       to the next. No exact dates — this is a live document, not a promise.
@@ -29,7 +29,7 @@ const stages = [
           <div>
             <div class="flex items-center gap-3">
               <p class="font-medium">{stage.title}</p>
-              <span class="rounded-full border border-line px-2 py-0.5 text-xs text-muted">{stage.status}</span>
+              <span class="rounded-full border border-line px-2 py-0.5 font-mono text-xs text-muted">{stage.status}</span>
             </div>
             <p class="mt-1 text-sm text-muted">{stage.desc}</p>
           </div>

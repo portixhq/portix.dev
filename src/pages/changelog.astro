@@ -43,14 +43,14 @@ const entries = [
 
 <BaseLayout title="Changelog">
   <section class="mx-auto max-w-3xl px-6 py-20">
-    <h1 class="text-3xl font-bold">Changelog</h1>
+    <h1 class="font-mono text-3xl font-semibold">Changelog</h1>
     <p class="mt-4 text-ink">Build logs, in the order they happened.</p>
 
     <div class="mt-10 space-y-12">
       {entries.map((entry) => (
         <article class="border-l-2 border-line pl-6">
           <p class="text-xs text-muted">{entry.date}</p>
-          <h2 class="mt-1 text-lg font-semibold">PortixOne Build Log #{entry.number}</h2>
+          <h2 class="mt-1 font-mono text-lg font-semibold">PortixOne Build Log #{entry.number}</h2>
           <dl class="mt-4 space-y-2 text-sm">
             <div><dt class="inline font-medium text-ink">Built: </dt><dd class="inline text-muted">{entry.built}</dd></div>
             <div><dt class="inline font-medium text-ink">Learned: </dt><dd class="inline text-muted">{entry.learned}</dd></div>

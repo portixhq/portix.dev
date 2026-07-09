@@ -1,0 +1,19 @@
+---
+interface Props {
+  variant?: 'info' | 'success' | 'warning' | 'danger';
+  class?: string;
+}
+
+const { variant = 'info', class: className } = Astro.props;
+
+const variantClass = {
+  info: 'border-line bg-surface-secondary text-ink',
+  success: 'border-brand bg-surface text-ink',
+  warning: 'border-warning bg-surface text-ink',
+  danger: 'border-danger bg-surface text-ink',
+}[variant];
+---
+
+<div class:list={['rounded-card border p-4 text-[14px]', variantClass, className]} role="alert">
+  <slot />
+</div>

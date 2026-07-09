@@ -3,8 +3,8 @@
 
 <div class="mx-auto max-w-md">
   <div class="flex items-baseline justify-between">
-    <p class="text-[15px] font-semibold text-ink">Your first print</p>
-    <span class="ttfp-checklist-eta font-mono text-[12px] text-accent2">~5:00 remaining</span>
+    <p class="font-mono text-[15px] font-semibold text-ink">Your first print</p>
+    <span class="ttfp-checklist-eta font-mono text-[12px] text-brand">~5:00 remaining</span>
   </div>
 
   <ul class="ttfp-checklist-list mt-5 space-y-3"></ul>
@@ -36,8 +36,8 @@
       const isDone = Boolean(state[key]);
       const check = el.querySelector('.checklist-check');
       if (check) check.textContent = isDone ? '✓' : '○';
-      check?.classList.toggle('border-accent', isDone);
-      check?.classList.toggle('text-accent', isDone);
+      check?.classList.toggle('border-brand', isDone);
+      check?.classList.toggle('text-brand', isDone);
       check?.classList.toggle('border-line', !isDone);
       el.classList.toggle('text-ink', isDone);
     });

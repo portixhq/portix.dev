@@ -23,23 +23,23 @@ const wsEvents = ['status', 'job:queued', 'job:printing', 'job:printed', 'job:er
 
 <BaseLayout title="Runtime API">
   <section class="mx-auto max-w-3xl px-6 py-20">
-    <p class="text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Docs</p>
-    <h1 class="mt-2 text-3xl font-bold">Runtime API</h1>
+    <p class="text-[12px] font-semibold uppercase tracking-[0.14em] text-brand">Docs</p>
+    <h1 class="mt-2 font-mono text-3xl font-semibold">Runtime API</h1>
     <p class="mt-4 text-ink">
       The local HTTP + WebSocket surface the SDK talks to — same host/port you pass to <code class="font-mono text-[13px]">new Portix()</code>
       (default <code class="font-mono text-[13px]">127.0.0.1:17321</code>). Most developers never call this directly; it's here for when you do.
-      Source: <a href="https://github.com/portixhq/portixone/blob/master/runtime/src/api/api.route.ts" class="text-accent hover:underline">runtime/src/api/</a>.
+      Source: <a href="https://github.com/portixhq/portixone/blob/master/runtime/src/api/api.route.ts" class="text-brand hover:underline">runtime/src/api/</a>.
     </p>
 
-    <h2 class="mt-10 text-lg font-semibold">Authentication</h2>
+    <h2 class="mt-10 font-mono text-lg font-semibold">Authentication</h2>
     <p class="mt-4 text-[14px] leading-relaxed text-muted">
       Send the API key in the <code class="font-mono text-ink">x-portix-api-key</code> header. The runtime's admin key
       (<code class="font-mono text-ink">PORTIX_LOCAL_API_KEY</code>, defaults to <code class="font-mono text-ink">dev-local-key</code>)
       sees every job on the runtime; a token from a completed pairing only sees its own tenant/app's jobs.
     </p>
 
-    <h2 class="mt-12 text-lg font-semibold">HTTP endpoints</h2>
-    <div class="mt-4 overflow-x-auto rounded-md border border-line">
+    <h2 class="mt-12 font-mono text-lg font-semibold">HTTP endpoints</h2>
+    <div class="mt-4 overflow-x-auto rounded-code border border-line">
       <table class="w-full text-left text-[13px]">
         <thead class="border-b border-line bg-surface text-muted">
           <tr>
@@ -52,7 +52,7 @@ const wsEvents = ['status', 'job:queued', 'job:printing', 'job:printed', 'job:er
         <tbody>
           {endpoints.map((e) => (
             <tr class="border-b border-line last:border-0">
-              <td class="px-4 py-3 font-mono text-accent2">{e.method}</td>
+              <td class="px-4 py-3 font-mono text-brand">{e.method}</td>
               <td class="px-4 py-3 font-mono text-ink">{e.path}</td>
               <td class="px-4 py-3 text-muted">{e.auth}</td>
               <td class="px-4 py-3 text-muted">{e.desc}</td>
@@ -62,23 +62,23 @@ const wsEvents = ['status', 'job:queued', 'job:printing', 'job:printed', 'job:er
       </table>
     </div>
 
-    <h2 class="mt-12 text-lg font-semibold">WebSocket events</h2>
+    <h2 class="mt-12 font-mono text-lg font-semibold">WebSocket events</h2>
     <p class="mt-4 text-[14px] leading-relaxed text-muted">
       Same host/port, upgraded to a WebSocket connection. Every message is <code class="font-mono text-ink">{'{ event, data }'}</code>.
       Sent on connect: a <code class="font-mono text-ink">status</code> event. Broadcast as jobs move through the queue:
     </p>
     <div class="mt-4 flex flex-wrap gap-2">
       {wsEvents.map((ev) => (
-        <span class="rounded-md border border-line bg-surface px-3 py-1 font-mono text-[12px] text-ink">{ev}</span>
+        <span class="rounded-btn border border-line bg-surface-tertiary px-3 py-1 font-mono text-[12px] text-ink">{ev}</span>
       ))}
     </div>
     <p class="mt-4 text-[13px] text-muted">
       The SDK's <code class="font-mono text-ink">portix.on(event, handler)</code> subscribes to these for you — see the
-      <a href="/docs/sdk" class="text-accent hover:underline">SDK reference</a>.
+      <a href="/docs/sdk" class="text-brand hover:underline">SDK reference</a>.
     </p>
 
-    <h2 class="mt-12 text-lg font-semibold">GET /metrics response shape</h2>
-    <pre class="mt-4 overflow-x-auto rounded-md border border-line bg-surface p-5 font-mono text-[13px] leading-7 text-ink"><code>{`{
+    <h2 class="mt-12 font-mono text-lg font-semibold">GET /metrics response shape</h2>
+    <pre class="mt-4 overflow-x-auto rounded-code border border-line bg-surface-tertiary p-5 font-mono text-[13px] leading-7 text-ink"><code>{`{
   uptimeMs: number,
   jobs: {
     total: number,
@@ -98,7 +98,7 @@ const wsEvents = ['status', 'job:queued', 'job:printing', 'job:printed', 'job:er
 
     <p class="mt-10 text-sm text-muted">
       Every error response is <code class="font-mono text-ink">{'{ error: CODE, message }'}</code> — see the
-      <a href="/docs/faq" class="text-accent hover:underline">FAQ</a> for what each error code means.
+      <a href="/docs/faq" class="text-brand hover:underline">FAQ</a> for what each error code means.
     </p>
   </section>
 </BaseLayout>

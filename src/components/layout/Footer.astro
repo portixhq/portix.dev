@@ -1,0 +1,22 @@
+---
+const footerLinks = [
+  { href: '/docs', label: 'Documentation' },
+  { href: 'https://github.com/portixhq/portix-sdk-js', label: 'SDK' },
+  { href: 'https://github.com/portixhq/portixone', label: 'GitHub' },
+  { href: '/examples', label: 'Examples' },
+  { href: '/blog', label: 'Blog' },
+  { href: 'https://status.portix.one', label: 'Status' },
+  { href: 'https://github.com/portixhq', label: 'Community' },
+];
+---
+
+<footer class="border-t border-line bg-surface">
+  <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-10 text-[13px] text-muted">
+    <span>© PortixOne — built in public, from Mexico.</span>
+    <div class="flex flex-wrap gap-x-6 gap-y-2">
+      {footerLinks.map((item) => (
+        <a href={item.href} class="transition-colors duration-150 ease-out hover:text-ink">{item.label}</a>
+      ))}
+    </div>
+  </div>
+</footer>

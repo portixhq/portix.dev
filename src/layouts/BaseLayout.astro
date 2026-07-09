@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import Navbar from '../components/layout/Navbar.astro';
+import Footer from '../components/layout/Footer.astro';
 
 interface Props {
   title: string;
@@ -10,26 +12,6 @@ const {
   title,
   description = 'PortixOne — the local infrastructure for web applications. One API. Every device.',
 } = Astro.props;
-
-const nav = [
-  { href: '/docs', label: 'Docs' },
-  { href: '/learn', label: 'Learn' },
-  { href: '/examples', label: 'Examples' },
-  { href: '/compare', label: 'Compare' },
-  { href: '/roadmap', label: 'Roadmap' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/changelog', label: 'Changelog' },
-];
-
-const footerLinks = [
-  { href: '/docs', label: 'Documentation' },
-  { href: 'https://github.com/portixhq/portix-sdk-js', label: 'SDK' },
-  { href: 'https://github.com/portixhq/portixone', label: 'GitHub' },
-  { href: '/examples', label: 'Examples' },
-  { href: '/blog', label: 'Blog' },
-  { href: 'https://status.portix.one', label: 'Status' },
-  { href: 'https://github.com/portixhq', label: 'Community' },
-];
 ---
 
 <!doctype html>
@@ -40,47 +22,14 @@ const footerLinks = [
     <title>{title} · PortixOne</title>
     <meta name="description" content={description} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
   </head>
-  <body class="min-h-screen bg-bg text-ink font-sans antialiased">
-    <header class="border-b border-line">
-      <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-        <a href="/" class="flex items-center gap-2 text-[15px] font-bold tracking-tight">
-          <span class="h-4 w-4 rotate-45 border-[1.5px] border-accent"></span>
-          PortixOne
-        </a>
-        <nav class="hidden gap-7 text-[13px] text-muted md:flex">
-          {nav.map((item) => (
-            <a href={item.href} class="hover:text-ink">{item.label}</a>
-          ))}
-        </nav>
-        <a
-          href="https://github.com/portixhq/portixone"
-          class="rounded-md border border-line px-3.5 py-1.5 text-[13px] hover:border-white/20"
-        >
-          GitHub
-        </a>
-      </div>
-    </header>
+  <body class="bg-grid min-h-screen bg-surface font-sans text-ink antialiased">
+    <Navbar />
 
     <main>
       <slot />
     </main>
 
-    <footer class="border-t border-line">
-      <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-10 text-[13px] text-muted">
-        <span>© PortixOne — built in public, from Mexico.</span>
-        <div class="flex flex-wrap gap-x-6 gap-y-2">
-          {footerLinks.map((item) => (
-            <a href={item.href} class="hover:text-ink">{item.label}</a>
-          ))}
-        </div>
-      </div>
-    </footer>
+    <Footer />
   </body>
 </html>

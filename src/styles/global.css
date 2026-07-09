@@ -1,3 +1,126 @@
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/jetbrains-mono/600.css';
+
+@font-face {
+  font-family: 'Switzer';
+  src: url('/fonts/Switzer-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Switzer';
+  src: url('/fonts/Switzer-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Switzer';
+  src: url('/fonts/Switzer-Semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Primitives */
+  --white: #ffffff;
+  --black: #000000;
+  --brand: #58f0be;
+  --gray-50: #fafafa;
+  --gray-100: #f5f5f5;
+  --gray-200: #e5e5e5;
+  --gray-400: #a3a3a3;
+  --gray-600: #525252;
+  --gray-900: #171717;
+
+  /* Semantic tokens — components consume these, never the primitives above */
+  --color-surface: var(--white);
+  --color-surface-secondary: var(--gray-50);
+  --color-surface-tertiary: var(--gray-100);
+  --color-ink: var(--black);
+  --color-muted: var(--gray-600);
+  --color-line: var(--gray-200);
+  --color-line-strong: var(--black);
+  --color-brand: var(--brand);
+  --color-warning: #f5a623;
+  --color-danger: #e5484d;
+}
+
+::selection {
+  background: var(--color-brand);
+  color: var(--color-ink);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-400);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+/* Background grid — 1-2% opacity, drifts almost imperceptibly slowly */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(0 0 0 / 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(0 0 0 / 0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+  animation: grid-drift 120s linear infinite;
+}
+@keyframes grid-drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 48px 48px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bg-grid {
+    animation: none;
+  }
+}
+
+/* Button system — Primary and Outline in active use, remaining variants defined for future consumers */
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-btn border px-4 py-2 text-[13px] font-mono font-medium transition-colors duration-150 ease-out;
+}
+.btn-primary {
+  @apply btn border-ink bg-ink text-white hover:bg-white hover:text-ink;
+}
+.btn-secondary {
+  @apply btn border-line bg-surface-secondary text-ink hover:border-ink;
+}
+.btn-outline {
+  @apply btn border-ink bg-transparent text-ink hover:border-brand;
+}
+.btn-ghost {
+  @apply btn border-transparent bg-transparent text-ink hover:border-line;
+}
+.btn-link {
+  @apply inline-flex items-center gap-1 border-0 p-0 font-mono text-[13px] font-medium text-ink underline decoration-line underline-offset-4 transition-colors duration-150 ease-out hover:decoration-brand;
+}
+.btn-danger {
+  @apply btn border-danger bg-transparent text-danger hover:bg-danger hover:text-white;
+}
+.btn-icon {
+  @apply inline-flex h-9 w-9 items-center justify-center rounded-btn border border-line bg-surface text-ink transition-colors duration-150 ease-out hover:border-ink;
+}

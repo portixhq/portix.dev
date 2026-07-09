@@ -4,23 +4,23 @@ const withPortix = ['Same API everywhere', 'Local Runtime, zero drivers', 'Silen
 ---
 
 <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-  <div class="rounded-md border border-line bg-surface p-6">
-    <p class="mb-4 text-[12px] font-semibold uppercase tracking-[0.14em] text-muted">Without PortixOne</p>
+  <div class="rounded-card border border-line bg-surface p-6">
+    <p class="mb-4 font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-muted">Without PortixOne</p>
     <ul class="space-y-2.5 text-[13px] text-muted">
       {without.map((item) => (
         <li class="flex gap-2">
-          <span class="text-red-400">✕</span>
+          <span class="text-danger">✕</span>
           <span>{item}</span>
         </li>
       ))}
     </ul>
   </div>
-  <div class="rounded-md border border-accent/40 bg-surface p-6">
-    <p class="mb-4 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">With PortixOne</p>
+  <div class="rounded-card border border-brand/40 bg-surface p-6">
+    <p class="mb-4 font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-brand">With PortixOne</p>
     <ul class="space-y-2.5 text-[13px] text-ink">
       {withPortix.map((item) => (
         <li class="flex gap-2">
-          <span class="text-accent">✓</span>
+          <span class="text-brand">✓</span>
           <span>{item}</span>
         </li>
       ))}

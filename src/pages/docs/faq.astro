@@ -35,10 +35,10 @@ const faqs = [
 
 <BaseLayout title="FAQ & Troubleshooting">
   <section class="mx-auto max-w-3xl px-6 py-20">
-    <p class="text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Docs</p>
-    <h1 class="mt-2 text-3xl font-bold">FAQ & Troubleshooting</h1>
+    <p class="text-[12px] font-semibold uppercase tracking-[0.14em] text-brand">Docs</p>
+    <h1 class="mt-2 font-mono text-3xl font-semibold">FAQ & Troubleshooting</h1>
 
-    <h2 class="mt-10 text-lg font-semibold">Frequently asked</h2>
+    <h2 class="mt-10 font-mono text-lg font-semibold">Frequently asked</h2>
     <div class="mt-6 space-y-6">
       {faqs.map((item) => (
         <div>
@@ -48,11 +48,11 @@ const faqs = [
       ))}
     </div>
 
-    <h2 class="mt-14 text-lg font-semibold">Error codes</h2>
+    <h2 class="mt-14 font-mono text-lg font-semibold">Error codes</h2>
     <p class="mt-4 text-[14px] text-muted">
       Every failed request is <code class="font-mono text-ink">{'{ error: CODE, message }'}</code>. What each one means, and what to do about it:
     </p>
-    <div class="mt-6 overflow-x-auto rounded-md border border-line">
+    <div class="mt-6 overflow-x-auto rounded-code border border-line">
       <table class="w-full text-left text-[13px]">
         <thead class="border-b border-line bg-surface text-muted">
           <tr>
@@ -65,7 +65,7 @@ const faqs = [
         <tbody>
           {errors.map((e) => (
             <tr class="border-b border-line last:border-0 align-top">
-              <td class="px-4 py-3 font-mono text-accent2">{e.code}</td>
+              <td class="px-4 py-3 font-mono text-brand">{e.code}</td>
               <td class="px-4 py-3 font-mono text-muted">{e.status}</td>
               <td class="px-4 py-3 text-muted">{e.meaning}</td>
               <td class="px-4 py-3 text-muted">{e.fix}</td>
@@ -76,7 +76,7 @@ const faqs = [
     </div>
 
     <p class="mt-10 text-sm text-muted">
-      Still stuck? <a href="https://github.com/portixhq/portixone/issues" class="text-accent hover:underline">Open an issue</a> with
+      Still stuck? <a href="https://github.com/portixhq/portixone/issues" class="text-brand hover:underline">Open an issue</a> with
       what you tried and the exact error — that's the fastest path to a fix or a docs update.
     </p>
   </section>

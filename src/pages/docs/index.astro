@@ -14,19 +14,19 @@ const cards = [
 
 <BaseLayout title="Docs">
   <section class="mx-auto max-w-3xl px-6 py-20">
-    <h1 class="text-3xl font-bold">Docs</h1>
+    <h1 class="font-mono text-3xl font-semibold">Docs</h1>
     <p class="mt-4 text-ink">From zero to your first print, then the full reference once you need it.</p>
 
-    <h2 class="mt-12 text-lg font-semibold">Quick Start</h2>
+    <h2 class="mt-12 font-mono text-lg font-semibold">Quick Start</h2>
 
     <ol class="mt-6 space-y-6">
       <li>
         <p class="text-sm font-medium text-ink">1. Install the SDK</p>
-        <pre class="mt-2 overflow-x-auto rounded-md border border-line bg-surface p-4 font-mono text-[13px]"><code>npm install @portixone/sdk</code></pre>
+        <pre class="mt-2 overflow-x-auto rounded-code border border-line bg-surface-tertiary p-4 font-mono text-[13px]"><code>npm install @portixone/sdk</code></pre>
       </li>
       <li>
         <p class="text-sm font-medium text-ink">2. Try it with no runtime and no printer</p>
-        <pre class="mt-2 overflow-x-auto rounded-md border border-line bg-surface p-4 font-mono text-[13px]"><code>{`import { Portix } from "@portixone/sdk";
+        <pre class="mt-2 overflow-x-auto rounded-code border border-line bg-surface-tertiary p-4 font-mono text-[13px]"><code>{`import { Portix } from "@portixone/sdk";
 
 const portix = new Portix({ mode: "mock" });
 await portix.connect();
@@ -39,30 +39,30 @@ await portix.print({ content: "Hello PortixOne!" });
         <p class="text-sm font-medium text-ink">3. Install the Runtime for a real print</p>
         <p class="mt-2 text-[13px] text-muted">
           Download <code class="font-mono text-ink">PortixOneRuntimeSetup.exe</code> from the
-          <a href="https://github.com/portixhq/portixone/releases" class="text-accent hover:underline">latest release</a>,
+          <a href="https://github.com/portixhq/portixone/releases" class="text-brand hover:underline">latest release</a>,
           run it (no Node.js or other prerequisites — it's bundled), and it installs as a Windows Service
           that starts automatically.
         </p>
       </li>
       <li>
         <p class="text-sm font-medium text-ink">4. Drop `mode: "mock"` and print for real</p>
-        <pre class="mt-2 overflow-x-auto rounded-md border border-line bg-surface p-4 font-mono text-[13px]"><code>{`import { Portix } from "@portixone/sdk";
+        <pre class="mt-2 overflow-x-auto rounded-code border border-line bg-surface-tertiary p-4 font-mono text-[13px]"><code>{`import { Portix } from "@portixone/sdk";
 
 const portix = new Portix();
 await portix.connect();
 
 await portix.print({ content: "Hello PortixOne!" });`}</code></pre>
         <p class="mt-2 text-[13px] text-muted">
-          Same code, one option removed. See the <a href="/docs/sdk" class="text-accent hover:underline">SDK reference</a> for
+          Same code, one option removed. See the <a href="/docs/sdk" class="text-brand hover:underline">SDK reference</a> for
           every option `print()` and the rest of the class accept.
         </p>
       </li>
     </ol>
 
-    <h2 class="mt-14 text-lg font-semibold">Reference</h2>
+    <h2 class="mt-14 font-mono text-lg font-semibold">Reference</h2>
     <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
       {cards.map((card) => (
-        <a href={card.href} class="block rounded-lg border border-line bg-surface p-5 hover:border-white/20">
+        <a href={card.href} class="block rounded-card border border-line bg-surface p-5 transition-colors duration-150 ease-out hover:border-brand">
           <p class="font-medium text-ink">{card.title}</p>
           <p class="mt-1 text-sm text-muted">{card.desc}</p>
         </a>
