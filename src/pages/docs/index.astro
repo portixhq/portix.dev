@@ -45,16 +45,18 @@ await portix.print({ content: "Hello PortixOne!" });
         </p>
       </li>
       <li>
-        <p class="text-sm font-medium text-ink">4. Drop `mode: "mock"` and print for real</p>
+        <p class="text-sm font-medium text-ink">4. Swap `mode: "mock"` for your app identity and print for real</p>
         <pre class="mt-2 overflow-x-auto rounded-code border border-line bg-surface-tertiary p-4 font-mono text-[13px]"><code>{`import { Portix } from "@portixone/sdk";
 
-const portix = new Portix();
+const portix = new Portix({ appId: "my-app", tenant: "default" });
 await portix.connect();
 
 await portix.print({ content: "Hello PortixOne!" });`}</code></pre>
         <p class="mt-2 text-[13px] text-muted">
-          Same code, one option removed. See the <a href="/docs/sdk" class="text-brand hover:underline">SDK reference</a> for
-          every option `print()` and the rest of the class accept.
+          `mode: "mock"` becomes your integration's `appId`/`tenant` — the first `connect()` pairs
+          automatically (instant from a browser on `localhost`). See the
+          <a href="/docs/sdk" class="text-brand hover:underline">SDK reference</a> for every option
+          `print()` and the rest of the class accept.
         </p>
       </li>
     </ol>

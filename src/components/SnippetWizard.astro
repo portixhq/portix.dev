@@ -121,7 +121,7 @@ const protocols = [
     const templates: Record<string, (p: { printer: string; protocol: string }) => string> = {
       js: ({ printer, protocol }) => `${importLine}
 
-const portix = new Portix();
+const portix = new Portix({ appId: 'my-app', tenant: 'default' });
 await portix.connect();
 
 ${protocolCommentFor(protocol)}
@@ -131,7 +131,7 @@ await portix.print({
 });`,
       react: ({ printer, protocol }) => `${importLine}
 
-const portix = new Portix();
+const portix = new Portix({ appId: 'my-app', tenant: 'default' });
 
 function PrintButton() {
   const handlePrint = async () => {
@@ -144,7 +144,7 @@ function PrintButton() {
 }`,
       vue: ({ printer, protocol }) => `${importLine}
 
-const portix = new Portix();
+const portix = new Portix({ appId: 'my-app', tenant: 'default' });
 
 async function print() {
   await portix.connect();
@@ -154,7 +154,7 @@ async function print() {
       angular: ({ printer, protocol }) => `${importLine}
 
 export class PrintService {
-  private portix = new Portix();
+  private portix = new Portix({ appId: 'my-app', tenant: 'default' });
 
   async print() {
     await this.portix.connect();
@@ -165,7 +165,7 @@ export class PrintService {
       next: ({ printer, protocol }) => `'use client';
 ${importLine}
 
-const portix = new Portix();
+const portix = new Portix({ appId: 'my-app', tenant: 'default' });
 
 export default function PrintButton() {
   const handlePrint = async () => {
