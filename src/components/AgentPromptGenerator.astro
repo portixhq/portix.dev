@@ -1,0 +1,174 @@
+---
+// The AI coding-agent prompt generator — used both inside BuilderPaths' "AI coding agent" tab and
+// standalone on /docs/ai-integration, so there is exactly one generator UI in the codebase.
+import { frameworks, codingEnvironments, printers, sdk, docs, LAST_VERIFIED_AT } from '../data/integration-manifest';
+
+const printerPresets = ['Thermal receipt (default)', 'Epson TM-T88', 'SICAR WL88S'];
+---
+
+<div class="agent-generator">
+  <div class="mt-1 grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <label class="text-[12px] text-muted">
+      Coding environment
+      <select class="agent-env mt-1 w-full rounded-btn border border-line bg-surface-secondary px-3 py-2 text-[13px] text-ink">
+        {codingEnvironments.map((e) => <option value={e.id}>{e.label}</option>)}
+      </select>
+    </label>
+    <label class="text-[12px] text-muted">
+      Framework
+      <select class="agent-framework mt-1 w-full rounded-btn border border-line bg-surface-secondary px-3 py-2 text-[13px] text-ink">
+        {frameworks.map((f) => <option value={f.id}>{f.label}</option>)}
+      </select>
+    </label>
+    <label class="text-[12px] text-muted">
+      Language
+      <select class="agent-language mt-1 w-full rounded-btn border border-line bg-surface-secondary px-3 py-2 text-[13px] text-ink">
+        <option>JavaScript</option>
+        <option>TypeScript</option>
+      </select>
+    </label>
+    <label class="text-[12px] text-muted">
+      Printer
+      <select class="agent-printer mt-1 w-full rounded-btn border border-line bg-surface-secondary px-3 py-2 text-[13px] text-ink">
+        {printerPresets.map((p) => <option>{p}</option>)}
+      </select>
+    </label>
+    <label class="text-[12px] text-muted">
+      Protocol
+      <select class="agent-protocol mt-1 w-full rounded-btn border border-line bg-surface-secondary px-3 py-2 text-[13px] text-ink">
+        {printers.protocolsSupported.map((p) => <option>{p}</option>)}
+      </select>
+    </label>
+    <label class="text-[12px] text-muted">
+      Setup
+      <select class="agent-mode mt-1 w-full rounded-btn border border-line bg-surface-secondary px-3 py-2 text-[13px] text-ink">
+        <option value="mock">Mock-first (no printer needed yet)</option>
+        <option value="runtime">Physical-printer setup</option>
+      </select>
+    </label>
+    <label class="text-[12px] text-muted sm:col-span-2">
+      Project
+      <select class="agent-project mt-1 w-full rounded-btn border border-line bg-surface-secondary px-3 py-2 text-[13px] text-ink">
+        <option value="existing">Existing project</option>
+        <option value="new">New example project</option>
+      </select>
+    </label>
+  </div>
+
+  <button type="button" class="agent-generate btn-primary mt-5 px-6 py-3">Generate integration prompt</button>
+
+  <div class="agent-result mt-6 hidden">
+    <div class="result-tabs flex gap-2">
+      <button type="button" class="result-tab rounded-btn border border-brand bg-brand/10 px-3 py-1.5 text-[12px] text-ink" data-result-tab="prompt">Prompt</button>
+      <button type="button" class="result-tab rounded-btn border border-line px-3 py-1.5 text-[12px] text-muted hover:text-ink" data-result-tab="code">Code</button>
+    </div>
+
+    <div class="result-panel mt-4" data-result-panel="prompt">
+      <div class="max-h-96 overflow-y-auto rounded-code border border-line bg-surface-tertiary p-5">
+        <pre class="agent-prompt whitespace-pre-wrap font-mono text-[11.5px] leading-6 text-ink"></pre>
+      </div>
+      <p class="mt-3 text-[11px] text-muted">
+        The prompt never includes secrets and never asks the agent to bypass Runtime pairing or operating-system permissions.
+      </p>
+    </div>
+    <div class="result-panel mt-4 hidden" data-result-panel="code">
+      <div class="rounded-code border border-line bg-surface-tertiary p-5">
+        <pre class="agent-snippet overflow-x-auto font-mono text-[12.5px] leading-6 text-ink"><code></code></pre>
+      </div>
+    </div>
+
+    <div class="mt-5 flex flex-wrap items-center gap-3">
+      <button type="button" class="agent-copy-prompt btn-primary">Copy prompt</button>
+      <button type="button" class="agent-copy-code btn-outline">Copy SDK snippet</button>
+      <a href={docs.sdkReference} class="btn-link">Open matching documentation →</a>
+    </div>
+    <p class="agent-copied-note mt-3 hidden text-[12px] text-brand">
+      Copied — paste this into your coding agent at the root of your project.
+    </p>
+    <p class="mt-3 text-[11px] text-muted">
+      Your agent can implement the application code. Installing the local Runtime, approving pairing, and
+      confirming physical output remain explicit human steps.
+    </p>
+  </div>
+
+  <p class="mt-8 border-t border-line pt-4 text-[11px] text-muted">
+    Verified against Portix.One SDK {sdk.latestVerifiedVersion} · manifest last verified {LAST_VERIFIED_AT}
+  </p>
+</div>
+
+<script>
+  import { buildIntegrationPrompt, buildFrameworkSnippet } from '../lib/integration-prompt';
+  import type { FrameworkId } from '../data/integration-manifest';
+
+  document.querySelectorAll<HTMLElement>('.agent-generator').forEach((root) => {
+    function track(event: string, detail: Record<string, unknown> = {}) {
+      window.dispatchEvent(new CustomEvent('portix:analytics', { detail: { event, ...detail } }));
+    }
+
+    function highlight(code: string) {
+      return code
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/\b(import|from|const|await|new|async|function|export|class|return|try|catch|throw|if|let)\b/g, '<span class="text-brand">$1</span>');
+    }
+
+    const agentResult = root.querySelector<HTMLElement>('.agent-result');
+    const agentPromptEl = root.querySelector<HTMLElement>('.agent-prompt');
+    const agentSnippetEl = root.querySelector<HTMLElement>('.agent-snippet code');
+
+    root.querySelector('.agent-generate')?.addEventListener('click', () => {
+      const framework = (root.querySelector<HTMLSelectElement>('.agent-framework')?.value ?? 'javascript') as FrameworkId;
+      const inputs = {
+        codingEnvironment: (root.querySelector<HTMLSelectElement>('.agent-env')?.value ?? 'generic') as any,
+        framework,
+        language: (root.querySelector<HTMLSelectElement>('.agent-language')?.value ?? 'JavaScript') as 'JavaScript' | 'TypeScript',
+        printerType: root.querySelector<HTMLSelectElement>('.agent-printer')?.value ?? 'Thermal receipt',
+        protocol: root.querySelector<HTMLSelectElement>('.agent-protocol')?.value ?? 'ESC/POS',
+        mode: (root.querySelector<HTMLSelectElement>('.agent-mode')?.value ?? 'mock') as 'mock' | 'runtime',
+        projectType: (root.querySelector<HTMLSelectElement>('.agent-project')?.value ?? 'existing') as 'existing' | 'new',
+        appId: 'my-app',
+        tenant: 'default',
+      };
+
+      const prompt = buildIntegrationPrompt(inputs);
+      const code = buildFrameworkSnippet({ framework, mode: inputs.mode, appId: inputs.appId, tenant: inputs.tenant });
+
+      if (agentPromptEl) agentPromptEl.textContent = prompt;
+      if (agentSnippetEl) agentSnippetEl.innerHTML = highlight(code);
+      agentResult?.classList.remove('hidden');
+      track('integration_prompt_generated', inputs);
+    });
+
+    root.querySelectorAll<HTMLButtonElement>('.result-tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.resultTab;
+        root.querySelectorAll('.result-tab').forEach((t) => {
+          const active = t === tab;
+          t.classList.toggle('border-brand', active);
+          t.classList.toggle('bg-brand/10', active);
+          t.classList.toggle('text-ink', active);
+          t.classList.toggle('border-line', !active);
+          t.classList.toggle('text-muted', !active);
+        });
+        root.querySelectorAll('[data-result-panel]').forEach((p) => {
+          p.classList.toggle('hidden', (p as HTMLElement).dataset.resultPanel !== target);
+        });
+      });
+    });
+
+    const agentCopiedNote = root.querySelector<HTMLElement>('.agent-copied-note');
+    function flashCopied() {
+      agentCopiedNote?.classList.remove('hidden');
+      setTimeout(() => agentCopiedNote?.classList.add('hidden'), 2500);
+    }
+    root.querySelector('.agent-copy-prompt')?.addEventListener('click', () => {
+      navigator.clipboard.writeText(agentPromptEl?.textContent ?? '');
+      flashCopied();
+      track('integration_prompt_copied');
+    });
+    root.querySelector('.agent-copy-code')?.addEventListener('click', () => {
+      navigator.clipboard.writeText(agentSnippetEl?.textContent ?? '');
+      track('sdk_snippet_copied', { source: 'agent' });
+    });
+  });
+</script>

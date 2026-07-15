@@ -1,0 +1,33 @@
+# Portix.One
+
+> Local-first printing infrastructure that connects browser-based applications to local thermal
+> receipt printers through a secure Runtime and a JavaScript SDK or API.
+
+Portix.One -> is a -> local-first printing infrastructure
+Web application -> sends jobs through -> SDK or API
+SDK or API -> communicates with -> Portix.One Runtime
+Runtime -> connects to -> local USB or network printer
+Runtime -> returns -> job status and errors
+
+## Start here
+
+- Quick start: https://portix.one/docs
+- SDK reference: https://portix.one/docs/sdk
+- Runtime API: https://portix.one/docs/runtime
+- AI coding agent integration: https://portix.one/docs/ai-integration
+- Security model: https://portix.one/security
+- FAQ: https://portix.one/docs/faq
+- Comparison with browser printing: https://portix.one/compare
+
+## Facts, not slogans
+
+- Printer support today: thermal receipt printers using ESC/POS on Windows.
+- The SDK does not replace printer drivers - it works with printers already available to the
+  operating system.
+- A print job passing through the Runtime is "accepted," not "printed" - only the Runtime's
+  documented "completed" terminal status confirms physical output.
+- Pricing: the SDK and self-managed Runtime are free, including production use. Managed operations
+  (diagnostics, remote configuration, fleet management) are separate paid tiers, currently in preview.
+
+This file is a pointer to canonical, human-readable documentation, not a replacement for it. If
+anything here conflicts with the linked pages, the linked pages are correct.

@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { pairing, runtime } from '../data/integration-manifest';
+
+const trustPoints = [
+  {
+    title: 'Runtime bound to the documented local interface',
+    body: `The Runtime listens on ${runtime.defaultEndpoint} — a loopback address, not a public one. It is not designed to be reachable from the public internet.`,
+  },
+  {
+    title: 'Explicit application pairing',
+    body: 'Every web application must complete the pairing flow below before it can send a single print job. There is no default, always-on credential a stranger\'s app can reuse.',
+  },
+  {
+    title: 'Revocable authorization',
+    body: 'A completed pairing can be revoked from the Runtime at any time. Once revoked, that application\'s token stops working on its very next request.',
+  },
+  {
+    title: 'No public printer exposure',
+    body: 'The printer itself is never addressed directly by the browser. Every job passes through the Runtime, which is the only thing that talks to the printer.',
+  },
+  {
+    title: 'Documented local data flow',
+    body: 'Web application → SDK/API → local Runtime → printer, with status and errors flowing back the same path. No step in that chain is undocumented or hidden.',
+  },
+];
+---
+
+<BaseLayout title="Security model" description="How Portix.One pairs applications to a local Runtime, scopes tokens, and keeps printers off the public internet.">
+  <section class="mx-auto max-w-3xl px-6 py-20">
+    <p class="text-[12px] font-semibold uppercase tracking-[0.14em] text-brand">Local security model</p>
+    <h1 class="mt-2 font-mono text-3xl font-semibold">Local by design. Explicitly paired.</h1>
+    <p class="mt-4 text-[15px] leading-relaxed text-ink">
+      The printer stays on the local machine or network. Every web application must be approved before it can send
+      jobs through the Portix.One Runtime.
+    </p>
+
+    <div class="mt-10 space-y-6">
+      {trustPoints.map((point) => (
+        <div class="rounded-card border border-line bg-surface p-5">
+          <p class="font-mono text-[14px] font-semibold text-ink">{point.title}</p>
+          <p class="mt-2 text-[13px] leading-relaxed text-muted">{point.body}</p>
+        </div>
+      ))}
+    </div>
+
+    <h2 class="mt-14 font-mono text-lg font-semibold">The pairing flow</h2>
+    <ol class="mt-4 space-y-3 text-[14px] leading-relaxed text-muted">
+      {pairing.flow.map((step, i) => (
+        <li class="flex gap-3">
+          <span class="font-mono text-brand">{String(i + 1).padStart(2, '0')}</span>
+          <span>{step}</span>
+        </li>
+      ))}
+    </ol>
+    <p class="mt-4 text-[13px] leading-relaxed text-muted">
+      One documented exception: a pairing request from a browser origin the Runtime already trusts —
+      <code class="font-mono text-ink">localhost</code> or a private-network address — is approved automatically,
+      without a human in the tray. Every other origin, including a deployed production site, always requires a
+      human to approve the request from the Portix.One tray.
+    </p>
+
+    <h2 class="mt-14 font-mono text-lg font-semibold">Token scope</h2>
+    <p class="mt-4 text-[14px] leading-relaxed text-muted">
+      A paired application's token only ever sees its own tenant and app's jobs — not every job the Runtime has
+      ever queued. The Runtime's own admin key, used by the local dashboard and tray, is a separate credential that
+      never leaves the machine it runs on.
+    </p>
+
+    <h2 class="mt-14 font-mono text-lg font-semibold">Revocation</h2>
+    <p class="mt-4 text-[14px] leading-relaxed text-muted">
+      Revoking a pairing is immediate — the revoked application's token is rejected on its very next request. There
+      is no delay, cache, or grace period.
+    </p>
+
+    <p class="mt-14 text-[13px] text-muted">
+      Questions about a specific deployment or threat model? <a href="mailto:hello@portix.dev?subject=PortixOne%20Security" class="text-brand hover:underline">Email us</a> —
+      or read the <a href="/docs/runtime" class="text-brand hover:underline">Runtime API reference</a> for the exact endpoints this page describes.
+    </p>
+  </section>
+</BaseLayout>

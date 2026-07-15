@@ -1,12 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Playground from '../components/Playground.astro';
-import SnippetWizard from '../components/SnippetWizard.astro';
-import TTFPChecklist from '../components/TTFPChecklist.astro';
+import BuilderPaths from '../components/BuilderPaths.astro';
 import PricingCards from '../components/PricingCards.astro';
 import DocsCards from '../components/DocsCards.astro';
 import JoinPreviewForm from '../components/JoinPreviewForm.astro';
-import TTFPBar from '../components/TTFPBar.astro';
+import { printers, runtime } from '../data/integration-manifest';
 
 // 3. How it works — the local-first architecture, one step per relationship
 const architecture = [
@@ -75,11 +73,11 @@ const faqs = [
   { q: 'Which thermal printers and commands are supported?', a: 'Thermal receipt printers using ESC/POS on Windows are the focus of the current Developer Preview. Broader printer and OS support is on the roadmap.' },
   { q: 'Does it work with React, Next.js, Vue, and Angular?', a: 'Yes. Portix.One works with browser-based applications and modern web frameworks through the same SDK and API.' },
   { q: 'Can it print without opening the browser print dialog?', a: 'Yes. Jobs go directly to the printer through the Runtime, with no browser print dialog.' },
-  { q: 'What happens if the runtime or printer is offline?', a: 'The demo and API surface the specific problem — runtime not running, no printer found, or printer offline — instead of failing silently.' },
+  { q: 'What happens if the runtime or printer is offline?', a: 'The SDK and API surface the specific problem — runtime not running, no printer found, or printer offline — instead of failing silently.' },
   { q: 'How is the web app paired with the local runtime?', a: 'You approve a pairing between the browser application and the local Runtime. Both sides verify the relationship before any print job is accepted.' },
-  { q: 'Does Portix.One confirm physical printing?', a: 'The Runtime reports the most reliable terminal state the printer connection supports. When it cannot verify physical output, the demo and API say the job was delivered to the printer rather than claiming it printed.' },
+  { q: 'Does Portix.One confirm physical printing?', a: 'The Runtime reports the most reliable terminal state the printer connection supports. When it cannot verify physical output, the API says the job was delivered to the printer rather than claiming it printed.' },
   { q: 'Does Portix.One currently offer no-code connectors?', a: 'Not yet. Low-code teams can call the REST API directly today. A dedicated no-code connector is in preview — join the Developer Preview to be notified.' },
-  { q: 'How is production usage priced?', a: 'The SDK stays free for development. Production and Scale pricing shown on this page are expected Developer Preview pricing and are being finalized.' },
+  { q: 'How is production usage priced?', a: 'The SDK and self-managed Runtime are free, including production use. Managed operations — Runtime diagnostics, remote configuration, and fleet management — are paid, billed per managed Runtime. Production is in preview with no fixed price yet; Scale is quote-based.' },
 ];
 
 const faqJsonLd = {
@@ -101,10 +99,13 @@ const appJsonLd = {
   description:
     'Local-first printing infrastructure that connects browser-based applications to local thermal receipt printers through a secure runtime and a JavaScript SDK or API.',
   url: 'https://portix.one',
+  // Only the Free tier's offer is declared — Production and Scale prices are intentionally omitted
+  // from structured data while they're still Developer Preview / quote-based, not finalized. See
+  // PricingCards.astro.
   offers: {
     '@type': 'Offer',
-    name: 'Free developer tier',
-    description: 'The Portix.One SDK and Runtime are free for development and unrestricted production use. Paid Production and Scale tiers are in Developer Preview pricing.',
+    name: 'Free self-managed tier',
+    description: 'The Portix.One SDK and self-managed Runtime are free, including production use. Managed operations (diagnostics, remote configuration, fleet management) are separate paid tiers, currently in preview.',
     price: '0',
     priceCurrency: 'USD',
   },
@@ -114,7 +115,7 @@ const appJsonLd = {
 <BaseLayout title="Thermal Receipt Printer API for Web Apps | Portix.One" rawTitle>
   <!-- 1. HERO — define the product -->
   <section class="relative overflow-hidden bg-black">
-    <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-x-12 gap-y-14 px-6 pb-20 pt-16 md:grid-cols-2 md:pb-28 md:pt-24">
+    <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-x-12 gap-y-14 px-6 pb-20 pt-16 md:grid-cols-[1fr_1.5fr] md:pb-28 md:pt-24">
       <div class="text-left">
         <div class="mb-7 flex flex-wrap items-center gap-x-3 gap-y-2">
           <span class="rounded-full border border-brand/40 bg-brand/10 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.1em] text-brand">
@@ -133,11 +134,11 @@ const appJsonLd = {
         </p>
 
         <div class="mt-10 flex flex-wrap items-center gap-3">
-          <a href="#playground" class="btn-primary px-6 py-3 text-[14px]">
-            See every step to your first print
+          <a href="#how-it-works" class="btn-outline px-6 py-3 text-[14px]">
+            See how it works
           </a>
-          <a href="#playground" class="btn-outline px-6 py-3 text-[14px]">
-            See a real receipt print
+          <a href="#get-started" class="btn-primary px-6 py-3 text-[14px]">
+            A direct path to your first print
           </a>
         </div>
       </div>
@@ -151,26 +152,9 @@ const appJsonLd = {
         <img
           src="/printerhero.png"
           alt="Thermal receipt printer printing a Portix.One ticket: web app connected, runtime detected, printer ready, receipt printed"
-          class="relative z-10 w-full max-w-[552px] select-none drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
+          class="relative z-10 w-full max-w-[662px] select-none drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
           loading="eager"
         />
-      </div>
-    </div>
-  </section>
-
-  <!-- 2. PRODUCT PROOF — see it work -->
-  <section id="playground" class="scroll-mt-20 border-t border-line bg-surface-secondary">
-    <div class="mx-auto max-w-6xl px-6 py-24">
-      <p class="mb-3 text-center font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-brand">Live product demo</p>
-      <h2 class="mx-auto max-w-[24ch] text-center font-mono text-2xl font-semibold leading-[1.15]">
-        This is not a mockup. Try a real print flow.
-      </h2>
-      <p class="mx-auto mt-4 max-w-[62ch] text-center text-[15px] leading-relaxed text-muted">
-        Run the same connection check Portix.One uses in production. If the local runtime is available, it finds the
-        printer and prints. If it is not, the demo shows exactly what is missing.
-      </p>
-      <div class="mt-14">
-        <Playground />
       </div>
     </div>
   </section>
@@ -187,15 +171,23 @@ const appJsonLd = {
         directly to the internet.
       </p>
 
-      <!-- Diagram -->
+      <!-- Diagram — a frosted-ice glow travels node → arrow → node, left to right, to read as a
+           continuous flow rather than four static boxes. -->
       <div class="mt-12 overflow-x-auto">
-        <div class="flex min-w-[640px] items-stretch gap-3 font-mono text-[12px]">
+        <div class="flow-track flex min-w-[640px] items-stretch gap-3 font-mono text-[12px]">
           {['Web application', 'Portix.One SDK / API', 'Secure local runtime', 'Local printer'].map((node, i) => (
             <>
-              <div class="flex flex-1 items-center justify-center rounded-md border border-line bg-surface-secondary px-4 py-5 text-center text-ink">
+              <div
+                class="flow-node flex flex-1 items-center justify-center rounded-md border border-line bg-surface-secondary px-4 py-5 text-center text-ink"
+                style={`animation-delay: ${i * 2 * 0.595}s`}
+              >
                 {node}
               </div>
-              {i < 3 && <div class="flex items-center text-brand">→</div>}
+              {i < 3 && (
+                <div class="flow-arrow flex items-center text-brand" style={`animation-delay: ${(i * 2 + 1) * 0.595}s`}>
+                  →
+                </div>
+              )}
             </>
           ))}
         </div>
@@ -221,40 +213,47 @@ const appJsonLd = {
     </div>
   </section>
 
-  <!-- 4. TIME TO FIRST PRINT — the true setup flow -->
-  <section class="border-t border-line bg-surface-secondary">
+  <!-- 4. GET STARTED — the real setup path, explained plainly instead of tracked live -->
+  <section id="get-started" class="scroll-mt-20 border-t border-line bg-surface-secondary">
     <div class="mx-auto max-w-6xl px-6 py-24">
       <p class="mb-3 font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-brand">Time to First Print</p>
-      <h2 class="max-w-[30ch] font-mono text-2xl font-semibold leading-[1.15]">
-        From a printer on your counter to a confirmed print from your web app.
+      <h2 class="max-w-[26ch] font-mono text-2xl font-semibold leading-[1.15]">
+        A direct path to your first print.
       </h2>
-      <p class="mt-4 max-w-[64ch] text-[15px] leading-relaxed text-muted">
-        Time to First Print is the elapsed time between starting setup and confirming that a real print job completed on
-        a physical printer — not the time since you landed on this page.
+      <p class="mt-4 max-w-[60ch] text-[15px] leading-relaxed text-muted">
+        Install the Runtime, pair your application, and send a real receipt.
       </p>
-      <div class="mt-12">
-        <TTFPChecklist />
+
+      <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+        {[
+          { n: '01', title: 'Install the Runtime', body: 'Download and run the Portix.One Runtime on the Windows machine your printer is connected to.' },
+          { n: '02', title: 'Pair your application', body: 'Approve the pairing request from the Portix.One tray — one human action, done once.' },
+          { n: '03', title: 'Send a real receipt', body: 'Call print() from your app and watch a real job reach the printer.' },
+        ].map((step) => (
+          <div class="rounded-card border border-line bg-surface p-6">
+            <p class="font-mono text-[13px] font-semibold text-brand">{step.n}</p>
+            <p class="mt-3 font-mono text-[15px] font-semibold text-ink">{step.title}</p>
+            <p class="mt-2 max-w-[38ch] text-[13px] leading-relaxed text-muted">{step.body}</p>
+          </div>
+        ))}
       </div>
+
+      <a href="/docs" class="btn-primary mt-10 inline-flex px-6 py-3 text-[14px]">Read the Quick Start →</a>
     </div>
   </section>
 
-  <!-- 5. DEVELOPER EXPERIENCE — choose how you build -->
+  <!-- 5. CHOOSE HOW YOU BUILD — one interactive experience, five genuinely different outputs -->
   <section class="border-t border-line">
     <div class="mx-auto max-w-6xl px-6 py-24">
       <p class="mb-3 font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-brand">Built for every way developers build</p>
-      <h2 class="max-w-[24ch] font-mono text-2xl font-semibold leading-[1.15]">Use the abstraction level that fits you.</h2>
+      <h2 class="max-w-[26ch] font-mono text-2xl font-semibold leading-[1.15]">Choose how you want to integrate.</h2>
       <p class="mt-4 max-w-[64ch] text-[15px] leading-relaxed text-muted">
-        Start from a guided flow or integrate directly with the SDK and API. The same reliable printing architecture
-        runs underneath every path — for experienced engineers, framework developers, AI-assisted builders, and low-code
-        teams alike.
+        Start with the SDK, a framework example, a generated coding-agent prompt, or a low-code API recipe. Every
+        path uses the same Portix.One Runtime and print-job model underneath.
       </p>
       <div class="mt-12">
-        <SnippetWizard />
+        <BuilderPaths />
       </div>
-      <p class="mt-8 max-w-[64ch] text-[13px] leading-relaxed text-muted">
-        Works with browser-based applications and modern web frameworks through the JavaScript SDK, REST, and WebSocket
-        interfaces. No-code connector availability is in preview.
-      </p>
     </div>
   </section>
 
@@ -275,6 +274,30 @@ const appJsonLd = {
           </div>
         ))}
       </div>
+    </div>
+  </section>
+
+  <!-- COMPACT SECURITY BLOCK -->
+  <section class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <p class="mb-3 font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-brand">Local security model</p>
+      <h2 class="max-w-[24ch] font-mono text-2xl font-semibold leading-[1.15]">Local by design. Explicitly paired.</h2>
+      <p class="mt-4 max-w-[64ch] text-[15px] leading-relaxed text-muted">
+        The printer stays on the local machine or network. Every web application must be approved before it can send
+        jobs through the Portix.One Runtime.
+      </p>
+      <ul class="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-[13px] text-muted">
+        {[
+          'Runtime bound to the documented local interface',
+          'Explicit application pairing',
+          'Revocable authorization',
+          'No public printer exposure',
+          'Documented local data flow',
+        ].map((point) => (
+          <li class="flex items-center gap-2"><span class="text-brand">✓</span>{point}</li>
+        ))}
+      </ul>
+      <a href="/security" class="btn-link mt-8">Read the security model →</a>
     </div>
   </section>
 
@@ -343,13 +366,24 @@ const appJsonLd = {
         Built in public, with developers testing real print workflows.
       </h2>
       <p class="mt-4 max-w-[62ch] text-[15px] leading-relaxed text-muted">
-        Portix.One is maintained infrastructure, not a prototype. Every release is versioned in public, and the Runtime
-        detection in the demo above runs the same code path production uses — try it yourself instead of taking our
-        word for it.
+        Portix.One is maintained infrastructure, not a prototype. Every release is versioned in public, and the source
+        is open — read the code that talks to the Runtime instead of taking our word for it.
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
         <a href="https://github.com/portixhq/portixone" class="btn-outline">View the source</a>
         <a href="/changelog" class="btn-ghost">Read the changelog</a>
+      </div>
+
+      <div class="mt-12 rounded-card border border-line bg-surface p-6">
+        <p class="mb-4 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-brand">Tested with real hardware</p>
+        <div class="grid grid-cols-2 gap-x-6 gap-y-3 font-mono text-[13px] sm:grid-cols-4">
+          <div><p class="text-[11px] text-muted">Printer</p><p class="text-ink">{printers.verified[0].model}</p></div>
+          <div><p class="text-[11px] text-muted">OS</p><p class="text-ink">{printers.verified[0].os}</p></div>
+          <div><p class="text-[11px] text-muted">Connection</p><p class="text-ink">{printers.verified[0].connection}</p></div>
+          <div><p class="text-[11px] text-muted">Protocol</p><p class="text-ink">{printers.verified[0].protocol}</p></div>
+          <div><p class="text-[11px] text-muted">Runtime</p><p class="text-ink">{runtime.version}</p></div>
+          <div><p class="text-[11px] text-muted">Last verified</p><p class="text-ink">{printers.verified[0].lastVerifiedAt}</p></div>
+        </div>
       </div>
     </div>
   </section>
@@ -359,10 +393,11 @@ const appJsonLd = {
     <div class="mx-auto max-w-6xl px-6 py-24">
       <p class="mb-3 font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-brand">Pricing</p>
       <h2 class="max-w-[34ch] font-mono text-2xl font-semibold leading-[1.15]">
-        Start free. Pay when Portix.One becomes part of your operation.
+        Start self-managed. Upgrade when printing becomes an operation.
       </h2>
       <p class="mt-4 max-w-[62ch] text-[15px] leading-relaxed text-muted">
-        The SDK stays free for development. Pricing is based on the production value Portix.One operates.
+        The Portix.One SDK and self-managed Runtime are free. Paid plans add managed diagnostics, remote
+        configuration, team controls, and fleet operations.
       </p>
       <div class="mt-12">
         <PricingCards />
@@ -414,7 +449,7 @@ const appJsonLd = {
         Connect a local thermal receipt printer and ship your first controlled print workflow with Portix.One.
       </p>
       <div class="mt-8 flex flex-wrap items-center gap-3">
-        <a href="#playground" class="btn-primary px-6 py-3 text-[14px]">A guided path to your first print</a>
+        <a href="#get-started" class="btn-primary px-6 py-3 text-[14px]">A guided path to your first print</a>
         <a href="/docs" class="btn-outline px-6 py-3 text-[14px]">Read the quick start</a>
       </div>
 
@@ -428,14 +463,46 @@ const appJsonLd = {
     </div>
   </section>
 
-  <TTFPBar />
-
   <script type="application/ld+json" set:html={JSON.stringify(appJsonLd)} is:inline />
   <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} is:inline />
 </BaseLayout>
 
-<style is:global>
-  body {
-    padding-bottom: 44px;
+<style>
+  /* Architecture diagram — a frosted-ice pulse travels through each node and arrow in sequence,
+     then pauses briefly before looping, reading as one continuous signal rather than four static
+     boxes. Off entirely under reduced motion, matching the rest of the site's motion policy. */
+  @media (prefers-reduced-motion: no-preference) {
+    .flow-node {
+      animation: flow-node-pulse 4.76s ease-in-out infinite;
+    }
+    .flow-arrow {
+      animation: flow-arrow-pulse 4.76s ease-in-out infinite;
+    }
+  }
+
+  @keyframes flow-node-pulse {
+    0%,
+    18%,
+    100% {
+      box-shadow: 0 0 0 rgba(var(--color-brand-rgb), 0);
+      border-color: var(--color-line);
+    }
+    7% {
+      box-shadow: 0 0 26px 2px rgba(var(--color-brand-rgb), 0.5);
+      border-color: rgba(var(--color-brand-rgb), 0.85);
+    }
+  }
+
+  @keyframes flow-arrow-pulse {
+    0%,
+    18%,
+    100% {
+      opacity: 0.35;
+      text-shadow: none;
+    }
+    7% {
+      opacity: 1;
+      text-shadow: 0 0 12px rgba(var(--color-brand-rgb), 0.9);
+    }
   }
 </style>

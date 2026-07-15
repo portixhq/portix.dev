@@ -1,41 +1,68 @@
 ---
+// Pricing direction: open SDK + self-managed Runtime, paid managed operations. Production and Scale
+// intentionally show no price — both are still Developer Preview / not fully built, and this site
+// has already had one honesty pass over an unsupported "5 prices are firm" claim. Don't reintroduce it.
 const plans = [
   {
     name: 'Free',
-    tagline: 'For every developer',
+    tagline: 'Build and run self-managed printing workflows.',
     price: '$0',
     unit: null,
-    features: ['Full Runtime & SDK', 'Silent printing', 'Unrestricted production use', 'Playground & docs', 'Community support'],
+    features: [
+      'JavaScript SDK',
+      'Mock mode',
+      'Self-managed local Runtime',
+      'Local configuration',
+      'Direct printing',
+      'Community support',
+      'Public documentation and examples',
+    ],
+    note: 'Free does not include managed diagnostics, remote configuration, fleet visibility, release controls, or priority support.',
     cta: 'Get Started',
     href: '/docs',
     highlight: false,
   },
   {
     name: 'Production',
-    tagline: 'Recommended',
-    price: '$24',
-    unit: 'per Runtime / mo, expected',
-    features: ['Everything in Free', 'Priority support', 'Production reliability tooling'],
-    cta: 'Join Developer Preview',
+    tagline: 'Managed operations for business-critical printing.',
+    price: null,
+    unit: 'Per managed Runtime / month',
+    features: [
+      'Everything in Free',
+      'Runtime health and diagnostics',
+      'Managed release channel',
+      'Version visibility',
+      'Priority support',
+      'Production troubleshooting tools',
+    ],
+    previewFeatures: ['Remote configuration', 'Operational alerts'],
+    cta: 'Join Production Preview',
     href: '#join',
     highlight: true,
   },
   {
     name: 'Scale',
-    tagline: 'For growing operations',
-    price: '$79',
-    unit: 'per Runtime / mo, expected',
-    features: ['Organizations & teams', 'Runtime health & diagnostics', 'Remote configuration', 'Version management', 'Priority support'],
-    cta: 'Join Developer Preview',
-    href: '#join',
+    tagline: 'Operate printing across teams, locations, and Runtime fleets.',
+    price: null,
+    unit: null,
+    features: [],
+    previewFeatures: [
+      'Organizations and teams',
+      'Multiple locations',
+      'Fleet health',
+      'Centralized configuration',
+      'Runtime version management',
+      'Role-based access',
+      'Audit history',
+      'Priority support or SLA',
+    ],
+    cta: 'Contact us',
+    href: 'mailto:hello@portix.dev?subject=PortixOne%20Scale',
     highlight: false,
   },
 ];
 ---
 
-<p class="mb-6 text-center text-[13px] text-muted">
-  Production and Scale prices below are expected Developer Preview pricing, not final — billed per Runtime.
-</p>
 <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
   {
     plans.map((plan) => (
@@ -46,9 +73,14 @@ const plans = [
         ]}
       >
         <p class="text-[13px] font-semibold uppercase tracking-[0.1em] text-muted">{plan.name}</p>
-        <p class="mt-1 font-mono text-[13px] text-brand">{plan.tagline}</p>
-        <p class="mt-4 font-mono text-2xl font-bold text-ink">{plan.price}</p>
+        <p class="mt-1 max-w-[26ch] text-[13px] text-muted">{plan.tagline}</p>
+        {plan.price ? (
+          <p class="mt-4 font-mono text-2xl font-bold text-ink">{plan.price}</p>
+        ) : (
+          <p class="mt-4 font-mono text-[15px] font-semibold text-brand">Contact us</p>
+        )}
         {plan.unit && <p class="mt-0.5 text-[11px] text-muted">{plan.unit}</p>}
+
         <ul class="mt-5 flex-1 space-y-2 text-[13px] text-muted">
           {plan.features.map((f) => (
             <li class="flex gap-2">
@@ -56,7 +88,16 @@ const plans = [
               <span>{f}</span>
             </li>
           ))}
+          {plan.previewFeatures?.map((f) => (
+            <li class="flex gap-2">
+              <span class="text-muted">◌</span>
+              <span>{f} <span class="text-[10.5px] uppercase tracking-[0.08em] text-muted">— in preview</span></span>
+            </li>
+          ))}
         </ul>
+
+        {plan.note && <p class="mt-4 text-[11px] leading-relaxed text-muted">{plan.note}</p>}
+
         <a href={plan.href} class:list={['mt-6 text-center', plan.highlight ? 'btn-primary' : 'btn-outline']}>
           {plan.cta}
         </a>
@@ -66,5 +107,5 @@ const plans = [
 </div>
 
 <p class="mt-6 text-center text-[13px] text-muted">
-  Need Enterprise? <a href="mailto:hello@portix.dev?subject=PortixOne%20Enterprise" class="text-brand hover:underline">Let's talk</a>.
+  Need something Scale doesn't cover yet? <a href="mailto:hello@portix.dev?subject=PortixOne%20Enterprise" class="text-brand hover:underline">Let's talk</a>.
 </p>

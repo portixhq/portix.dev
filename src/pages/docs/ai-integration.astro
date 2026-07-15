@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AgentPromptGenerator from '../../components/AgentPromptGenerator.astro';
+import { sdk, runtime, jobs, frameworks, LAST_VERIFIED_AT } from '../../data/integration-manifest';
+---
+
+<BaseLayout
+  title="AI coding agent integration"
+  description="Generate a verified Portix.One integration prompt for Codex, Cursor, Claude Code, Copilot, or any coding agent — with the real SDK contract, Runtime prerequisites, and a checkable definition of done."
+>
+  <section class="mx-auto max-w-3xl px-6 py-20">
+    <p class="text-[12px] font-semibold uppercase tracking-[0.14em] text-brand">Docs</p>
+    <h1 class="mt-2 font-mono text-3xl font-semibold">Give your coding agent the same contract a careful engineer would use.</h1>
+    <p class="mt-4 text-[15px] leading-relaxed text-ink">
+      This isn't "copy this prompt." It's a project-aware prompt generator that only uses the official SDK surface,
+      real Runtime prerequisites, real job-status semantics, and a definition of done your agent — or you — can
+      actually verify.
+    </p>
+
+    <div class="mt-10 rounded-card border border-line bg-surface p-6 md:p-8">
+      <p class="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-brand">Prompt generator</p>
+      <AgentPromptGenerator />
+    </div>
+
+    <h2 class="mt-14 font-mono text-lg font-semibold">Current verified source</h2>
+    <div class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+      <div><p class="text-[11px] text-muted">SDK package</p><p class="font-mono text-[13px] text-ink">{sdk.package}</p></div>
+      <div><p class="text-[11px] text-muted">SDK version</p><p class="font-mono text-[13px] text-ink">{sdk.latestVerifiedVersion}</p></div>
+      <div><p class="text-[11px] text-muted">Runtime version</p><p class="font-mono text-[13px] text-ink">{runtime.version}</p></div>
+      <div><p class="text-[11px] text-muted">Last verified</p><p class="font-mono text-[13px] text-ink">{LAST_VERIFIED_AT}</p></div>
+    </div>
+
+    <h2 class="mt-14 font-mono text-lg font-semibold">Framework recipes</h2>
+    <p class="mt-3 text-[14px] leading-relaxed text-muted">
+      Every framework option produces framework-shaped code using the same verified SDK calls. Only the frameworks
+      below have a real, maintained example repository today — the generator is honest about the rest.
+    </p>
+    <ul class="mt-4 space-y-2 text-[13px]">
+      {frameworks.map((f) => (
+        <li class="flex items-center justify-between rounded-btn border border-line px-4 py-2.5">
+          <span class="font-mono text-ink">{f.label}</span>
+          {f.hasMaintainedExample ? (
+            <a href={f.exampleUrl} class="text-brand hover:underline">Maintained example →</a>
+          ) : (
+            <span class="text-muted">On the roadmap</span>
+          )}
+        </li>
+      ))}
+    </ul>
+
+    <h2 class="mt-14 font-mono text-lg font-semibold">Runtime prerequisites</h2>
+    <ul class="mt-4 space-y-2 text-[14px] leading-relaxed text-muted">
+      <li>· A {runtime.supportedOperatingSystems.join(', ')} computer with the Portix.One Runtime installed and running.</li>
+      <li>· A compatible printer, powered on and available to the operating system.</li>
+      <li>· A completed application pairing, approved by a human in the Portix.One tray.</li>
+    </ul>
+
+    <h2 class="mt-14 font-mono text-lg font-semibold">Job-status semantics</h2>
+    <p class="mt-3 text-[14px] leading-relaxed text-muted">
+      Real statuses, exactly as the Runtime returns them: <code class="font-mono text-ink">{jobs.statuses.join(', ')}</code>.
+      An agent — or your own code — must not conflate these:
+    </p>
+    <ul class="mt-4 space-y-2 text-[13px] text-muted">
+      <li><span class="font-mono text-ink">Accepted</span> — {jobs.semantics.accepted}</li>
+      <li><span class="font-mono text-ink">Delivered</span> — {jobs.semantics.delivered}</li>
+      <li><span class="font-mono text-ink">Confirmed</span> — {jobs.semantics.confirmed}</li>
+    </ul>
+
+    <h2 class="mt-14 font-mono text-lg font-semibold">Security rules</h2>
+    <ul class="mt-4 space-y-2 text-[14px] leading-relaxed text-muted">
+      <li>· The generated prompt never includes real API keys, pairing tokens, pairing codes, or a visitor's detected Runtime data.</li>
+      <li>· It never asks the agent to install or run installers automatically, disable security prompts, approve pairing without a human, open public ports, or expose the Runtime to the internet.</li>
+      <li>· Every value in the prompt is either a placeholder you provided or drawn from this page's verified manifest.</li>
+    </ul>
+
+    <h2 class="mt-14 font-mono text-lg font-semibold">Definition of done</h2>
+    <ul class="mt-4 space-y-2 text-[14px] leading-relaxed text-muted">
+      <li>· The project builds and its existing tests pass.</li>
+      <li>· Mock mode produces the expected receipt preview.</li>
+      <li>· Runtime-unavailable and job-failure states are visible and actionable.</li>
+      <li>· No secrets or temporary pairing values are committed.</li>
+      <li>· The application never labels an accepted job as physically printed.</li>
+      <li>· Physical-printer completion stays a manual verification step unless the Runtime returns a documented terminal confirmation.</li>
+    </ul>
+
+    <p class="mt-14 text-[13px] text-muted">
+      See also: <a href="/docs/sdk" class="text-brand hover:underline">SDK reference</a>,
+      <a href="/docs/runtime" class="text-brand hover:underline">Runtime API</a>,
+      <a href="/security" class="text-brand hover:underline">Security model</a>.
+    </p>
+  </section>
+</BaseLayout>
