@@ -31,8 +31,8 @@
   /* Primitives */
   --white: #ffffff;
   --black: #000000;
-  --brand: #8f00a8;
-  --brand-rgb: 143, 0, 168;
+  --brand: #b9d9fb; /* Frosted Ice — replaces the former brand purple */
+  --brand-rgb: 185, 217, 251;
   --gray-50: #fafafa;
   --gray-100: #f5f5f5;
   --gray-200: #e5e5e5;
@@ -40,14 +40,21 @@
   --gray-600: #525252;
   --gray-900: #171717;
 
-  /* Semantic tokens — components consume these, never the primitives above */
-  --color-surface: var(--white);
-  --color-surface-secondary: var(--gray-50);
-  --color-surface-tertiary: var(--gray-100);
-  --color-ink: var(--black);
-  --color-muted: var(--gray-600);
-  --color-line: var(--gray-200);
-  --color-line-strong: var(--black);
+  /* Dark surfaces layered above absolute black */
+  --ink-900: #0a0a0a;
+  --ink-850: #141416;
+  --ink-800: #1b1b1e;
+  --ink-line: #262629;
+
+  /* Semantic tokens — components consume these, never the primitives above.
+     The landing runs on an absolute-black (#000000) theme. */
+  --color-surface: var(--black);
+  --color-surface-secondary: var(--ink-900);
+  --color-surface-tertiary: var(--ink-850);
+  --color-ink: var(--white);
+  --color-muted: var(--gray-400);
+  --color-line: var(--ink-line);
+  --color-line-strong: var(--white);
   --color-brand: var(--brand);
   --color-brand-rgb: var(--brand-rgb);
   --color-brand-10: rgba(var(--brand-rgb), 0.1);
@@ -60,7 +67,7 @@
 
 ::selection {
   background: var(--color-brand);
-  color: var(--color-ink);
+  color: var(--black);
 }
 
 ::-webkit-scrollbar {
@@ -86,8 +93,8 @@
 /* Background grid — 1-2% opacity, drifts almost imperceptibly slowly */
 .bg-grid {
   background-image:
-    linear-gradient(to right, rgb(0 0 0 / 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(0 0 0 / 0.02) 1px, transparent 1px);
+    linear-gradient(to right, rgb(255 255 255 / 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.03) 1px, transparent 1px);
   background-size: 48px 48px;
   animation: grid-drift 120s linear infinite;
 }
@@ -110,7 +117,7 @@
   @apply inline-flex items-center justify-center gap-2 rounded-btn border px-4 py-2 text-[13px] font-mono font-medium transition-colors duration-150 ease-out;
 }
 .btn-primary {
-  @apply btn border-ink bg-ink text-white hover:bg-white hover:text-ink;
+  @apply btn border-ink bg-ink text-surface hover:bg-transparent hover:text-ink;
 }
 .btn-secondary {
   @apply btn border-line bg-surface-secondary text-ink hover:border-ink;

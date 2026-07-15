@@ -1,35 +1,53 @@
 ---
+import { STAGES } from '../lib/ttfp';
+
+const prerequisites = [
+  'Windows computer supported by the current Runtime',
+  'Compatible printer, powered on and connected by USB or network',
+  'Permission to install and run the Portix.One Runtime',
+];
 ---
 
 <div class="mx-auto max-w-md">
-  <div class="flex items-baseline justify-between">
+  <p class="mb-4 font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-muted">Before you start</p>
+  <ul class="space-y-2 text-[13px] text-muted">
+    {prerequisites.map((p) => (
+      <li class="flex gap-2">
+        <span class="text-brand">·</span>
+        <span>{p}</span>
+      </li>
+    ))}
+  </ul>
+
+  <div class="mt-8 flex items-baseline justify-between border-t border-line pt-6">
     <p class="font-mono text-[15px] font-semibold text-ink">Your first print</p>
-    <span class="ttfp-checklist-eta font-mono text-[12px] text-brand">~5:00 remaining</span>
+    <span class="ttfp-checklist-step font-mono text-[12px] text-brand">0 of {STAGES.length} steps complete</span>
   </div>
 
-  <ul class="ttfp-checklist-list mt-5 space-y-3"></ul>
+  <ul class="ttfp-checklist-list mt-5 space-y-3">
+    {STAGES.map((stage) => (
+      <li class="checklist-item flex items-start gap-3 text-[13px] text-muted" data-key={stage.key}>
+        <span class="checklist-check mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-line text-[11px] text-muted">○</span>
+        <span>
+          <span class="checklist-label block">{stage.label}</span>
+          <span class="block text-[12px] text-muted/80">{stage.description}</span>
+        </span>
+      </li>
+    ))}
+  </ul>
 
   <p class="ttfp-checklist-note mt-4 text-[13px] leading-relaxed text-muted"></p>
+  <button type="button" class="ttfp-checklist-reset mt-3 hidden font-mono text-[12px] text-muted underline decoration-line underline-offset-4 hover:text-ink">
+    Start a new setup
+  </button>
 </div>
 
 <script>
-  import { CHECKLIST_STAGES, getState, getEtaLabel, onUpdate, type StageKey } from '../lib/ttfp';
-
-  const list = document.querySelector<HTMLElement>('.ttfp-checklist-list');
-
-  if (list) {
-    list.innerHTML = CHECKLIST_STAGES.map(
-      (stage) => `
-        <li class="checklist-item flex items-center gap-3 text-[13px] text-muted" data-key="${stage.key}">
-          <span class="checklist-check flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-line text-[11px] text-muted">○</span>
-          <span>${stage.label}</span>
-        </li>
-      `,
-    ).join('');
-  }
+  import { STAGES, getState, getStepLabel, onUpdate, resetState, type StageKey } from '../lib/ttfp';
 
   function render() {
     const state = getState();
+    const done = STAGES.filter((s) => state[s.key]).length;
 
     document.querySelectorAll<HTMLElement>('.checklist-item').forEach((el) => {
       const key = el.dataset.key as StageKey;
@@ -42,23 +60,32 @@
       el.classList.toggle('text-ink', isDone);
     });
 
-    document.querySelectorAll<HTMLElement>('.ttfp-checklist-eta').forEach((el) => {
-      const eta = getEtaLabel();
-      el.textContent = eta === 'Printed' ? eta : `~${eta}`;
+    document.querySelectorAll<HTMLElement>('.ttfp-checklist-step').forEach((el) => {
+      el.textContent = getStepLabel();
     });
 
     document.querySelectorAll<HTMLElement>('.ttfp-checklist-note').forEach((el) => {
       if (state.printed) {
-        el.textContent = 'That was a real print. Welcome to PortixOne.';
-      } else if (state.pairedBrowser) {
-        el.textContent = "You're paired — hit print in the Playground above for the real thing.";
-      } else if (state.downloadedRuntime) {
-        el.textContent = "You're one click away from your first print.";
+        el.textContent = 'That was a real print, confirmed by the Runtime. Welcome to Portix.One.';
+      } else if (state.jobAccepted) {
+        el.textContent = 'The Runtime accepted the job. If nothing came out, check the printer connection.';
+      } else if (state.applicationPaired) {
+        el.textContent = "You're paired — hit print in the Playground above to send a real job.";
+      } else if (state.runtimeDetected) {
+        el.textContent = 'Runtime found. Pair the Playground above to continue.';
       } else {
         el.textContent = '';
       }
     });
+
+    document.querySelectorAll<HTMLElement>('.ttfp-checklist-reset').forEach((el) => {
+      el.classList.toggle('hidden', done === 0);
+    });
   }
+
+  document.querySelector('.ttfp-checklist-reset')?.addEventListener('click', () => {
+    resetState();
+  });
 
   onUpdate(render);
 </script>

@@ -1,4 +1,5 @@
 ---
+import { STAGES } from '../lib/ttfp';
 ---
 
 <div
@@ -8,26 +9,23 @@
   <div class="mx-auto flex max-w-6xl items-center gap-4 px-6 py-2.5">
     <span class="shrink-0 font-mono text-[11px] font-semibold uppercase tracking-[0.1em] text-muted">Time to first print</span>
     <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-line">
-      <div class="ttfp-fill h-full w-[8%] rounded-full bg-brand transition-all duration-500"></div>
+      <div class="ttfp-fill h-full w-0 rounded-full bg-brand transition-all duration-500"></div>
     </div>
-    <span class="ttfp-percent shrink-0 font-mono text-[12px] font-semibold text-ink">8%</span>
-    <span class="ttfp-eta hidden shrink-0 font-mono text-[11px] text-muted sm:inline">4:36 remaining</span>
+    <span class="ttfp-step shrink-0 font-mono text-[11px] text-muted">0 of {STAGES.length} steps</span>
   </div>
 </div>
 
 <script>
-  import { getProgress, getEtaLabel, onUpdate } from '../lib/ttfp';
+  import { getProgress, getCompletedCount, STAGES, onUpdate } from '../lib/ttfp';
 
   function render() {
     const percent = Math.round(getProgress());
+    const done = getCompletedCount();
     document.querySelectorAll<HTMLElement>('.ttfp-fill').forEach((el) => {
       el.style.width = `${percent}%`;
     });
-    document.querySelectorAll<HTMLElement>('.ttfp-percent').forEach((el) => {
-      el.textContent = `${percent}%`;
-    });
-    document.querySelectorAll<HTMLElement>('.ttfp-eta').forEach((el) => {
-      el.textContent = getEtaLabel();
+    document.querySelectorAll<HTMLElement>('.ttfp-step').forEach((el) => {
+      el.textContent = done >= STAGES.length ? 'Printed' : `${done} of ${STAGES.length} steps`;
     });
   }
 

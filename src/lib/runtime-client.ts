@@ -36,6 +36,8 @@ export interface DetectResult {
   found: boolean;
   /** True when the Runtime is real but has no real printer driver configured — a print would be accepted and tracked, never reach paper. */
   simulated?: boolean;
+  /** The Runtime's configured default printer, straight from /health — real signal for "a compatible printer is available", no auth required. */
+  defaultPrinter?: string;
 }
 
 /** A short, best-effort probe — most visitors have no Runtime running, so this must fail fast, not hang. */
@@ -44,8 +46,8 @@ export async function detectRuntime(): Promise<DetectResult> {
   try {
     const res = await fetch(`${RUNTIME_BASE}/health`, { signal });
     if (!res.ok) return { found: false };
-    const body: { simulated?: boolean } = await res.json();
-    return { found: true, simulated: body.simulated };
+    const body: { simulated?: boolean; defaultPrinter?: string } = await res.json();
+    return { found: true, simulated: body.simulated, defaultPrinter: body.defaultPrinter };
   } catch {
     return { found: false };
   } finally {
@@ -91,7 +93,8 @@ export interface PrintResult {
   status: string;
 }
 
-/** The real thing — this is the call that puts ink on paper. */
+/** The real thing — this is the call that puts ink on paper. A 202 here only means the job was queued
+ *  (`status: 'pending'`), never that paper came out — see `pollJobStatus` for the actual terminal state. */
 export async function realPrint(token: string, content: string): Promise<PrintResult> {
   const res = await fetch(`${RUNTIME_BASE}/print`, {
     method: 'POST',
@@ -100,4 +103,36 @@ export async function realPrint(token: string, content: string): Promise<PrintRe
   });
   if (!res.ok) throw new Error(`Print failed (${res.status})`);
   return res.json();
+}
+
+export type JobTerminalStatus = 'completed' | 'failed' | 'cancelled' | 'timeout';
+
+interface JobRecordLike {
+  jobId: string;
+  status: 'pending' | 'printing' | 'completed' | 'failed' | 'cancelled';
+}
+
+const JOB_POLL_MS = 800;
+const JOB_POLL_TIMEOUT_MS = 15_000;
+
+/** There is no single-job GET endpoint — only `GET /jobs` (a list). We poll the list and pick our job
+ *  out by id until it reaches a real terminal status, exactly the same states `queue.service.ts` uses. */
+export async function pollJobStatus(token: string, jobId: string): Promise<JobTerminalStatus> {
+  const deadline = Date.now() + JOB_POLL_TIMEOUT_MS;
+  while (Date.now() < deadline) {
+    await new Promise((resolve) => setTimeout(resolve, JOB_POLL_MS));
+    try {
+      const res = await fetch(`${RUNTIME_BASE}/jobs`, { headers: { [API_KEY_HEADER]: token } });
+      if (res.ok) {
+        const jobs: JobRecordLike[] = await res.json();
+        const job = jobs.find((j) => j.jobId === jobId);
+        if (job?.status === 'completed' || job?.status === 'failed' || job?.status === 'cancelled') {
+          return job.status;
+        }
+      }
+    } catch {
+      // Transient — keep polling until the deadline.
+    }
+  }
+  return 'timeout';
 }

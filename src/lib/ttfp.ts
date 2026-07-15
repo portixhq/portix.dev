@@ -1,38 +1,53 @@
 // Shared "Time To First Print" progress tracker for the landing page.
-// Every stage after "landed" is tied to a real, observable action — the last
-// two (paired, printed) are real signals from runtime-client.ts, not
-// simulated clicks. The bar can never claim 100% unless a real print happened.
+//
+// Every stage is a real, observable signal from the Runtime itself — never a
+// page-engagement event (viewing a section, picking a use case, generating a
+// snippet). Reading "How it works" or building a snippet may help conversion,
+// but none of that advances a physical print, so none of it is tracked here.
 
-export type StageKey =
-  | 'landed'
-  | 'sawHowItWorks'
-  | 'selectedUseCase'
-  | 'generatedSnippet'
-  | 'downloadedRuntime'
-  | 'pairedBrowser'
-  | 'printed';
+export type StageKey = 'runtimeDetected' | 'printerAvailable' | 'applicationPaired' | 'jobAccepted' | 'printed';
 
 interface Stage {
   key: StageKey;
   percent: number;
   label: string;
+  description: string;
 }
 
 export const STAGES: Stage[] = [
-  { key: 'landed', percent: 0, label: 'Landed on the page' },
-  { key: 'sawHowItWorks', percent: 15, label: 'Saw how it works' },
-  { key: 'selectedUseCase', percent: 30, label: 'Selected your use case' },
-  { key: 'generatedSnippet', percent: 45, label: 'Generated your integration' },
-  { key: 'downloadedRuntime', percent: 60, label: 'Downloaded the Runtime' },
-  { key: 'pairedBrowser', percent: 80, label: 'Paired your browser' },
-  { key: 'printed', percent: 100, label: 'First print completed' },
+  {
+    key: 'runtimeDetected',
+    percent: 20,
+    label: 'Runtime installed and running',
+    description: 'The Portix.One Runtime responded on this machine.',
+  },
+  {
+    key: 'printerAvailable',
+    percent: 40,
+    label: 'Compatible printer available',
+    description: 'The Runtime reports a configured printer, ready to receive jobs.',
+  },
+  {
+    key: 'applicationPaired',
+    percent: 60,
+    label: 'Application paired',
+    description: 'This browser and your Runtime both verified the pairing.',
+  },
+  {
+    key: 'jobAccepted',
+    percent: 80,
+    label: 'Print job accepted',
+    description: 'The Runtime accepted a real job and assigned a job ID.',
+  },
+  {
+    key: 'printed',
+    percent: 100,
+    label: 'Output confirmed',
+    description: 'The job reached its documented terminal success state.',
+  },
 ];
 
-/** Checklist-facing stages — "landed" is the implicit baseline, not a checkbox. */
-export const CHECKLIST_STAGES = STAGES.filter((s) => s.key !== 'landed');
-
-const STORAGE_KEY = 'portix_ttfp_v2';
-const BASE_SECONDS = 300; // "under 5 minutes"
+const STORAGE_KEY = 'portix_ttfp_v3';
 
 export const UPDATE_EVENT = 'portix:ttfp:update';
 
@@ -52,13 +67,11 @@ function writeState(state: State) {
 }
 
 export function getState(): State {
-  const state = readState();
-  state.landed = true;
-  return state;
+  return readState();
 }
 
 export function isDone(key: StageKey): boolean {
-  return key === 'landed' || Boolean(readState()[key]);
+  return Boolean(readState()[key]);
 }
 
 export function markStage(key: StageKey) {
@@ -69,6 +82,12 @@ export function markStage(key: StageKey) {
   window.dispatchEvent(new CustomEvent(UPDATE_EVENT, { detail: { key } }));
 }
 
+/** Reset all progress — used by the "Start a new setup" action once a run is complete. */
+export function resetState() {
+  writeState({});
+  window.dispatchEvent(new CustomEvent(UPDATE_EVENT, { detail: { key: 'reset' } }));
+}
+
 /** The displayed progress is the highest percent among reached stages — 100 only ever appears via `printed`. */
 export function getProgress(): number {
   const state = getState();
@@ -76,18 +95,16 @@ export function getProgress(): number {
   return Math.max(0, ...reached);
 }
 
-export function getCurrentStage(): Stage {
-  const percent = getProgress();
-  return [...STAGES].reverse().find((s) => s.percent <= percent) ?? STAGES[0];
+export function getCompletedCount(): number {
+  const state = getState();
+  return STAGES.filter((s) => state[s.key]).length;
 }
 
-export function getEtaLabel(): string {
-  const progress = getProgress();
-  if (progress >= 100) return 'Printed';
-  const remaining = Math.max(15, Math.round(BASE_SECONDS * (1 - progress / 100)));
-  const m = Math.floor(remaining / 60);
-  const s = remaining % 60;
-  return `${m}:${String(s).padStart(2, '0')} remaining`;
+/** Step-based label, not a time estimate — there is no telemetry yet to back a real ETA. */
+export function getStepLabel(): string {
+  const done = getCompletedCount();
+  if (done >= STAGES.length) return 'Printed';
+  return `${done} of ${STAGES.length} steps complete`;
 }
 
 export function onUpdate(callback: () => void) {

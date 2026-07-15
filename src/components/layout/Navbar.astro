@@ -1,27 +1,33 @@
 ---
 const nav = [
+  { href: '#playground', label: 'Product' },
+  { href: '#how-it-works', label: 'How it works' },
+  { href: '#use-cases', label: 'Use cases' },
+  { href: '#pricing', label: 'Pricing' },
   { href: '/docs', label: 'Docs' },
-  { href: '/learn', label: 'Learn' },
-  { href: '/examples', label: 'Examples' },
-  { href: '/compare', label: 'Compare' },
-  { href: '/roadmap', label: 'Roadmap' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/changelog', label: 'Changelog' },
 ];
 ---
 
-<header class="border-b border-line bg-surface">
-  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-    <a href="/" class="flex items-center">
-      <img src="/wordmark.svg" alt="Portix.One" class="h-[52px] w-auto" />
+<header class="sticky top-0 z-40 border-b border-line bg-black/80 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
+    <a href="/" class="flex items-center" aria-label="Portix.One home">
+      <img src="/wordmark.svg" alt="Portix.One" class="h-[44px] w-auto" />
     </a>
-    <nav class="hidden gap-6 text-[13px] font-medium text-muted md:flex">
+
+    <nav class="hidden items-center gap-7 text-[13px] font-medium text-muted md:flex">
       {nav.map((item) => (
         <a href={item.href} class="transition-colors duration-150 ease-out hover:text-ink">{item.label}</a>
       ))}
     </nav>
-    <a href="https://github.com/portixhq/portixone" class="btn-outline">
-      GitHub
-    </a>
+
+    <div class="flex items-center gap-3">
+      <a
+        href="https://github.com/portixhq/portixone"
+        class="hidden text-[13px] font-medium text-muted transition-colors duration-150 ease-out hover:text-ink sm:inline"
+      >
+        GitHub
+      </a>
+      <a href="#playground" class="btn-primary">Get started</a>
+    </div>
   </div>
 </header>

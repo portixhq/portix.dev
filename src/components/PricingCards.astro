@@ -4,6 +4,7 @@ const plans = [
     name: 'Free',
     tagline: 'For every developer',
     price: '$0',
+    unit: null,
     features: ['Full Runtime & SDK', 'Silent printing', 'Unrestricted production use', 'Playground & docs', 'Community support'],
     cta: 'Get Started',
     href: '/docs',
@@ -12,24 +13,29 @@ const plans = [
   {
     name: 'Production',
     tagline: 'Recommended',
-    price: '$24/mo',
+    price: '$24',
+    unit: 'per Runtime / mo, expected',
     features: ['Everything in Free', 'Priority support', 'Production reliability tooling'],
-    cta: 'Notify Me',
+    cta: 'Join Developer Preview',
     href: '#join',
     highlight: true,
   },
   {
     name: 'Scale',
     tagline: 'For growing operations',
-    price: '$79/mo',
+    price: '$79',
+    unit: 'per Runtime / mo, expected',
     features: ['Organizations & teams', 'Runtime health & diagnostics', 'Remote configuration', 'Version management', 'Priority support'],
-    cta: 'Notify Me',
+    cta: 'Join Developer Preview',
     href: '#join',
     highlight: false,
   },
 ];
 ---
 
+<p class="mb-6 text-center text-[13px] text-muted">
+  Production and Scale prices below are expected Developer Preview pricing, not final — billed per Runtime.
+</p>
 <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
   {
     plans.map((plan) => (
@@ -42,6 +48,7 @@ const plans = [
         <p class="text-[13px] font-semibold uppercase tracking-[0.1em] text-muted">{plan.name}</p>
         <p class="mt-1 font-mono text-[13px] text-brand">{plan.tagline}</p>
         <p class="mt-4 font-mono text-2xl font-bold text-ink">{plan.price}</p>
+        {plan.unit && <p class="mt-0.5 text-[11px] text-muted">{plan.unit}</p>}
         <ul class="mt-5 flex-1 space-y-2 text-[13px] text-muted">
           {plan.features.map((f) => (
             <li class="flex gap-2">

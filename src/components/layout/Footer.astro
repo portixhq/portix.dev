@@ -1,22 +1,76 @@
 ---
-const footerLinks = [
-  { href: '/docs', label: 'Documentation' },
-  { href: 'https://github.com/portixhq/portix-sdk-js', label: 'SDK' },
-  { href: 'https://github.com/portixhq/portixone', label: 'GitHub' },
-  { href: '/examples', label: 'Examples' },
-  { href: '/blog', label: 'Blog' },
-  { href: 'https://status.portix.one', label: 'Status' },
-  { href: 'https://github.com/portixhq', label: 'Community' },
+const columns = [
+  {
+    title: 'Product',
+    links: [
+      { href: '#how-it-works', label: 'How it works' },
+      { href: '#pricing', label: 'Pricing' },
+      { href: '/docs/runtime', label: 'Printer compatibility' },
+      { href: '/docs', label: 'Security' },
+      { href: 'https://status.portix.one', label: 'Status' },
+    ],
+  },
+  {
+    title: 'Developers',
+    links: [
+      { href: '/docs', label: 'Documentation' },
+      { href: 'https://github.com/portixhq/portix-sdk-js', label: 'SDK' },
+      { href: '/examples', label: 'Examples' },
+      { href: 'https://github.com/portixhq/portixone', label: 'GitHub' },
+      { href: '/changelog', label: 'Changelog' },
+    ],
+  },
+  {
+    title: 'Solutions',
+    links: [
+      { href: '#use-cases', label: 'Retail & POS' },
+      { href: '#use-cases', label: 'Restaurants' },
+      { href: '#use-cases', label: 'Warehouses' },
+      { href: '#use-cases', label: 'Healthcare' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { href: '/blog', label: 'Blog' },
+      { href: '/roadmap', label: 'Roadmap' },
+      { href: '/learn', label: 'Learn' },
+      { href: '/compare', label: 'Compare' },
+    ],
+  },
 ];
 ---
 
 <footer class="border-t border-line bg-surface">
-  <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-10 text-[13px] text-muted">
-    <span>© PortixOne — built in public, from Mexico.</span>
-    <div class="flex flex-wrap gap-x-6 gap-y-2">
-      {footerLinks.map((item) => (
-        <a href={item.href} class="transition-colors duration-150 ease-out hover:text-ink">{item.label}</a>
+  <div class="mx-auto max-w-6xl px-6 py-14">
+    <div class="grid grid-cols-2 gap-8 md:grid-cols-5">
+      <div class="col-span-2 md:col-span-1">
+        <img src="/wordmark.svg" alt="Portix.One" class="h-9 w-auto" />
+        <p class="mt-4 max-w-[28ch] text-[13px] leading-relaxed text-muted">
+          Local-first printing infrastructure for web applications.
+        </p>
+      </div>
+
+      {columns.map((col) => (
+        <div>
+          <p class="mb-3 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-ink">{col.title}</p>
+          <ul class="space-y-2 text-[13px] text-muted">
+            {col.links.map((link) => (
+              <li>
+                <a href={link.href} class="transition-colors duration-150 ease-out hover:text-ink">{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
       ))}
+    </div>
+
+    <div class="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6 text-[12px] text-muted">
+      <span>© PortixOne — built in public, from Mexico.</span>
+      <div class="flex gap-x-6">
+        <a href="/privacy" class="transition-colors duration-150 ease-out hover:text-ink">Privacy</a>
+        <a href="/terms" class="transition-colors duration-150 ease-out hover:text-ink">Terms</a>
+      </div>
     </div>
   </div>
 </footer>

@@ -6,12 +6,20 @@ import Footer from '../components/layout/Footer.astro';
 interface Props {
   title: string;
   description?: string;
+  /** When true, use `title` verbatim instead of appending "· PortixOne". */
+  rawTitle?: boolean;
 }
 
 const {
   title,
-  description = 'PortixOne — the local infrastructure for web applications. One API. Every device.',
+  description = 'Print to local thermal receipt printers from JavaScript and browser-based applications through the secure Portix.One Runtime. Built for USB, network, and ESC/POS printing.',
+  rawTitle = false,
 } = Astro.props;
+
+const site = 'https://portix.one';
+const canonical = new URL(Astro.url.pathname, site).href;
+const ogImage = `${site}/printerhero.png`;
+const fullTitle = rawTitle ? title : `${title} · PortixOne`;
 ---
 
 <!doctype html>
@@ -19,9 +27,25 @@ const {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title} · PortixOne</title>
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index, follow" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Portix.One" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
   </head>
   <body class="bg-grid min-h-screen bg-surface font-sans text-ink antialiased">
     <Navbar />
