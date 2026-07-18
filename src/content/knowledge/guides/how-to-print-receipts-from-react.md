@@ -17,7 +17,7 @@ author:
   name: "Portix.One"
   type: "Organization"
 cover:
-  src: "/images/knowledge/react-receipt-printing.webp"
+  src: "/images/knowledge/react-receipt-printing.svg"
   alt: "React application sending a receipt to a thermal printer"
 entities:
   - "React"
