@@ -1,0 +1,32 @@
+---
+interface Props {
+  title: string;
+  contentType: string;
+  category: string;
+  publishedAt: Date;
+  updatedAt: Date;
+  authorName: string;
+}
+
+const { title, contentType, category, publishedAt, updatedAt, authorName } = Astro.props;
+
+const dateFormat = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+---
+
+<header>
+  <p class="font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-brand">
+    {contentType} · {category}
+  </p>
+  <h1 class="mt-2 font-mono text-3xl font-semibold text-ink">{title}</h1>
+  <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px] text-muted">
+    <span>By {authorName}</span>
+    <span aria-hidden="true">·</span>
+    <span>Published <time datetime={publishedAt.toISOString()}>{dateFormat.format(publishedAt)}</time></span>
+    {updatedAt.getTime() !== publishedAt.getTime() && (
+      <>
+        <span aria-hidden="true">·</span>
+        <span>Updated <time datetime={updatedAt.toISOString()}>{dateFormat.format(updatedAt)}</time></span>
+      </>
+    )}
+  </div>
+</header>

@@ -1,0 +1,44 @@
+---
+import { getCollection, render } from 'astro:content';
+import KnowledgeArticleLayout from '../../layouts/KnowledgeArticleLayout.astro';
+import { knowledgeEntryHref } from '../../lib/knowledge-types';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('knowledge', ({ data }) => data.status === 'published');
+
+  return entries.map((entry) => ({
+    params: { slug: knowledgeEntryHref(entry.id).replace(/^\/knowledge\//, '') },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+
+const related = entry.data.relatedArticles.length
+  ? await getCollection('knowledge', ({ id, data }) => {
+      const bareSlug = id.replace(/\.md$/, '').split('/').pop();
+      return data.status === 'published' && !!bareSlug && entry.data.relatedArticles.includes(bareSlug);
+    })
+  : [];
+---
+
+<KnowledgeArticleLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  quickAnswer={entry.data.quickAnswer}
+  contentType={entry.data.contentType}
+  category={entry.data.category}
+  publishedAt={entry.data.publishedAt}
+  updatedAt={entry.data.updatedAt}
+  authorName={entry.data.author.name}
+  authorType={entry.data.author.type}
+  coverSrc={entry.data.cover.src}
+  coverAlt={entry.data.cover.alt}
+  noindex={entry.data.noindex}
+  headings={headings}
+  references={entry.data.references}
+  relatedEntries={related}
+>
+  <Content />
+</KnowledgeArticleLayout>

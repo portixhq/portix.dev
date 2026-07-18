@@ -8,12 +8,14 @@ interface Props {
   description?: string;
   /** When true, use `title` verbatim instead of appending "· PortixOne". */
   rawTitle?: boolean;
+  noindex?: boolean;
 }
 
 const {
   title,
   description = 'Print to local thermal receipt printers from JavaScript and browser-based applications through the secure Portix.One Runtime. Built for USB, network, and ESC/POS printing.',
   rawTitle = false,
+  noindex = false,
 } = Astro.props;
 
 const site = 'https://portix.one';
@@ -30,7 +32,8 @@ const fullTitle = rawTitle ? title : `${title} · PortixOne`;
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
+    <slot name="head" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
     <!-- Open Graph -->

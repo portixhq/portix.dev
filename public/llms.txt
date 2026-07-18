@@ -19,6 +19,14 @@ Runtime -> returns -> job status and errors
 - FAQ: https://portix.one/docs/faq
 - Comparison with browser printing: https://portix.one/compare
 
+## Knowledge
+
+- Knowledge base: https://portix.one/knowledge
+- Guides: https://portix.one/knowledge/guides
+- Concepts: https://portix.one/knowledge/concepts
+- Comparisons: https://portix.one/knowledge/comparisons
+- Troubleshooting: https://portix.one/knowledge/troubleshooting
+
 ## Facts, not slogans
 
 - Printer support today: thermal receipt printers using ESC/POS on Windows.
