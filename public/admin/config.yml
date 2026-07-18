@@ -1,0 +1,290 @@
+backend:
+  name: github
+  repo: portixhq/portix.dev
+  branch: master
+  base_url: https://portix.one
+  auth_endpoint: api/auth
+
+publish_mode: simple
+media_folder: "public/images/knowledge"
+public_folder: "/images/knowledge"
+
+collections:
+  - name: "guides"
+    label: "Guides"
+    folder: "src/content/knowledge/guides"
+    create: true
+    slug: "{{fields.slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields: &knowledge_fields
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string", hint: "Must match the filename. Short, descriptive, stable." }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Quick Answer", name: "quickAnswer", widget: "text", hint: "A direct, self-sufficient answer shown at the top of the article." }
+      - label: "Content Type"
+        name: "contentType"
+        widget: "hidden"
+        default: "guide"
+      - { label: "Category", name: "category", widget: "string" }
+      - { label: "Primary Topic", name: "primaryTopic", widget: "string" }
+      - label: "Search Intent"
+        name: "searchIntent"
+        widget: "select"
+        options: ["how-to", "informational", "comparison", "troubleshooting"]
+      - { label: "Audience", name: "audience", widget: "string", default: "web developers" }
+      - label: "Difficulty"
+        name: "difficulty"
+        widget: "select"
+        options: ["beginner", "intermediate", "advanced"]
+      - label: "Cover"
+        name: "cover"
+        widget: "object"
+        fields:
+          - { label: "Image", name: "src", widget: "image" }
+          - { label: "Alt text", name: "alt", widget: "string" }
+      - label: "Entities"
+        name: "entities"
+        widget: "list"
+        hint: "Named concepts/technologies this article covers. Used for related-content matching."
+      - { label: "Tags", name: "tags", widget: "list" }
+      - label: "Related Articles"
+        name: "relatedArticles"
+        widget: "list"
+        required: false
+        hint: "Slugs of other Knowledge articles (filename without extension)."
+      - label: "References"
+        name: "references"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "URL", name: "url", widget: "string" }
+          - { label: "Publisher", name: "publisher", widget: "string" }
+          - { label: "Accessed At", name: "accessedAt", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options: ["draft", "published", "archived"]
+        default: "draft"
+      - label: "Published At"
+        name: "publishedAt"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+      - label: "Updated At"
+        name: "updatedAt"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+      - label: "Author"
+        name: "author"
+        widget: "object"
+        fields:
+          - { label: "Name", name: "name", widget: "string", default: "Portix.One" }
+          - label: "Type"
+            name: "type"
+            widget: "select"
+            options: ["Organization", "Person"]
+            default: "Organization"
+      - { label: "Featured", name: "featured", widget: "boolean", default: false, required: false }
+      - { label: "Noindex", name: "noindex", widget: "boolean", default: false, required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "concepts"
+    label: "Concepts"
+    folder: "src/content/knowledge/concepts"
+    create: true
+    slug: "{{fields.slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Quick Answer", name: "quickAnswer", widget: "text" }
+      - { label: "Content Type", name: "contentType", widget: "hidden", default: "concept" }
+      - { label: "Category", name: "category", widget: "string" }
+      - { label: "Primary Topic", name: "primaryTopic", widget: "string" }
+      - { label: "Search Intent", name: "searchIntent", widget: "select", options: ["how-to", "informational", "comparison", "troubleshooting"], default: "informational" }
+      - { label: "Audience", name: "audience", widget: "string", default: "web developers" }
+      - { label: "Difficulty", name: "difficulty", widget: "select", options: ["beginner", "intermediate", "advanced"] }
+      - label: "Cover"
+        name: "cover"
+        widget: "object"
+        fields:
+          - { label: "Image", name: "src", widget: "image" }
+          - { label: "Alt text", name: "alt", widget: "string" }
+      - { label: "Entities", name: "entities", widget: "list" }
+      - { label: "Tags", name: "tags", widget: "list" }
+      - { label: "Related Articles", name: "relatedArticles", widget: "list", required: false }
+      - label: "References"
+        name: "references"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "URL", name: "url", widget: "string" }
+          - { label: "Publisher", name: "publisher", widget: "string" }
+          - { label: "Accessed At", name: "accessedAt", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Status", name: "status", widget: "select", options: ["draft", "published", "archived"], default: "draft" }
+      - { label: "Published At", name: "publishedAt", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Updated At", name: "updatedAt", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - label: "Author"
+        name: "author"
+        widget: "object"
+        fields:
+          - { label: "Name", name: "name", widget: "string", default: "Portix.One" }
+          - { label: "Type", name: "type", widget: "select", options: ["Organization", "Person"], default: "Organization" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false, required: false }
+      - { label: "Noindex", name: "noindex", widget: "boolean", default: false, required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "comparisons"
+    label: "Comparisons"
+    folder: "src/content/knowledge/comparisons"
+    create: true
+    slug: "{{fields.slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Quick Answer", name: "quickAnswer", widget: "text" }
+      - { label: "Content Type", name: "contentType", widget: "hidden", default: "comparison" }
+      - { label: "Category", name: "category", widget: "string" }
+      - { label: "Primary Topic", name: "primaryTopic", widget: "string" }
+      - { label: "Search Intent", name: "searchIntent", widget: "select", options: ["how-to", "informational", "comparison", "troubleshooting"], default: "comparison" }
+      - { label: "Audience", name: "audience", widget: "string", default: "web developers" }
+      - { label: "Difficulty", name: "difficulty", widget: "select", options: ["beginner", "intermediate", "advanced"] }
+      - label: "Cover"
+        name: "cover"
+        widget: "object"
+        fields:
+          - { label: "Image", name: "src", widget: "image" }
+          - { label: "Alt text", name: "alt", widget: "string" }
+      - { label: "Entities", name: "entities", widget: "list" }
+      - { label: "Tags", name: "tags", widget: "list" }
+      - { label: "Related Articles", name: "relatedArticles", widget: "list", required: false }
+      - label: "References"
+        name: "references"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "URL", name: "url", widget: "string" }
+          - { label: "Publisher", name: "publisher", widget: "string" }
+          - { label: "Accessed At", name: "accessedAt", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Status", name: "status", widget: "select", options: ["draft", "published", "archived"], default: "draft" }
+      - { label: "Published At", name: "publishedAt", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Updated At", name: "updatedAt", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - label: "Author"
+        name: "author"
+        widget: "object"
+        fields:
+          - { label: "Name", name: "name", widget: "string", default: "Portix.One" }
+          - { label: "Type", name: "type", widget: "select", options: ["Organization", "Person"], default: "Organization" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false, required: false }
+      - { label: "Noindex", name: "noindex", widget: "boolean", default: false, required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "troubleshooting"
+    label: "Troubleshooting"
+    folder: "src/content/knowledge/troubleshooting"
+    create: true
+    slug: "{{fields.slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Quick Answer", name: "quickAnswer", widget: "text" }
+      - { label: "Content Type", name: "contentType", widget: "hidden", default: "troubleshooting" }
+      - { label: "Category", name: "category", widget: "string" }
+      - { label: "Primary Topic", name: "primaryTopic", widget: "string" }
+      - { label: "Search Intent", name: "searchIntent", widget: "select", options: ["how-to", "informational", "comparison", "troubleshooting"], default: "troubleshooting" }
+      - { label: "Audience", name: "audience", widget: "string", default: "web developers" }
+      - { label: "Difficulty", name: "difficulty", widget: "select", options: ["beginner", "intermediate", "advanced"] }
+      - label: "Cover"
+        name: "cover"
+        widget: "object"
+        fields:
+          - { label: "Image", name: "src", widget: "image" }
+          - { label: "Alt text", name: "alt", widget: "string" }
+      - { label: "Entities", name: "entities", widget: "list" }
+      - { label: "Tags", name: "tags", widget: "list" }
+      - { label: "Related Articles", name: "relatedArticles", widget: "list", required: false }
+      - label: "References"
+        name: "references"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "URL", name: "url", widget: "string" }
+          - { label: "Publisher", name: "publisher", widget: "string" }
+          - { label: "Accessed At", name: "accessedAt", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Status", name: "status", widget: "select", options: ["draft", "published", "archived"], default: "draft" }
+      - { label: "Published At", name: "publishedAt", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Updated At", name: "updatedAt", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - label: "Author"
+        name: "author"
+        widget: "object"
+        fields:
+          - { label: "Name", name: "name", widget: "string", default: "Portix.One" }
+          - { label: "Type", name: "type", widget: "select", options: ["Organization", "Person"], default: "Organization" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false, required: false }
+      - { label: "Noindex", name: "noindex", widget: "boolean", default: false, required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "examples"
+    label: "Examples"
+    folder: "src/content/knowledge/examples"
+    create: true
+    slug: "{{fields.slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Quick Answer", name: "quickAnswer", widget: "text" }
+      - { label: "Content Type", name: "contentType", widget: "hidden", default: "example" }
+      - { label: "Category", name: "category", widget: "string" }
+      - { label: "Primary Topic", name: "primaryTopic", widget: "string" }
+      - { label: "Search Intent", name: "searchIntent", widget: "select", options: ["how-to", "informational", "comparison", "troubleshooting"], default: "how-to" }
+      - { label: "Audience", name: "audience", widget: "string", default: "web developers" }
+      - { label: "Difficulty", name: "difficulty", widget: "select", options: ["beginner", "intermediate", "advanced"] }
+      - label: "Cover"
+        name: "cover"
+        widget: "object"
+        fields:
+          - { label: "Image", name: "src", widget: "image" }
+          - { label: "Alt text", name: "alt", widget: "string" }
+      - { label: "Entities", name: "entities", widget: "list" }
+      - { label: "Tags", name: "tags", widget: "list" }
+      - { label: "Related Articles", name: "relatedArticles", widget: "list", required: false }
+      - label: "References"
+        name: "references"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "URL", name: "url", widget: "string" }
+          - { label: "Publisher", name: "publisher", widget: "string" }
+          - { label: "Accessed At", name: "accessedAt", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Status", name: "status", widget: "select", options: ["draft", "published", "archived"], default: "draft" }
+      - { label: "Published At", name: "publishedAt", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Updated At", name: "updatedAt", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - label: "Author"
+        name: "author"
+        widget: "object"
+        fields:
+          - { label: "Name", name: "name", widget: "string", default: "Portix.One" }
+          - { label: "Type", name: "type", widget: "select", options: ["Organization", "Person"], default: "Organization" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false, required: false }
+      - { label: "Noindex", name: "noindex", widget: "boolean", default: false, required: false }
+      - { label: "Body", name: "body", widget: "markdown" }

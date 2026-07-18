@@ -1,0 +1,134 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/knowledge/Breadcrumbs.astro';
+import ArticleHeader from '../components/knowledge/ArticleHeader.astro';
+import QuickAnswer from '../components/knowledge/QuickAnswer.astro';
+import TableOfContents from '../components/knowledge/TableOfContents.astro';
+import ArticleBody from '../components/knowledge/ArticleBody.astro';
+import References from '../components/knowledge/References.astro';
+import RelatedContent from '../components/knowledge/RelatedContent.astro';
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface RelatedEntry {
+  id: string;
+  data: { title: string; description: string; contentType: string };
+}
+
+interface Reference {
+  title: string;
+  url: string;
+  publisher: string;
+  accessedAt: Date;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  quickAnswer: string;
+  contentType: string;
+  category: string;
+  publishedAt: Date;
+  updatedAt: Date;
+  authorName: string;
+  authorType: 'Organization' | 'Person';
+  coverSrc: string;
+  coverAlt: string;
+  noindex: boolean;
+  headings: Heading[];
+  references: Reference[];
+  relatedEntries: RelatedEntry[];
+}
+
+const {
+  title,
+  description,
+  quickAnswer,
+  contentType,
+  category,
+  publishedAt,
+  updatedAt,
+  authorName,
+  authorType,
+  coverSrc,
+  coverAlt,
+  noindex,
+  headings,
+  references,
+  relatedEntries,
+} = Astro.props;
+
+const site = 'https://portix.one';
+const pageUrl = new URL(Astro.url.pathname, site).href;
+
+const categoryLabel = `${contentType.charAt(0).toUpperCase()}${contentType.slice(1)}s`;
+const categorySlug = `${contentType}s`;
+
+const breadcrumbItems = [
+  { label: 'Knowledge', href: '/knowledge' },
+  { label: categoryLabel, href: `/knowledge/${categorySlug}` },
+  { label: title, href: pageUrl },
+];
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: title,
+  description,
+  image: new URL(coverSrc, site).href,
+  datePublished: publishedAt.toISOString(),
+  dateModified: updatedAt.toISOString(),
+  author: { '@type': authorType, name: authorName },
+  publisher: { '@type': 'Organization', name: 'Portix.One' },
+  mainEntityOfPage: pageUrl,
+};
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbItems.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.label,
+    item: item.href.startsWith('http') ? item.href : new URL(item.href, site).href,
+  })),
+};
+---
+
+<BaseLayout title={title} description={description} noindex={noindex}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
+  </Fragment>
+
+  <article class="mx-auto max-w-3xl px-6 py-20">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <div class="mt-6">
+      <ArticleHeader
+        title={title}
+        contentType={categoryLabel.slice(0, -1)}
+        category={category}
+        publishedAt={publishedAt}
+        updatedAt={updatedAt}
+        authorName={authorName}
+      />
+    </div>
+
+    <img src={coverSrc} alt={coverAlt} width="768" height="432" class="mt-8 w-full rounded-card border border-line object-cover" />
+
+    <QuickAnswer answer={quickAnswer} />
+    <TableOfContents headings={headings} />
+
+    <ArticleBody>
+      <slot />
+    </ArticleBody>
+
+    <References references={references} />
+    <RelatedContent entries={relatedEntries} />
+  </article>
+</BaseLayout>

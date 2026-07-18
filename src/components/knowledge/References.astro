@@ -1,0 +1,29 @@
+---
+interface Reference {
+  title: string;
+  url: string;
+  publisher: string;
+  accessedAt: Date;
+}
+
+interface Props {
+  references: Reference[];
+}
+
+const { references } = Astro.props;
+const dateFormat = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+---
+
+{references.length > 0 && (
+  <section class="mt-12 border-t border-line pt-8">
+    <h2 class="font-mono text-lg font-semibold text-ink">References</h2>
+    <ul class="mt-4 space-y-2 text-[13px] text-muted">
+      {references.map((ref) => (
+        <li>
+          <a href={ref.url} class="text-brand hover:underline" rel="noopener noreferrer" target="_blank">{ref.title}</a>
+          {' '}— {ref.publisher}, accessed {dateFormat.format(ref.accessedAt)}
+        </li>
+      ))}
+    </ul>
+  </section>
+)}

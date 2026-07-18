@@ -1,0 +1,12 @@
+---
+interface Props {
+  answer: string;
+}
+
+const { answer } = Astro.props;
+---
+
+<div class="mt-8 rounded-code border border-line bg-surface-tertiary p-5">
+  <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-brand">Quick answer</p>
+  <p class="mt-2 text-[15px] leading-relaxed text-ink">{answer}</p>
+</div>

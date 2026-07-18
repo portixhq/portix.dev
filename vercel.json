@@ -1,0 +1,25 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/blog",
+      "destination": "/knowledge",
+      "permanent": true
+    },
+    {
+      "source": "/blog/:path*",
+      "destination": "/knowledge",
+      "permanent": true
+    },
+    {
+      "source": "/learn",
+      "destination": "/knowledge",
+      "permanent": true
+    },
+    {
+      "source": "/learn/:path*",
+      "destination": "/knowledge",
+      "permanent": true
+    }
+  ]
+}

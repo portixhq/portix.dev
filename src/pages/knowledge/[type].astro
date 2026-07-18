@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/knowledge/Breadcrumbs.astro';
+import KnowledgeCard from '../../components/knowledge/KnowledgeCard.astro';
+import { KNOWLEDGE_TYPES, knowledgeEntryHref, type KnowledgeTypeSlug } from '../../lib/knowledge-types';
+
+export async function getStaticPaths() {
+  return Object.keys(KNOWLEDGE_TYPES).map((type) => ({ params: { type } }));
+}
+
+const { type } = Astro.params as { type: KnowledgeTypeSlug };
+const meta = KNOWLEDGE_TYPES[type];
+
+const entries = await getCollection(
+  'knowledge',
+  ({ data }) => data.status === 'published' && data.contentType === type.slice(0, -1)
+);
+entries.sort((a, b) => b.data.updatedAt.getTime() - a.data.updatedAt.getTime());
+---
+
+<BaseLayout title={meta.label} description={meta.description}>
+  <section class="mx-auto max-w-3xl px-6 py-20">
+    <Breadcrumbs items={[{ label: 'Knowledge', href: '/knowledge' }, { label: meta.label, href: `/knowledge/${type}` }]} />
+    <h1 class="mt-4 font-mono text-3xl font-semibold text-ink">{meta.label}</h1>
+    <p class="mt-3 text-[15px] leading-relaxed text-muted">{meta.description}</p>
+
+    {entries.length === 0 ? (
+      <p class="mt-10 text-[14px] text-muted">No published articles yet.</p>
+    ) : (
+      <div class="mt-10 grid gap-4 sm:grid-cols-2">
+        {entries.map((entry) => (
+          <KnowledgeCard
+            href={knowledgeEntryHref(entry.id)}
+            title={entry.data.title}
+            description={entry.data.description}
+            contentType={entry.data.contentType}
+          />
+        ))}
+      </div>
+    )}
+  </section>
+</BaseLayout>
