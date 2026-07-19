@@ -1,0 +1,36 @@
+<svg viewBox="0 0 768 432" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Anatomy of an ESC/POS command broken into prefix, command byte, and parameter">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1b1b1e" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="768" height="432" fill="#000000"/>
+  <rect width="768" height="432" fill="url(#grid)"/>
+
+  <g font-family="'JetBrains Mono', monospace">
+    <rect x="234" y="176" width="90" height="48" rx="6" fill="#0a0a0a" stroke="#b9d9fb" stroke-width="1.4"/>
+    <text x="279" y="207" text-anchor="middle" font-size="18" fill="#b9d9fb">ESC</text>
+
+    <rect x="334" y="176" width="70" height="48" rx="6" fill="#0a0a0a" stroke="#262629" stroke-width="1.4"/>
+    <text x="369" y="207" text-anchor="middle" font-size="18" fill="#a3a3a3">a</text>
+
+    <rect x="414" y="176" width="70" height="48" rx="6" fill="#0a0a0a" stroke="#262629" stroke-width="1.4"/>
+    <text x="449" y="207" text-anchor="middle" font-size="18" fill="#a3a3a3">n</text>
+
+    <line x1="279" y1="228" x2="279" y2="256" stroke="#525252" stroke-width="1.2"/>
+    <text x="279" y="272" text-anchor="middle" font-size="10" fill="#525252">prefix</text>
+
+    <line x1="369" y1="228" x2="369" y2="256" stroke="#525252" stroke-width="1.2"/>
+    <text x="369" y="272" text-anchor="middle" font-size="10" fill="#525252">command</text>
+
+    <line x1="449" y1="228" x2="449" y2="256" stroke="#525252" stroke-width="1.2"/>
+    <text x="449" y="272" text-anchor="middle" font-size="10" fill="#525252">parameter</text>
+
+    <text x="359" y="150" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">COMMAND ANATOMY</text>
+
+    <text x="359" y="312" text-anchor="middle" font-size="12" fill="#525252" letter-spacing="0.5">1B 61 01</text>
+  </g>
+
+  <text x="384" y="392" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" fill="#525252" letter-spacing="2">PORTIX.ONE / KNOWLEDGE</text>
+</svg>

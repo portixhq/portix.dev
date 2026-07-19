@@ -18,8 +18,15 @@ const entries = await getCollection(
 );
 entries.sort((a, b) => b.data.updatedAt.getTime() - a.data.updatedAt.getTime());
 
+const CATEGORY_LABEL_OVERRIDES: Record<string, string> = {
+  'esc-pos': 'ESC/POS',
+};
+
 function categoryLabel(category: string) {
-  return category.replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  return (
+    CATEGORY_LABEL_OVERRIDES[category] ??
+    category.replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+  );
 }
 
 const groups = Object.entries(
