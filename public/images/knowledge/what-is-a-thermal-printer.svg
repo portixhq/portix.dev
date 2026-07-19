@@ -1,0 +1,65 @@
+<svg viewBox="0 0 768 432" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A thermal printhead heating a row of dots as media passes beneath it">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1b1b1e" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="768" height="432" fill="#000000"/>
+  <rect width="768" height="432" fill="url(#grid)"/>
+
+  <g font-family="'JetBrains Mono', monospace">
+    <!-- Printhead -->
+    <rect x="204" y="150" width="360" height="20" rx="4" fill="#141416" stroke="#262629" stroke-width="1.5"/>
+    <g>
+      <circle cx="228" cy="160" r="3.5" fill="#b9d9fb"/>
+      <circle cx="252" cy="160" r="3.5" fill="#b9d9fb"/>
+      <circle cx="276" cy="160" r="3.5" fill="#3a3a3d"/>
+      <circle cx="300" cy="160" r="3.5" fill="#b9d9fb"/>
+      <circle cx="324" cy="160" r="3.5" fill="#3a3a3d"/>
+      <circle cx="348" cy="160" r="3.5" fill="#3a3a3d"/>
+      <circle cx="372" cy="160" r="3.5" fill="#b9d9fb"/>
+      <circle cx="396" cy="160" r="3.5" fill="#b9d9fb"/>
+      <circle cx="420" cy="160" r="3.5" fill="#3a3a3d"/>
+      <circle cx="444" cy="160" r="3.5" fill="#b9d9fb"/>
+      <circle cx="468" cy="160" r="3.5" fill="#3a3a3d"/>
+      <circle cx="492" cy="160" r="3.5" fill="#b9d9fb"/>
+      <circle cx="516" cy="160" r="3.5" fill="#3a3a3d"/>
+      <circle cx="540" cy="160" r="3.5" fill="#b9d9fb"/>
+    </g>
+    <text x="384" y="136" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">THERMAL PRINTHEAD</text>
+
+    <!-- Heat marks descending -->
+    <line x1="228" y1="172" x2="228" y2="196" stroke="#b9d9fb" stroke-width="1" opacity="0.5"/>
+    <line x1="252" y1="172" x2="252" y2="196" stroke="#b9d9fb" stroke-width="1" opacity="0.5"/>
+    <line x1="300" y1="172" x2="300" y2="196" stroke="#b9d9fb" stroke-width="1" opacity="0.5"/>
+    <line x1="372" y1="172" x2="372" y2="196" stroke="#b9d9fb" stroke-width="1" opacity="0.5"/>
+    <line x1="396" y1="172" x2="396" y2="196" stroke="#b9d9fb" stroke-width="1" opacity="0.5"/>
+    <line x1="444" y1="172" x2="444" y2="196" stroke="#b9d9fb" stroke-width="1" opacity="0.5"/>
+    <line x1="492" y1="172" x2="492" y2="196" stroke="#b9d9fb" stroke-width="1" opacity="0.5"/>
+    <line x1="540" y1="172" x2="540" y2="196" stroke="#b9d9fb" stroke-width="1" opacity="0.5"/>
+
+    <!-- Paper output -->
+    <rect x="234" y="196" width="300" height="150" fill="#ffffff"/>
+    <rect x="234" y="196" width="300" height="16" fill="#e5e5e5"/>
+    <circle cx="252" cy="228" r="12" fill="none" stroke="#171717" stroke-width="2.4"/>
+    <line x1="272" y1="222" x2="330" y2="222" stroke="#171717" stroke-width="3"/>
+    <line x1="272" y1="234" x2="310" y2="234" stroke="#171717" stroke-width="3"/>
+    <line x1="252" y1="256" x2="516" y2="256" stroke="#a3a3a3" stroke-width="1.6"/>
+    <line x1="252" y1="270" x2="470" y2="270" stroke="#a3a3a3" stroke-width="1.6"/>
+    <line x1="252" y1="284" x2="516" y2="284" stroke="#a3a3a3" stroke-width="1.6"/>
+    <line x1="252" y1="298" x2="440" y2="298" stroke="#a3a3a3" stroke-width="1.6"/>
+    <line x1="252" y1="318" x2="516" y2="318" stroke="#171717" stroke-width="2.4"/>
+    <g transform="translate(252,332)">
+      <rect x="0" y="0" width="10" height="20" fill="#171717"/>
+      <rect x="14" y="0" width="4" height="20" fill="#171717"/>
+      <rect x="22" y="0" width="10" height="20" fill="#171717"/>
+      <rect x="36" y="0" width="6" height="20" fill="#171717"/>
+      <rect x="46" y="0" width="10" height="20" fill="#171717"/>
+      <rect x="60" y="0" width="4" height="20" fill="#171717"/>
+      <rect x="68" y="0" width="10" height="20" fill="#171717"/>
+    </g>
+  </g>
+
+  <text x="384" y="392" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" fill="#525252" letter-spacing="2">PORTIX.ONE / KNOWLEDGE</text>
+</svg>

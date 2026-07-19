@@ -1,0 +1,52 @@
+<svg viewBox="0 0 768 432" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A label printer peeling a die-cut label with a barcode from its liner">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1b1b1e" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="768" height="432" fill="#000000"/>
+  <rect width="768" height="432" fill="url(#grid)"/>
+
+  <g font-family="'JetBrains Mono', monospace">
+    <!-- Printer body -->
+    <rect x="260" y="120" width="200" height="90" rx="8" fill="#141416" stroke="#262629" stroke-width="1.5"/>
+    <rect x="280" y="138" width="160" height="20" rx="3" fill="#0a0a0a" stroke="#262629" stroke-width="1.2"/>
+    <circle cx="424" cy="182" r="4" fill="#b9d9fb"/>
+    <text x="360" y="106" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">LABEL PRINTER</text>
+
+    <!-- Peel edge -->
+    <line x1="284" y1="210" x2="436" y2="210" stroke="#262629" stroke-width="1.4"/>
+    <path d="M300 210 L260 240" stroke="#525252" stroke-width="1.2" stroke-dasharray="3 4"/>
+
+    <!-- Liner continuing right -->
+    <rect x="300" y="210" width="136" height="18" fill="#0f0f11" stroke="#262629" stroke-width="1"/>
+    <rect x="316" y="212" width="22" height="14" fill="none" stroke="#3a3a3d" stroke-width="1" stroke-dasharray="2 2"/>
+    <rect x="348" y="212" width="22" height="14" fill="none" stroke="#3a3a3d" stroke-width="1" stroke-dasharray="2 2"/>
+    <rect x="380" y="212" width="22" height="14" fill="none" stroke="#3a3a3d" stroke-width="1" stroke-dasharray="2 2"/>
+
+    <!-- Peeling label -->
+    <g transform="translate(200,236) rotate(-8)">
+      <rect x="0" y="0" width="110" height="76" rx="4" fill="#ffffff"/>
+      <rect x="12" y="12" width="86" height="10" fill="#a3a3a3"/>
+      <g transform="translate(14,32)">
+        <rect x="0" y="0" width="3" height="30" fill="#171717"/>
+        <rect x="6" y="0" width="2" height="30" fill="#171717"/>
+        <rect x="11" y="0" width="4" height="30" fill="#171717"/>
+        <rect x="18" y="0" width="2" height="30" fill="#171717"/>
+        <rect x="23" y="0" width="3" height="30" fill="#171717"/>
+        <rect x="29" y="0" width="5" height="30" fill="#171717"/>
+        <rect x="37" y="0" width="2" height="30" fill="#171717"/>
+        <rect x="42" y="0" width="4" height="30" fill="#171717"/>
+        <rect x="49" y="0" width="2" height="30" fill="#171717"/>
+        <rect x="54" y="0" width="3" height="30" fill="#171717"/>
+        <rect x="60" y="0" width="5" height="30" fill="#171717"/>
+        <rect x="68" y="0" width="2" height="30" fill="#171717"/>
+        <rect x="73" y="0" width="4" height="30" fill="#171717"/>
+        <rect x="80" y="0" width="2" height="30" fill="#171717"/>
+      </g>
+    </g>
+  </g>
+
+  <text x="384" y="392" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" fill="#525252" letter-spacing="2">PORTIX.ONE / KNOWLEDGE</text>
+</svg>

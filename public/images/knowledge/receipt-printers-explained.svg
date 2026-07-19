@@ -1,0 +1,44 @@
+<svg viewBox="0 0 768 432" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A receipt printer feeding a paper roll and cutting a printed receipt">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1b1b1e" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="768" height="432" fill="#000000"/>
+  <rect width="768" height="432" fill="url(#grid)"/>
+
+  <g font-family="'JetBrains Mono', monospace">
+    <!-- Paper roll -->
+    <g transform="translate(224,120)">
+      <circle cx="0" cy="0" r="46" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="16" fill="none" stroke="#525252" stroke-width="1.5"/>
+      <text x="0" y="-58" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">ROLL</text>
+    </g>
+
+    <!-- Printer body -->
+    <rect x="304" y="86" width="180" height="68" rx="8" fill="#141416" stroke="#262629" stroke-width="1.5"/>
+    <rect x="322" y="102" width="144" height="18" rx="3" fill="#0a0a0a" stroke="#262629" stroke-width="1.2"/>
+    <circle cx="452" cy="136" r="4" fill="#b9d9fb"/>
+    <line x1="322" y1="140" x2="446" y2="140" stroke="#262629" stroke-width="1.5"/>
+    <text x="394" y="72" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">RECEIPT PRINTER</text>
+
+    <!-- Receipt curling out -->
+    <path d="M330 154 L330 220 Q330 236 346 236 L458 236 Q474 236 474 252 L474 300" fill="none" stroke="#262629" stroke-width="1"/>
+    <rect x="330" y="154" width="128" height="82" fill="#ffffff"/>
+    <line x1="342" y1="168" x2="446" y2="168" stroke="#a3a3a3" stroke-width="1.8"/>
+    <line x1="342" y1="182" x2="420" y2="182" stroke="#a3a3a3" stroke-width="1.8"/>
+    <line x1="342" y1="196" x2="446" y2="196" stroke="#a3a3a3" stroke-width="1.8"/>
+    <line x1="342" y1="210" x2="400" y2="210" stroke="#171717" stroke-width="2.4"/>
+    <rect x="346" y="220" width="10" height="14" fill="#171717"/>
+    <rect x="360" y="220" width="4" height="14" fill="#171717"/>
+    <rect x="368" y="220" width="10" height="14" fill="#171717"/>
+    <rect x="382" y="220" width="6" height="14" fill="#171717"/>
+
+    <!-- Cutter mark -->
+    <line x1="330" y1="236" x2="458" y2="236" stroke="#b9d9fb" stroke-width="1.4" stroke-dasharray="3 4"/>
+    <text x="394" y="252" text-anchor="middle" font-size="10" fill="#525252" letter-spacing="0.5">AUTOCUTTER</text>
+  </g>
+
+  <text x="384" y="392" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" fill="#525252" letter-spacing="2">PORTIX.ONE / KNOWLEDGE</text>
+</svg>

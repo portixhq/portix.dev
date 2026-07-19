@@ -1,0 +1,62 @@
+<svg viewBox="0 0 768 432" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A point-of-sale event flowing through a template and queue to a printed receipt">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1b1b1e" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="768" height="432" fill="#000000"/>
+  <rect width="768" height="432" fill="url(#grid)"/>
+
+  <g font-family="'JetBrains Mono', monospace">
+    <!-- Sale event -->
+    <g transform="translate(84,166)">
+      <rect x="0" y="0" width="112" height="80" rx="8" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <text x="56" y="36" text-anchor="middle" font-size="20" fill="#b9d9fb">$</text>
+      <text x="56" y="56" text-anchor="middle" font-size="10" fill="#a3a3a3">SALE</text>
+      <text x="56" y="-12" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">EVENT</text>
+    </g>
+
+    <path d="M204 206 L254 206" stroke="#b9d9fb" stroke-width="1.5" stroke-dasharray="4 5"/>
+    <path d="M246 200 L256 206 L246 212" fill="none" stroke="#b9d9fb" stroke-width="1.5"/>
+
+    <!-- Template -->
+    <g transform="translate(262,166)">
+      <rect x="0" y="0" width="96" height="80" rx="8" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <line x1="16" y1="18" x2="80" y2="18" stroke="#525252" stroke-width="2"/>
+      <line x1="16" y1="32" x2="80" y2="32" stroke="#525252" stroke-width="2"/>
+      <line x1="16" y1="46" x2="56" y2="46" stroke="#525252" stroke-width="2"/>
+      <line x1="16" y1="62" x2="80" y2="62" stroke="#b9d9fb" stroke-width="2"/>
+      <text x="48" y="-12" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">TEMPLATE</text>
+    </g>
+
+    <path d="M358 206 L408 206" stroke="#b9d9fb" stroke-width="1.5" stroke-dasharray="4 5"/>
+    <path d="M400 200 L410 206 L400 212" fill="none" stroke="#b9d9fb" stroke-width="1.5"/>
+
+    <!-- Queue -->
+    <g transform="translate(416,166)">
+      <rect x="0" y="0" width="96" height="80" rx="8" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <rect x="14" y="16" width="68" height="14" rx="3" fill="none" stroke="#525252" stroke-width="1.5"/>
+      <rect x="14" y="34" width="68" height="14" rx="3" fill="none" stroke="#525252" stroke-width="1.5"/>
+      <rect x="14" y="52" width="68" height="14" rx="3" fill="none" stroke="#a3a3a3" stroke-width="1.5"/>
+      <text x="48" y="-12" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">QUEUE</text>
+    </g>
+
+    <path d="M512 206 L562 206" stroke="#b9d9fb" stroke-width="1.5" stroke-dasharray="4 5"/>
+    <path d="M554 200 L564 206 L554 212" fill="none" stroke="#b9d9fb" stroke-width="1.5"/>
+
+    <!-- Printer + receipt -->
+    <g transform="translate(572,168)">
+      <rect x="0" y="18" width="110" height="44" rx="5" fill="#141416" stroke="#262629" stroke-width="1.5"/>
+      <rect x="10" y="0" width="90" height="24" rx="3" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <circle cx="94" cy="40" r="3.5" fill="#b9d9fb"/>
+      <rect x="24" y="62" width="62" height="52" fill="#ffffff"/>
+      <line x1="32" y1="74" x2="78" y2="74" stroke="#a3a3a3" stroke-width="1.6"/>
+      <line x1="32" y1="84" x2="70" y2="84" stroke="#a3a3a3" stroke-width="1.6"/>
+      <line x1="32" y1="94" x2="78" y2="94" stroke="#171717" stroke-width="2.2"/>
+      <text x="55" y="-12" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">RECEIPT</text>
+    </g>
+  </g>
+
+  <text x="384" y="380" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" fill="#525252" letter-spacing="2">PORTIX.ONE / KNOWLEDGE</text>
+</svg>
