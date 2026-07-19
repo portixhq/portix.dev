@@ -17,6 +17,17 @@ const entries = await getCollection(
   ({ data }) => data.status === 'published' && data.contentType === type.slice(0, -1)
 );
 entries.sort((a, b) => b.data.updatedAt.getTime() - a.data.updatedAt.getTime());
+
+function categoryLabel(category: string) {
+  return category.replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+const groups = Object.entries(
+  entries.reduce<Record<string, typeof entries>>((acc, entry) => {
+    (acc[entry.data.category] ??= []).push(entry);
+    return acc;
+  }, {})
+).sort(([a], [b]) => a.localeCompare(b));
 ---
 
 <BaseLayout title={meta.label} description={meta.description}>
@@ -28,16 +39,21 @@ entries.sort((a, b) => b.data.updatedAt.getTime() - a.data.updatedAt.getTime());
     {entries.length === 0 ? (
       <p class="mt-10 text-[14px] text-muted">No published articles yet.</p>
     ) : (
-      <div class="mt-10 grid gap-4 sm:grid-cols-2">
-        {entries.map((entry) => (
-          <KnowledgeCard
-            href={knowledgeEntryHref(entry.id)}
-            title={entry.data.title}
-            description={entry.data.description}
-            contentType={entry.data.contentType}
-          />
-        ))}
-      </div>
+      groups.map(([category, categoryEntries], i) => (
+        <div class={i === 0 ? 'mt-10' : 'mt-14'}>
+          <h2 class="font-mono text-lg font-semibold text-ink">{categoryLabel(category)}</h2>
+          <div class="mt-5 grid gap-4 sm:grid-cols-2">
+            {categoryEntries.map((entry) => (
+              <KnowledgeCard
+                href={knowledgeEntryHref(entry.id)}
+                title={entry.data.title}
+                description={entry.data.description}
+                contentType={entry.data.contentType}
+              />
+            ))}
+          </div>
+        </div>
+      ))
     )}
   </section>
 </BaseLayout>
