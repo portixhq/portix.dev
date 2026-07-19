@@ -1,0 +1,47 @@
+<svg viewBox="0 0 768 432" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A web application connecting over loopback to a local printing service that reaches a printer">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1b1b1e" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="768" height="432" fill="#000000"/>
+  <rect width="768" height="432" fill="url(#grid)"/>
+
+  <g font-family="'JetBrains Mono', monospace">
+    <g transform="translate(96,166)">
+      <rect x="0" y="0" width="110" height="80" rx="8" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <text x="55" y="50" text-anchor="middle" font-size="14" fill="#a3a3a3">&lt;/&gt;</text>
+      <text x="55" y="-12" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">WEB APP</text>
+    </g>
+
+    <path d="M218 194 L280 194" stroke="#b9d9fb" stroke-width="1.5" stroke-dasharray="4 5"/>
+    <path d="M272 188 L282 194 L272 200" fill="none" stroke="#b9d9fb" stroke-width="1.5"/>
+    <text x="249" y="180" text-anchor="middle" font-size="9" fill="#525252">127.0.0.1</text>
+
+    <!-- Loopback dashed circle -->
+    <g transform="translate(360,206)">
+      <rect x="-70" y="-56" width="140" height="112" rx="10" fill="#0a0a0a" stroke="#b9d9fb" stroke-width="1.6" stroke-dasharray="5 4"/>
+      <text x="0" y="-8" text-anchor="middle" font-size="10" fill="#a3a3a3">pairing · auth</text>
+      <text x="0" y="8" text-anchor="middle" font-size="10" fill="#a3a3a3">queue · status</text>
+      <text x="0" y="-72" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">LOCAL SERVICE</text>
+    </g>
+
+    <path d="M440 206 L490 206" stroke="#b9d9fb" stroke-width="1.5" stroke-dasharray="4 5"/>
+    <path d="M482 200 L492 206 L482 212" fill="none" stroke="#b9d9fb" stroke-width="1.5"/>
+
+    <!-- Printer -->
+    <g transform="translate(500,174)">
+      <rect x="0" y="18" width="112" height="44" rx="6" fill="#141416" stroke="#262629" stroke-width="1.5"/>
+      <rect x="10" y="0" width="92" height="24" rx="3" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <circle cx="94" cy="40" r="3.5" fill="#b9d9fb"/>
+      <rect x="24" y="62" width="60" height="50" fill="#ffffff"/>
+      <line x1="32" y1="74" x2="76" y2="74" stroke="#a3a3a3" stroke-width="1.6"/>
+      <line x1="32" y1="84" x2="68" y2="84" stroke="#a3a3a3" stroke-width="1.6"/>
+      <line x1="32" y1="94" x2="76" y2="94" stroke="#171717" stroke-width="2.2"/>
+      <text x="56" y="-10" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">PRINTER</text>
+    </g>
+  </g>
+
+  <text x="384" y="392" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" fill="#525252" letter-spacing="2">PORTIX.ONE / KNOWLEDGE</text>
+</svg>
