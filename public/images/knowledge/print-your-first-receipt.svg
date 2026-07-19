@@ -1,0 +1,48 @@
+<svg viewBox="0 0 768 432" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A sample receipt job submitted to a paired printer role and printed as a physical test receipt">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1b1b1e" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="768" height="432" fill="#000000"/>
+  <rect width="768" height="432" fill="url(#grid)"/>
+
+  <g font-family="'JetBrains Mono', monospace">
+    <!-- Job payload -->
+    <g transform="translate(120,166)">
+      <rect x="0" y="0" width="120" height="80" rx="8" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <text x="60" y="34" text-anchor="middle" font-size="10" fill="#a3a3a3">{ }</text>
+      <text x="60" y="52" text-anchor="middle" font-size="9" fill="#525252">demo-sale-0001</text>
+      <text x="60" y="-12" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">JOB</text>
+    </g>
+
+    <path d="M242 206 L292 206" stroke="#b9d9fb" stroke-width="1.5" stroke-dasharray="4 5"/>
+    <path d="M284 200 L294 206 L284 212" fill="none" stroke="#b9d9fb" stroke-width="1.5"/>
+    <text x="267" y="192" text-anchor="middle" font-size="8" fill="#525252">customer-receipt</text>
+
+    <!-- Printer -->
+    <g transform="translate(304,168)">
+      <rect x="0" y="18" width="112" height="44" rx="6" fill="#141416" stroke="#262629" stroke-width="1.5"/>
+      <rect x="10" y="0" width="92" height="24" rx="3" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <circle cx="94" cy="40" r="3.5" fill="#b9d9fb"/>
+      <text x="56" y="-10" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">PRINTER</text>
+    </g>
+
+    <path d="M416 210 L416 232" stroke="#525252" stroke-width="1.2"/>
+
+    <!-- Printed test receipt -->
+    <rect x="356" y="232" width="120" height="130" fill="#ffffff"/>
+    <rect x="356" y="232" width="120" height="14" fill="#e5e5e5"/>
+    <line x1="368" y1="262" x2="464" y2="262" stroke="#a3a3a3" stroke-width="1.6"/>
+    <line x1="368" y1="276" x2="440" y2="276" stroke="#a3a3a3" stroke-width="1.6"/>
+    <line x1="368" y1="290" x2="464" y2="290" stroke="#a3a3a3" stroke-width="1.6"/>
+    <line x1="368" y1="304" x2="420" y2="304" stroke="#a3a3a3" stroke-width="1.6"/>
+    <line x1="368" y1="324" x2="464" y2="324" stroke="#171717" stroke-width="2.2"/>
+    <text x="416" y="346" text-anchor="middle" font-size="10" fill="#171717">11.50 USD</text>
+
+    <text x="416" y="220" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">TEST RECEIPT</text>
+  </g>
+
+  <text x="384" y="392" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" fill="#525252" letter-spacing="2">PORTIX.ONE / KNOWLEDGE</text>
+</svg>

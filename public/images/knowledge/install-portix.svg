@@ -1,0 +1,43 @@
+<svg viewBox="0 0 768 432" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An installer package being verified and installed as a healthy local runtime on a workstation">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1b1b1e" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="768" height="432" fill="#000000"/>
+  <rect width="768" height="432" fill="url(#grid)"/>
+
+  <g font-family="'JetBrains Mono', monospace">
+    <!-- Installer package -->
+    <g transform="translate(140,160)">
+      <rect x="0" y="0" width="100" height="100" rx="8" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <path d="M30 40 L70 40 L70 55 L58 55 L58 75 L42 75 L42 55 L30 55 Z" fill="none" stroke="#a3a3a3" stroke-width="1.6"/>
+      <text x="50" y="-12" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">INSTALLER</text>
+    </g>
+
+    <path d="M262 210 L312 210" stroke="#b9d9fb" stroke-width="1.5" stroke-dasharray="4 5"/>
+    <path d="M304 204 L314 210 L304 216" fill="none" stroke="#b9d9fb" stroke-width="1.5"/>
+
+    <!-- Verification shield -->
+    <g transform="translate(322,168)">
+      <path d="M42 0 L82 15 L82 48 C82 76 64 92 42 104 C20 92 2 76 2 48 L2 15 Z"
+            fill="#0a0a0a" stroke="#b9d9fb" stroke-width="1.6"/>
+      <path d="M26 52 L38 64 L60 36" fill="none" stroke="#b9d9fb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="42" y="-12" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">VERIFIED</text>
+    </g>
+
+    <path d="M424 210 L474 210" stroke="#b9d9fb" stroke-width="1.5" stroke-dasharray="4 5"/>
+    <path d="M466 204 L476 210 L466 216" fill="none" stroke="#b9d9fb" stroke-width="1.5"/>
+
+    <!-- Workstation with running runtime -->
+    <g transform="translate(486,166)">
+      <rect x="0" y="0" width="140" height="92" rx="8" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <rect x="16" y="16" width="108" height="42" rx="4" fill="none" stroke="#525252" stroke-width="1.3"/>
+      <circle cx="70" cy="76" r="5" fill="#b9d9fb"/>
+      <text x="70" y="-12" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">RUNTIME READY</text>
+    </g>
+  </g>
+
+  <text x="384" y="392" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" fill="#525252" letter-spacing="2">PORTIX.ONE / KNOWLEDGE</text>
+</svg>
