@@ -1,0 +1,47 @@
+<svg viewBox="0 0 768 432" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An Express print-job API persisting a job, dispatching it to a durable worker, and routing it toward a printer">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1b1b1e" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="768" height="432" fill="#000000"/>
+  <rect width="768" height="432" fill="url(#grid)"/>
+  <g font-family="'JetBrains Mono', monospace">
+    <g transform="translate(60,176)">
+      <rect x="0" y="0" width="104" height="72" rx="8" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <text x="52" y="34" text-anchor="middle" font-size="13" fill="#b9d9fb" font-weight="600">Express</text>
+      <text x="52" y="50" text-anchor="middle" font-size="9" fill="#525252">POST /jobs</text>
+      <text x="52" y="-12" text-anchor="middle" font-size="10" fill="#a3a3a3" letter-spacing="1">API</text>
+    </g>
+    <path d="M170 212 L212 212" stroke="#b9d9fb" stroke-width="1.4" stroke-dasharray="3 4"/>
+    <path d="M204 207 L214 212 L204 217" fill="none" stroke="#b9d9fb" stroke-width="1.4"/>
+    <g transform="translate(220,182)">
+      <rect x="0" y="0" width="96" height="60" rx="8" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <rect x="14" y="14" width="68" height="10" rx="2" fill="none" stroke="#525252" stroke-width="1"/>
+      <rect x="14" y="28" width="68" height="10" rx="2" fill="none" stroke="#a3a3a3" stroke-width="1"/>
+      <text x="48" y="-12" text-anchor="middle" font-size="10" fill="#a3a3a3" letter-spacing="1">JOB STORE</text>
+    </g>
+    <path d="M318 212 L360 212" stroke="#b9d9fb" stroke-width="1.4" stroke-dasharray="3 4"/>
+    <path d="M352 207 L362 212 L352 217" fill="none" stroke="#b9d9fb" stroke-width="1.4"/>
+    <g transform="translate(368,182)">
+      <rect x="0" y="0" width="96" height="60" rx="8" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <text x="48" y="26" text-anchor="middle" font-size="9" fill="#a3a3a3">worker</text>
+      <text x="48" y="40" text-anchor="middle" font-size="9" fill="#a3a3a3">retry · timeout</text>
+      <text x="48" y="-12" text-anchor="middle" font-size="10" fill="#a3a3a3" letter-spacing="1">QUEUE</text>
+    </g>
+    <path d="M466 212 L520 212" stroke="#525252" stroke-width="1.3" stroke-dasharray="2 4"/>
+    <g transform="translate(528,182)">
+      <rect x="0" y="0" width="96" height="60" rx="8" fill="none" stroke="#525252" stroke-width="1.4" stroke-dasharray="3 4"/>
+      <text x="48" y="34" text-anchor="middle" font-size="9" fill="#525252">Portix adapter</text>
+      <text x="48" y="-12" text-anchor="middle" font-size="10" fill="#a3a3a3" letter-spacing="1">PENDING</text>
+    </g>
+    <path d="M626 212 L668 212" stroke="#525252" stroke-width="1.3" stroke-dasharray="2 4"/>
+    <g transform="translate(676,182)">
+      <rect x="0" y="12" width="70" height="30" rx="5" fill="#141416" stroke="#262629" stroke-width="1.3"/>
+      <rect x="6" y="0" width="58" height="16" rx="2" fill="#0a0a0a" stroke="#262629" stroke-width="1.2"/>
+      <circle cx="58" cy="27" r="2.5" fill="#525252"/>
+      <text x="35" y="-6" text-anchor="middle" font-size="9" fill="#a3a3a3" letter-spacing="0.5">PRINTER</text>
+    </g>
+  </g>
+  <text x="384" y="392" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" fill="#525252" letter-spacing="2">PORTIX.ONE / KNOWLEDGE</text>
+</svg>
