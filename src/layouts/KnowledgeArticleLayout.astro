@@ -67,13 +67,19 @@ const site = 'https://portix.one';
 const pageUrl = new URL(Astro.url.pathname, site).href;
 
 const categorySlug = knowledgeTypeSlugForContentType(contentType);
-const categoryLabel = KNOWLEDGE_TYPES[categorySlug].label;
 
-const breadcrumbItems = [
-  { label: 'Knowledge', href: '/knowledge' },
-  { label: categoryLabel, href: `/knowledge/${categorySlug}` },
-  { label: title, href: pageUrl },
-];
+// Pillar articles are flat top-level hubs (/knowledge/<slug>) with no listing page,
+// so they skip the middle "type" breadcrumb rather than link to a page that doesn't exist.
+const breadcrumbItems = categorySlug
+  ? [
+      { label: 'Knowledge', href: '/knowledge' },
+      { label: KNOWLEDGE_TYPES[categorySlug].label, href: `/knowledge/${categorySlug}` },
+      { label: title, href: pageUrl },
+    ]
+  : [
+      { label: 'Knowledge', href: '/knowledge' },
+      { label: title, href: pageUrl },
+    ];
 
 const articleJsonLd = {
   '@context': 'https://schema.org',

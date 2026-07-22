@@ -28,12 +28,15 @@ export const KNOWLEDGE_TYPES = {
 
 export type KnowledgeTypeSlug = keyof typeof KNOWLEDGE_TYPES;
 
-/** Reverse lookup from a content entry's singular contentType to its plural URL slug. */
-export function knowledgeTypeSlugForContentType(contentType: string): KnowledgeTypeSlug {
+/**
+ * Reverse lookup from a content entry's singular contentType to its plural URL slug.
+ * Returns undefined for content types with no listing page (e.g. "pillar" — flat
+ * top-level hub articles at /knowledge/<slug>, not grouped under /knowledge/<type>/).
+ */
+export function knowledgeTypeSlugForContentType(contentType: string): KnowledgeTypeSlug | undefined {
   const match = (Object.entries(KNOWLEDGE_TYPES) as [KnowledgeTypeSlug, (typeof KNOWLEDGE_TYPES)[KnowledgeTypeSlug]][])
     .find(([, meta]) => meta.contentType === contentType);
-  if (!match) throw new Error(`No knowledge type slug registered for contentType "${contentType}"`);
-  return match[0];
+  return match?.[0];
 }
 
 /** Strips the source file extension so a content entry id routes as `/knowledge/<id>`. */

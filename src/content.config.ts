@@ -12,7 +12,7 @@ const knowledge = defineCollection({
     slug: z.string(),
     description: z.string(),
     quickAnswer: z.string(),
-    contentType: z.enum(['guide', 'concept', 'comparison', 'troubleshooting', 'example']),
+    contentType: z.enum(['guide', 'concept', 'comparison', 'troubleshooting', 'example', 'pillar']),
     category: z.string(),
     primaryTopic: z.string(),
     searchIntent: z.enum(['how-to', 'informational', 'comparison', 'troubleshooting']),

@@ -240,6 +240,55 @@ collections:
       - { label: "Noindex", name: "noindex", widget: "boolean", default: false, required: false }
       - { label: "Body", name: "body", widget: "markdown" }
 
+  - name: "pillars"
+    label: "Pillar Articles"
+    folder: "src/content/knowledge"
+    create: true
+    slug: "{{fields.slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string", hint: "Flat top-level URL: /knowledge/<slug>, no collection prefix." }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Quick Answer", name: "quickAnswer", widget: "text" }
+      - { label: "Content Type", name: "contentType", widget: "hidden", default: "pillar" }
+      - { label: "Category", name: "category", widget: "string" }
+      - { label: "Primary Topic", name: "primaryTopic", widget: "string" }
+      - { label: "Search Intent", name: "searchIntent", widget: "select", options: ["how-to", "informational", "comparison", "troubleshooting"], default: "informational" }
+      - { label: "Audience", name: "audience", widget: "string", default: "web developers" }
+      - { label: "Difficulty", name: "difficulty", widget: "select", options: ["beginner", "intermediate", "advanced"] }
+      - label: "Cover"
+        name: "cover"
+        widget: "object"
+        fields:
+          - { label: "Image", name: "src", widget: "image" }
+          - { label: "Alt text", name: "alt", widget: "string" }
+      - { label: "Entities", name: "entities", widget: "list" }
+      - { label: "Tags", name: "tags", widget: "list" }
+      - { label: "Related Articles", name: "relatedArticles", widget: "list", required: false }
+      - label: "References"
+        name: "references"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "URL", name: "url", widget: "string" }
+          - { label: "Publisher", name: "publisher", widget: "string" }
+          - { label: "Accessed At", name: "accessedAt", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Status", name: "status", widget: "select", options: ["draft", "published", "archived"], default: "draft" }
+      - { label: "Published At", name: "publishedAt", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Updated At", name: "updatedAt", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - label: "Author"
+        name: "author"
+        widget: "object"
+        fields:
+          - { label: "Name", name: "name", widget: "string", default: "Portix.One" }
+          - { label: "Type", name: "type", widget: "select", options: ["Organization", "Person"], default: "Organization" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false, required: false }
+      - { label: "Noindex", name: "noindex", widget: "boolean", default: false, required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
   - name: "examples"
     label: "Examples"
     folder: "src/content/knowledge/examples"

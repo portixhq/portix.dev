@@ -11,6 +11,9 @@ const recentlyUpdated = [...entries]
   .sort((a, b) => b.data.updatedAt.getTime() - a.data.updatedAt.getTime())
   .slice(0, 6);
 const featured = entries.filter((e) => e.data.featured).slice(0, 4);
+const pillars = entries
+  .filter((e) => e.data.contentType === 'pillar')
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
 ---
 
 <BaseLayout
@@ -37,6 +40,25 @@ const featured = entries.filter((e) => e.data.featured).slice(0, 4);
         </a>
       ))}
     </div>
+
+    {pillars.length > 0 && (
+      <>
+        <h2 class="mt-14 font-mono text-lg font-semibold text-ink">Pillar guides</h2>
+        <p class="mt-2 text-[13px] leading-relaxed text-muted">
+          Complete, in-depth references. Each one ties together the shorter concepts, guides, and comparisons below it.
+        </p>
+        <div class="mt-5 grid gap-4 sm:grid-cols-2">
+          {pillars.map((entry) => (
+            <KnowledgeCard
+              href={knowledgeEntryHref(entry.id)}
+              title={entry.data.title}
+              description={entry.data.description}
+              contentType={entry.data.contentType}
+            />
+          ))}
+        </div>
+      </>
+    )}
 
     {featured.length > 0 && (
       <>
