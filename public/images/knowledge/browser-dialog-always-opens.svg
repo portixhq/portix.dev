@@ -1,0 +1,25 @@
+<svg viewBox="0 0 768 432" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A browser print dialog that keeps opening because window.print() is the expected user-confirmed workflow">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1b1b1e" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="768" height="432" fill="#000000"/>
+  <rect width="768" height="432" fill="url(#grid)"/>
+  <g font-family="'JetBrains Mono', monospace">
+    <g transform="translate(264,130)">
+      <rect x="0" y="0" width="240" height="170" rx="8" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <circle cx="18" cy="18" r="3" fill="#525252"/>
+      <circle cx="30" cy="18" r="3" fill="#525252"/>
+      <circle cx="42" cy="18" r="3" fill="#525252"/>
+      <line x1="0" y1="30" x2="240" y2="30" stroke="#262629" stroke-width="1"/>
+      <rect x="60" y="52" width="120" height="72" rx="6" fill="none" stroke="#b9d9fb" stroke-width="1.6"/>
+      <text x="120" y="76" text-anchor="middle" font-size="9" fill="#a3a3a3">Print</text>
+      <rect x="76" y="88" width="88" height="12" rx="2" fill="none" stroke="#525252" stroke-width="1.1"/>
+      <path d="M195 88 a 14 14 0 1 1 -1 -1" fill="none" stroke="#c96a6a" stroke-width="1.8" marker-end="none"/>
+      <path d="M195 82 L200 88 L194 92" fill="none" stroke="#c96a6a" stroke-width="1.6"/>
+      <text x="120" y="-12" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">BROWSER</text>
+    </g>
+  </g>
+  <text x="384" y="392" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" fill="#525252" letter-spacing="2">PORTIX.ONE / KNOWLEDGE</text>
+</svg>

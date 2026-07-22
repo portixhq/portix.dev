@@ -7,6 +7,7 @@ import TableOfContents from '../components/knowledge/TableOfContents.astro';
 import ArticleBody from '../components/knowledge/ArticleBody.astro';
 import References from '../components/knowledge/References.astro';
 import RelatedContent from '../components/knowledge/RelatedContent.astro';
+import { KNOWLEDGE_TYPES, knowledgeTypeSlugForContentType } from '../lib/knowledge-types';
 
 interface Heading {
   depth: number;
@@ -65,8 +66,8 @@ const {
 const site = 'https://portix.one';
 const pageUrl = new URL(Astro.url.pathname, site).href;
 
-const categoryLabel = `${contentType.charAt(0).toUpperCase()}${contentType.slice(1)}s`;
-const categorySlug = `${contentType}s`;
+const categorySlug = knowledgeTypeSlugForContentType(contentType);
+const categoryLabel = KNOWLEDGE_TYPES[categorySlug].label;
 
 const breadcrumbItems = [
   { label: 'Knowledge', href: '/knowledge' },
@@ -111,7 +112,7 @@ const breadcrumbJsonLd = {
     <div class="mt-6">
       <ArticleHeader
         title={title}
-        contentType={categoryLabel.slice(0, -1)}
+        contentType={contentType}
         category={category}
         publishedAt={publishedAt}
         updatedAt={updatedAt}

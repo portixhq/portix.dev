@@ -1,0 +1,24 @@
+<svg viewBox="0 0 768 432" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Accented text printing as mismatched glyphs because of a code page mismatch">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1b1b1e" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="768" height="432" fill="#000000"/>
+  <rect width="768" height="432" fill="url(#grid)"/>
+  <g font-family="'JetBrains Mono', monospace">
+    <g transform="translate(150,180)">
+      <rect x="0" y="0" width="140" height="60" rx="8" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <text x="70" y="38" text-anchor="middle" font-size="18" fill="#a3a3a3">Café</text>
+      <text x="70" y="-12" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">SOURCE TEXT</text>
+    </g>
+    <path d="M300 210 L350 210" stroke="#c96a6a" stroke-width="1.5" stroke-dasharray="4 5"/>
+    <path d="M342 204 L352 210 L342 216" fill="none" stroke="#c96a6a" stroke-width="1.5"/>
+    <g transform="translate(360,178)">
+      <rect x="0" y="0" width="150" height="64" rx="8" fill="#0a0a0a" stroke="#c96a6a" stroke-width="1.6"/>
+      <text x="75" y="40" text-anchor="middle" font-size="18" fill="#c96a6a">CafÃ©</text>
+      <text x="75" y="-12" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">PRINTED (WRONG TABLE)</text>
+    </g>
+  </g>
+  <text x="384" y="392" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" fill="#525252" letter-spacing="2">PORTIX.ONE / KNOWLEDGE</text>
+</svg>

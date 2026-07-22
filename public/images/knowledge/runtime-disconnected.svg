@@ -1,0 +1,28 @@
+<svg viewBox="0 0 768 432" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A broken connection between a web application and a local printing runtime">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1b1b1e" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="768" height="432" fill="#000000"/>
+  <rect width="768" height="432" fill="url(#grid)"/>
+  <g font-family="'JetBrains Mono', monospace">
+    <g transform="translate(120,166)">
+      <rect x="0" y="0" width="110" height="80" rx="8" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <text x="55" y="50" text-anchor="middle" font-size="14" fill="#a3a3a3">&lt;/&gt;</text>
+      <text x="55" y="-12" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">WEB APP</text>
+    </g>
+    <path d="M242 206 L300 206" stroke="#c96a6a" stroke-width="1.5" stroke-dasharray="4 5"/>
+    <path d="M330 190 L360 222 M360 190 L330 222" stroke="#c96a6a" stroke-width="2.2"/>
+    <path d="M400 206 L458 206" stroke="#525252" stroke-width="1.5" stroke-dasharray="4 5" opacity="0.5"/>
+    <g transform="translate(466,166)">
+      <rect x="0" y="0" width="110" height="80" rx="8" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <g transform="translate(55,40)">
+        <path d="M0 -16 L14 -8 L14 8 L0 16 L-14 8 L-14 -8 Z" fill="none" stroke="#525252" stroke-width="1.5"/>
+      </g>
+      <text x="55" y="-12" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">RUNTIME</text>
+      <text x="55" y="100" text-anchor="middle" font-size="9" fill="#c96a6a">offline</text>
+    </g>
+  </g>
+  <text x="384" y="392" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" fill="#525252" letter-spacing="2">PORTIX.ONE / KNOWLEDGE</text>
+</svg>

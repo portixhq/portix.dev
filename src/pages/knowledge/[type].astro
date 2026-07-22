@@ -14,7 +14,7 @@ const meta = KNOWLEDGE_TYPES[type];
 
 const entries = await getCollection(
   'knowledge',
-  ({ data }) => data.status === 'published' && data.contentType === type.slice(0, -1)
+  ({ data }) => data.status === 'published' && data.contentType === meta.contentType
 );
 entries.sort((a, b) => b.data.updatedAt.getTime() - a.data.updatedAt.getTime());
 
