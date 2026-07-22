@@ -1,0 +1,51 @@
+<svg viewBox="0 0 768 432" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A validated lookup code encoded as a barcode and printed on a receipt">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1b1b1e" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="768" height="432" fill="#000000"/>
+  <rect width="768" height="432" fill="url(#grid)"/>
+  <g font-family="'JetBrains Mono', monospace">
+    <g transform="translate(120,150)">
+      <rect x="0" y="0" width="120" height="110" rx="8" fill="#0a0a0a" stroke="#262629" stroke-width="1.5"/>
+      <text x="60" y="50" text-anchor="middle" font-size="11" fill="#b9d9fb">CODE128</text>
+      <text x="60" y="70" text-anchor="middle" font-size="9" fill="#525252">validated</text>
+      <text x="60" y="-12" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">EXAMPLE</text>
+    </g>
+    <path d="M252 205 L302 205" stroke="#b9d9fb" stroke-width="1.5" stroke-dasharray="4 5"/>
+    <path d="M294 199 L304 205 L294 211" fill="none" stroke="#b9d9fb" stroke-width="1.5"/>
+    <rect x="314" y="150" width="180" height="120" fill="#ffffff"/>
+    <rect x="314" y="150" width="180" height="14" fill="#e5e5e5"/>
+    <g transform="translate(334,178)" fill="#171717">
+      <rect x="0" y="0" width="3" height="60"/>
+      <rect x="6" y="0" width="1" height="60"/>
+      <rect x="10" y="0" width="4" height="60"/>
+      <rect x="17" y="0" width="2" height="60"/>
+      <rect x="22" y="0" width="1" height="60"/>
+      <rect x="26" y="0" width="5" height="60"/>
+      <rect x="34" y="0" width="2" height="60"/>
+      <rect x="39" y="0" width="1" height="60"/>
+      <rect x="43" y="0" width="4" height="60"/>
+      <rect x="50" y="0" width="1" height="60"/>
+      <rect x="54" y="0" width="3" height="60"/>
+      <rect x="60" y="0" width="2" height="60"/>
+      <rect x="65" y="0" width="5" height="60"/>
+      <rect x="73" y="0" width="1" height="60"/>
+      <rect x="77" y="0" width="3" height="60"/>
+      <rect x="83" y="0" width="2" height="60"/>
+      <rect x="88" y="0" width="1" height="60"/>
+      <rect x="92" y="0" width="4" height="60"/>
+      <rect x="99" y="0" width="2" height="60"/>
+      <rect x="104" y="0" width="1" height="60"/>
+      <rect x="108" y="0" width="3" height="60"/>
+      <rect x="114" y="0" width="1" height="60"/>
+      <rect x="118" y="0" width="4" height="60"/>
+      <rect x="125" y="0" width="2" height="60"/>
+      <rect x="130" y="0" width="1" height="60"/>
+    </g>
+    <text x="404" y="256" text-anchor="middle" font-size="10" fill="#171717" letter-spacing="1">RCP-8472-XQ</text>
+    <text x="404" y="136" text-anchor="middle" font-size="11" fill="#a3a3a3" letter-spacing="1">RECEIPT</text>
+  </g>
+  <text x="384" y="392" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" fill="#525252" letter-spacing="2">PORTIX.ONE / KNOWLEDGE</text>
+</svg>
